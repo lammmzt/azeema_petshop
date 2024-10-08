@@ -132,7 +132,14 @@
                                     <?= $validation->getError('role'); ?>
                                 </div>
                             </select>
-
+                        </div>
+                        <div class="col-lg-12 mb-2">
+                            <label for="">No Hp</label>
+                            <input type="text" name="no_hp_user" class="form-control" placeholder="No Hp">
+                            <!-- validation -->
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('no_hp_user'); ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -205,6 +212,15 @@ foreach ($users as $key => $value) : ?>
                                 </div>
                             </select>
 
+                        </div>
+                        <div class="col-lg-12 mb-2">
+                            <label for="">No Hp</label>
+                            <input type="text" name="no_hp_user" class="form-control" placeholder="No Hp"
+                                value="<?= $value['no_hp_user']; ?>">
+                            <!-- validation -->
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('no_hp_user'); ?>
+                            </div>
                         </div>
                     </div>
                 </div>

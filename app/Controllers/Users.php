@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\usersModel;
+use Ramsey\Uuid\Uuid;
 
 class Users extends BaseController
 {
@@ -56,11 +57,13 @@ class Users extends BaseController
         ])) {
             return redirect()->to('/Users')->withInput();
         }
-        $this->userModel->save([
+        $this->userModel->insert([
+            'id_user' => Uuid::uuid4()->toString(),
             'username' => $this->request->getVar('username'),
             'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
             'nama_user' => $this->request->getVar('nama_user'),
-            'role' => $this->request->getVar('role')
+            'role' => $this->request->getVar('role'),
+            'no_hp_user' => $this->request->getVar('no_hp_user'),
         ]);
         session()->setFlashdata('success', 'Data Berhasil Ditambahkan');
         return redirect()->to('/Users');
@@ -80,7 +83,8 @@ class Users extends BaseController
             'username' => $this->request->getVar('username'),
             'password' => $password,
             'nama_user' => $this->request->getVar('nama_user'),
-            'role' => $this->request->getVar('role')
+            'role' => $this->request->getVar('role'),
+            'no_hp_user' => $this->request->getVar('no_hp_user'),
         ]);
         session()->setFlashdata('success', 'Data Berhasil Diubah');
         return redirect()->to('/Users');

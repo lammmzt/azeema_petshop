@@ -3,8 +3,8 @@
          <ul class="metismenu" id="menu">
              <li class="nav-label first">Menu utama</li>
              <li class="<?= ($menu_aktif == 'Dashboard') ? 'mm-active' : ''; ?>">
-                 <a class="" href="<?= base_url('/'); ?>" aria-expanded="false"><i class="icon icon-dashboard"></i><span
-                         class="nav-text">Dashboard</span></a>
+                 <a class="" href="<?= base_url('/'); ?>" aria-expanded="false"><i class="icon icon-home">
+                     </i><span class="nav-text">Dashboard</span></a>
              </li>
              <li class="nav-label">Master Data</li>
              <li class="<?= ($menu_aktif == 'Barang' || $menu_aktif == 'Layanan') ? 'mm-active' : ''; ?>"><a
