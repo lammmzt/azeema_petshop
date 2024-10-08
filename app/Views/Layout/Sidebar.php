@@ -32,10 +32,11 @@
                              href="<?= base_url('transaksi_keluar'); ?>">Transaksi Keluar</a></li>
                  </ul>
              </li>
-             <li><a href="<?= base_url('Order'); ?>" aria-expanded="false"><i class="fa fa-shopping-cart"></i><span
-                         class="nav-text">Order</span></a></li>
-             <li><a href="<?= base_url('Users'); ?>" aria-expanded="false"><i class="fa fa-users"></i><span
-                         class="nav-text">Users</span></a></li>
+             <li class="<?= ($menu_aktif == 'Order') ? 'mm-active' : ''; ?>"><a href="<?= base_url('Order'); ?>"
+                     aria-expanded="false"><i class="fa fa-shopping-cart"></i><span class="nav-text">Order</span></a>
+             </li>
+             <li class="<?= ($menu_aktif == 'Users') ? 'mm-active' : ''; ?>"><a href="<?= base_url('Users'); ?>"
+                     aria-expanded="false"><i class="fa fa-user"></i><span class="nav-text">Users</span></a></li>
 
          </ul>
      </div>
