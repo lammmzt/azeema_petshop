@@ -30,46 +30,39 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title"><?= $title; ?></h4>
+                <h4 class="card-title"><?= $title; ?> <?= $barang['nama_barang']; ?></h4>
                 <button type="button" data-toggle="modal" data-target="#add" href=""
                     class="btn btn-primary btn-sm float-right"><i class="fa fa-plus"></i></button>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-responsive-sm text-black-50" id="user">
+                    <table class="table table-striped table-responsive-sm text-black-50" id="tabel_tipe_barang">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Username</th>
-                                <th>Role</th>
-                                <th>No Hp</th>
+                                <th>Merk Barang</th>
+                                <th>Satuan</th>
+                                <th>Stok Barang</th>
+                                <th>Harga Barang</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $no = 1;
-                            foreach ($users as $key => $value) : ?>
+                            foreach ($tipe_barang as $key => $value) : ?>
                             <tr>
                                 <td><?= $no++; ?></td>
-                                <td><?= $value['username']; ?></td>
-                                <td><?php
-                                        if ($value['role'] == 1) {
-                                            echo '<span class="badge badge-primary">Owner</span>';
-                                        } elseif ($value['role'] == 2) {
-                                            echo '<span class="badge badge-success">Admin</span>';
-                                        } elseif ($value['role'] == 3) {
-                                            echo '<span class="badge badge-danger">User</span>';
-                                        }
-                                        ?>
-                                </td>
-                                <td><?= $value['no_hp_user']; ?></td>
+                                <td><?= $value['merk_tipe_barang']; ?></td>
+                                <td><?= $value['satuan']; ?></td>
+                                <td><?= $value['stok_tipe_barang']; ?></td>
+                                <td><?= $value['harga_tipe_barang']; ?></td>
                                 <td>
                                     <button type="button" data-toggle="modal"
-                                        data-target="#edit<?= $value['id_user']; ?>" href=""
+                                        data-target="#edit<?= $value['id_tipe_barang']; ?>" href=""
                                         class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
                                     <button type="button" data-toggle="modal"
-                                        data-target="#hapus<?= $value['id_user']; ?>" href=""
+                                        data-target="#hapus<?= $value['id_tipe_barang']; ?>" href=""
                                         class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                 </td>
 
@@ -91,57 +84,58 @@
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('Users/Simpan'); ?>" method="post">
+            <form action="<?= base_url('tipe_barang/Simpan'); ?>" method="post">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12 mb-2">
-                            <label for="">Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Username">
+                            <label for="">Merk Tipe Barang</label>
+                            <input type="text" name="merk_tipe_barang" class="form-control"
+                                placeholder="Masukan merk tipe barang">
 
                             <!-- validation -->
                             <div class="invalid-feedback">
-                                <?= $validation->getError('username'); ?>
+                                <?= $validation->getError('merk_tipe_barang'); ?>
                             </div>
                         </div>
+                        <input type="hidden" value="<?= $barang['id_barang']; ?>" name="id_barang">
                         <div class="col-lg-12 mb-2">
-                            <label for="">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password">
-                            <!-- validation -->
-                            <div class="invalid-feedback">
-                                <?= $validation->getError('password'); ?>
+                            <label for="">Harga Tipe Barang</label>
+                            <input type="text" name="harga_tipe_barang" class="form-control"
+                                placeholder="Masukan harga tipe barang">
 
-                            </div>
-                        </div>
-                        <div class="col-lg-12 mb-2">
-                            <label for="">Nama User</label>
-                            <input type="text" name="nama_user" class="form-control" placeholder="Nama User">
                             <!-- validation -->
                             <div class="invalid-feedback">
-                                <?= $validation->getError('nama_user'); ?>
+                                <?= $validation->getError('harga_tipe_barang'); ?>
                             </div>
                         </div>
                         <div class="col-lg-12 mb-2">
-                            <label for="">Role</label>
-                            <select name="role" class="form-control">
-                                <option value="">-- Pilih Role --</option>
-                                <option value="1">Owner</option>
-                                <option value="2">Admin</option>
-                                <option value="3">User</option>
-                                <!-- validation -->
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('role'); ?>
-                                </div>
+                            <label for="">Stok Tipe Barang</label>
+                            <input type="text" name="stok_tipe_barang" class="form-control"
+                                placeholder="Masukan stok tipe barang">
+
+                            <!-- validation -->
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('stok_tipe_barang'); ?>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb-2">
+                            <label for="">Satuan</label>
+                            <select name="satuan" class="form-control" id="tambah_satuan">
+                                <option value="pcs">Pcs</option>
+                                <option value="kg">KG</option>
+                                <option value="karung">Karung</option>
+                                <option value="box">Box</option>
+                                <option value="dus">Dus</option>
+                                <option value="lusin">Lusin</option>
                             </select>
-                        </div>
-                        <div class="col-lg-12 mb-2">
-                            <label for="">No Hp</label>
-                            <input type="text" name="no_hp_user" class="form-control" placeholder="No Hp">
+
                             <!-- validation -->
                             <div class="invalid-feedback">
-                                <?= $validation->getError('no_hp_user'); ?>
+                                <?= $validation->getError('satuan'); ?>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -155,11 +149,10 @@
 
 <!-- modalEdit -->
 <?php
-foreach ($users as $key => $value) : ?>
-
+foreach ($tipe_barang as $key => $value) : ?>
 
 <!-- Modal tamabh-->
-<div class="modal fade" id="edit<?= $value['id_user']; ?>">
+<div class="modal fade" id="edit<?= $value['id_tipe_barang']; ?>">
     <div class="modal-dialog modal-dialog-centered text-black-50" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -167,59 +160,57 @@ foreach ($users as $key => $value) : ?>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('Users/Update'); ?>" method="post">
+            <form action="<?= base_url('tipe_barang/Update'); ?>" method="post">
                 <div class="modal-body">
                     <div class="row">
-                        <input type="hidden" value="<?= $value['id_user']; ?>" name="id_user">
+                        <input type="hidden" value="<?= $value['id_tipe_barang']; ?>" name="id_tipe_barang">
                         <div class="col-lg-12 mb-2">
-                            <label for="">Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Username"
-                                value="<?= $value['username']; ?>">
+                            <label for="">Merk Tipe Barang</label>
+                            <input type="text" name="merk_tipe_barang" class="form-control"
+                                placeholder="Masukan merk tipe barang" value="<?= $value['merk_tipe_barang']; ?>">
 
                             <!-- validation -->
                             <div class="invalid-feedback">
-                                <?= $validation->getError('username'); ?>
+                                <?= $validation->getError('merk_tipe_barang'); ?>
                             </div>
                         </div>
                         <div class="col-lg-12 mb-2">
-                            <label for="">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password">
-                            <!-- validation -->
-                            <div class="invalid-feedback">
-                                <?= $validation->getError('password'); ?>
+                            <label for="">Harga Tipe Barang</label>
+                            <input type="text" name="harga_tipe_barang" class="form-control"
+                                placeholder="Masukan harga tipe barang" value="<?= $value['harga_tipe_barang']; ?>">
 
-                            </div>
-                        </div>
-                        <div class="col-lg-12 mb-2">
-                            <label for="">Nama User</label>
-                            <input type="text" name="nama_user" class="form-control" placeholder="Nama User"
-                                value="<?= $value['nama_user']; ?>">
                             <!-- validation -->
                             <div class="invalid-feedback">
-                                <?= $validation->getError('nama_user'); ?>
+                                <?= $validation->getError('harga_tipe_barang'); ?>
+                            </div>
+                        </div>
+                        <input type="hidden" value="<?= $barang['id_barang']; ?>" name="id_barang">
+                        <div class="col-lg-12 mb-2">
+                            <label for="">Stok Tipe Barang</label>
+                            <input type="text" name="stok_tipe_barang" class="form-control"
+                                placeholder="Masukan stok tipe barang" value="<?= $value['stok_tipe_barang']; ?>">
+
+                            <!-- validation -->
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('stok_tipe_barang'); ?>
                             </div>
                         </div>
                         <div class="col-lg-12 mb-2">
-                            <label for="">Role</label>
-                            <select name="role" class="form-control">
-                                <option value="">-- Pilih Role --</option>
-                                <option value="1" <?= ($value['role'] == 1) ? 'selected' : ''; ?>>Owner</option>
-                                <option value="2" <?= ($value['role'] == 2) ? 'selected' : ''; ?>>Admin</option>
-                                <option value="3" <?= ($value['role'] == 3) ? 'selected' : ''; ?>>User</option>
-                                <!-- validation -->
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('role'); ?>
-                                </div>
+                            <label for="">Satuan</label>
+                            <select name="satuan" class="form-control" id="tambah_satuan">
+                                <option value="pcs" <?= $value['satuan'] == 'pcs' ? 'selected' : ''; ?>>Pcs</option>
+                                <option value="kg" <?= $value['satuan'] == 'kg' ? 'selected' : ''; ?>>KG</option>
+                                <option value="karung" <?= $value['satuan'] == 'karung' ? 'selected' : ''; ?>>Karung
+                                </option>
+                                <option value="box" <?= $value['satuan'] == 'box' ? 'selected' : ''; ?>>Box</option>
+                                <option value="dus" <?= $value['satuan'] == 'dus' ? 'selected' : ''; ?>>Dus</option>
+                                <option value="lusin" <?= $value['satuan'] == 'lusin' ? 'selected' : ''; ?>>Lusin
+                                </option>
                             </select>
 
-                        </div>
-                        <div class="col-lg-12 mb-2">
-                            <label for="">No Hp</label>
-                            <input type="text" name="no_hp_user" class="form-control" placeholder="No Hp"
-                                value="<?= $value['no_hp_user']; ?>">
                             <!-- validation -->
                             <div class="invalid-feedback">
-                                <?= $validation->getError('no_hp_user'); ?>
+                                <?= $validation->getError('satuan'); ?>
                             </div>
                         </div>
                     </div>
@@ -236,8 +227,8 @@ foreach ($users as $key => $value) : ?>
 <?php endforeach; ?>
 <!-- Modal hapus-->
 <?php
-foreach ($users as $key => $value) : ?>
-<div class="modal fade" id="hapus<?= $value['id_user']; ?>">
+foreach ($tipe_barang as $key => $value) : ?>
+<div class="modal fade" id="hapus<?= $value['id_tipe_barang']; ?>">
     <div class="modal-dialog modal-dialog-centered text-black-50" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -245,9 +236,10 @@ foreach ($users as $key => $value) : ?>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('Users/Hapus'); ?>" method="post">
+            <form action="<?= base_url('tipe_barang/Hapus'); ?>" method="post">
                 <div class="modal-body">
-                    <input type="hidden" value="<?= $value['id_user']; ?>" name="id">
+                    <input type="hidden" value="<?= $barang['id_barang']; ?>" name="id_barang">
+                    <input type="hidden" value="<?= $value['id_tipe_barang']; ?>" name="id">
                     <p>Apakah Anda Yakin Ingin Menghapus Data Ini ? </p>
                 </div>
                 <div class="modal-footer">
@@ -266,15 +258,18 @@ foreach ($users as $key => $value) : ?>
 <?= $this->section('dataTables'); ?>
 <script>
 $(document).ready(function() {
-    $('#user').DataTable({
+    $('#tabel_tipe_barang').DataTable({
         "columnDefs": [{
             "orderable": false,
-            "targets": 4
+            "targets": 2
 
         }]
 
     });
 
 });
+
+// tambah satuan select2
+$('#tambah_satuan').select2();
 </script>
 <?= $this->endSection('dataTables'); ?>

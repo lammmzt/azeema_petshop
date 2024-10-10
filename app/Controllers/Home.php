@@ -9,7 +9,7 @@ class Home extends BaseController
         $data = [
             'title' => 'Dashboard',
             'menu_aktif' => 'Dashboard',
-            'subtitle' => '',
+            'main_menu' => '',
         ];
         return view('Admin/Dashboard/index', $data);
     }

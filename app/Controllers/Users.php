@@ -18,6 +18,7 @@ class Users extends BaseController
         $data = [
             'title' => 'Users',
             'subtitle' => 'Data Users',
+            'main_menu' => 'Users',
             'menu_aktif' => 'Users',
             'validation' => \Config\Services::validation(),
             'users' => $this->userModel->getUsers()

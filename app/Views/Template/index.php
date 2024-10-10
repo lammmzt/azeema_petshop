@@ -15,7 +15,7 @@
     <link href="<?= base_url('assets/vendor/jqvmap/css/jqvmap.min.css'); ?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/style.css'); ?>" rel="stylesheet">
 
-
+    <link rel="stylesheet" href="<?= base_url('assets/'); ?>vendor/select2/css/select2.min.css">
 
 </head>
 
@@ -124,8 +124,8 @@
                     </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)"><?= $title; ?></a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0)"><?= $subtitle; ?></a></li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0)"><?= $main_menu; ?></a></li>
+                            <li class="breadcrumb-item active"><a href="javascript:void(0)"><?= $title; ?></a></li>
                         </ol>
                     </div>
                 </div>
@@ -173,7 +173,9 @@
     <script src="<?= base_url('assets/vendor/global/global.min.js'); ?>"></script>
     <script src="<?= base_url('assets/js/quixnav-init.js'); ?>"></script>
     <script src="<?= base_url('assets/js/custom.min.js'); ?>"></script>
-
+    <!-- select2 -->
+    <script src="<?= base_url('assets/'); ?>vendor/select2/js/select2.full.min.js"></script>
+    <script src="<?= base_url('assets/'); ?>js/plugins-init/select2-init.js"></script>
     <!-- Datatable -->
     <script src="<?= base_url('assets/vendor/datatables/js/jquery.dataTables.min.js'); ?>"></script>
 
@@ -200,6 +202,7 @@
     <script src="<?= base_url('assets/vendor/jqvmap/js/jquery.vmap.min.js'); ?>"></script>
     <script src="<?= base_url('assets/vendor/jqvmap/js/jquery.vmap.usa.js'); ?>"></script>
     <script src="<?= base_url('assets/vendor/jquery.counterup/jquery.counterup.min.js'); ?>"></script>
+
 
 
     <script src="<?= base_url('assets/js/dashboard/dashboard-1.js'); ?>"></script>
