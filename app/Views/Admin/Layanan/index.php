@@ -66,8 +66,6 @@
                                     <button type="button" data-toggle="modal"
                                         data-target="#hapus<?= $value['id_layanan']; ?>" href=""
                                         class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-                                    <a href="<?= base_url('tipe_layanan/' . $value['id_layanan']); ?>"
-                                        class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
                                 </td>
 
                             </tr>
@@ -274,7 +272,7 @@ $(document).ready(function() {
     $('#tabel_layanan').DataTable({
         "columnDefs": [{
             "orderable": false,
-            "targets": 2
+            "targets": 5
 
         }]
 

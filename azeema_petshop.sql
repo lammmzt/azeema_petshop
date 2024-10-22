@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 08, 2024 at 03:42 PM
+-- Generation Time: Oct 13, 2024 at 05:29 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -30,7 +30,14 @@ SET time_zone = "+00:00";
 CREATE TABLE `barang` (
   `id_barang` varchar(255) NOT NULL,
   `nama_barang` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `barang`
+--
+
+INSERT INTO `barang` (`id_barang`, `nama_barang`) VALUES
+('026f6cbd-6e5d-4c10-ab6d-46c981f4608e', 'Pakan Kucing');
 
 -- --------------------------------------------------------
 
@@ -44,7 +51,7 @@ CREATE TABLE `detail_order` (
   `id_layanan` int NOT NULL,
   `jumlah_order` int NOT NULL,
   `sub_total_order` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -58,7 +65,7 @@ CREATE TABLE `detail_transaksi` (
   `id_tipe_barang` int NOT NULL,
   `jumlah_transaksi` int NOT NULL,
   `sub_total_transaksi` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -73,7 +80,14 @@ CREATE TABLE `layanan` (
   `harga_layanan` int NOT NULL,
   `promo_layanan` int NOT NULL,
   `foto_layanan` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `layanan`
+--
+
+INSERT INTO `layanan` (`id_layanan`, `nama_layanan`, `deskripsi_layanan`, `harga_layanan`, `promo_layanan`, `foto_layanan`) VALUES
+(2, 'Grooming', 'Ok', 100000, 10, '1728574230_b340c93a71621695c09b.jpeg');
 
 -- --------------------------------------------------------
 
@@ -92,7 +106,7 @@ CREATE TABLE `order` (
   `bukti_pembayaran` varchar(255) DEFAULT NULL,
   `total_order` int NOT NULL,
   `status_order` enum('0','1','2','3','4') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -103,11 +117,18 @@ CREATE TABLE `order` (
 CREATE TABLE `tipe_barang` (
   `id_tipe_barang` int NOT NULL,
   `id_barang` varchar(255) NOT NULL,
-  `kode_tipe_barang` varchar(255) NOT NULL,
   `merk_tipe_barang` varchar(255) NOT NULL,
+  `satuan` varchar(255) NOT NULL,
   `stok_tipe_barang` int NOT NULL,
   `harga_tipe_barang` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tipe_barang`
+--
+
+INSERT INTO `tipe_barang` (`id_tipe_barang`, `id_barang`, `merk_tipe_barang`, `satuan`, `stok_tipe_barang`, `harga_tipe_barang`) VALUES
+(2, '026f6cbd-6e5d-4c10-ab6d-46c981f4608e', 'Catcoice', 'kg', 11, 75000);
 
 -- --------------------------------------------------------
 
@@ -117,12 +138,12 @@ CREATE TABLE `tipe_barang` (
 
 CREATE TABLE `transaksi` (
   `id_transaksi` varchar(255) NOT NULL,
-  `nama_pelanggan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `nama_pelanggan` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
   `jenis_transaksi` enum('0','1') NOT NULL,
   `tanggaL_tranaksi` date DEFAULT NULL,
   `total_transaksi` int NOT NULL,
   `status_transaksi` enum('0','1','2','3','4') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -134,11 +155,11 @@ CREATE TABLE `users` (
   `id_user` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('1','2','3') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `role` enum('1','2','3') CHARACTER SET utf8mb4 NOT NULL,
   `nama_user` varchar(255) NOT NULL,
   `alamat_user` varchar(255) DEFAULT NULL,
   `no_hp_user` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
@@ -225,13 +246,13 @@ ALTER TABLE `detail_transaksi`
 -- AUTO_INCREMENT for table `layanan`
 --
 ALTER TABLE `layanan`
-  MODIFY `id_layanan` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_layanan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tipe_barang`
 --
 ALTER TABLE `tipe_barang`
-  MODIFY `id_tipe_barang` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tipe_barang` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

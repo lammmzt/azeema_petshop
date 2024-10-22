@@ -30,6 +30,10 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
+                <a href="<?= base_url('barang'); ?>" class="btn btn-primary btn-sm"><i class="fa fa-arrow-left"></i>
+                    Kembali</a>
+            </div>
+            <div class="card-header">
                 <h4 class="card-title"><?= $title; ?> <?= $barang['nama_barang']; ?></h4>
                 <button type="button" data-toggle="modal" data-target="#add" href=""
                     class="btn btn-primary btn-sm float-right"><i class="fa fa-plus"></i></button>
