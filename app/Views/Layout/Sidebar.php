@@ -27,9 +27,9 @@
                  <ul aria-expanded="false"
                      class="<?= ($menu_aktif == 'transaksi_masuk' || $menu_aktif == 'transaksi_keluar') ? 'mm-show' : ''; ?>">
                      <li><a class="<?= ($menu_aktif == 'transaksi_masuk') ? 'mm-active' : ''; ?>"
-                             href="<?= base_url('transaksi_masuk'); ?>">Transaksi Masuk</a></li>
+                             href="<?= base_url('Transaksi/Masuk'); ?>">Transaksi Masuk</a></li>
                      <li><a class="<?= ($menu_aktif == 'transaksi_keluar') ? 'mm-active' : ''; ?>"
-                             href="<?= base_url('transaksi_keluar'); ?>">Transaksi Keluar</a></li>
+                             href="<?= base_url('Transaksi/Keluar'); ?>">Transaksi Keluar</a></li>
                  </ul>
              </li>
              <li class="<?= ($menu_aktif == 'Order') ? 'mm-active' : ''; ?>"><a href="<?= base_url('Order'); ?>"

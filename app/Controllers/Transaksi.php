@@ -3,29 +3,94 @@ namespace App\Controllers;
 
 use App\Models\transaksiModel;
 use App\Models\detailTransaksiModel;
+use App\Models\barangModel;
+use App\Models\tipeBarangModel;
 use Ramsey\Uuid\Uuid;
 
 class Transaksi extends BaseController
 {
     protected $transaksiModel;
     protected $detailTransaksiModel;
+    protected $barangModel;
+    protected $tipeBarangModel;
 
-    public function __construct()
+    public function __construct() 
     {
         $this->transaksiModel = new transaksiModel();
         $this->detailTransaksiModel = new detailTransaksiModel();
+        $this->barangModel = new barangModel();
+        $this->tipeBarangModel = new tipeBarangModel();
     }
 
-    public function Masuk()
+
+    // ================================== TRANSAKSI MASUK ==================================
+    public function Masuk() // Menampilkan halaman daftar transaksi masuk
     {
-        $data = [
+        $data = [ // Data yang akan dikirim ke view
             'title' => 'Daftar Transaksi Masuk',
             'main_menu' => 'Transaksi',
             'menu_aktif' => 'trasaksi_masuk',
             'validation' => \Config\Services::validation(),
-            'transaksi' => $this->transaksiModel->getTransaksiByJenis('0'),
+            'transaksi_masuk' => $this->transaksiModel->getTransaksiByJenis('0'),
         ];
-        return view('Transaksi/Masuk/index', $data);
+        return view('Admin/Transaksi/Masuk/index', $data); // Load view
+    }
+
+    public function tambah_transaksi_masuk() // Menampilkan halaman tambah transaksi masuk
+    {
+        $data = [ // Data yang akan dikirim ke view
+            'title' => 'Tambah Transaksi Masuk',
+            'main_menu' => 'Transaksi',
+            'menu_aktif' => 'transaksi_masuk',
+            'validation' => \Config\Services::validation(),
+            'tipe_barang' => $this->tipeBarangModel->getTipeBarang(), // Mengambil data tipe barang
+        ];
+        
+        return view('Admin/Transaksi/Masuk/tambah', $data); // Load view
+    }
+
+    public function simpan_transaksi_masuk() // Proses simpan transaksi masuk
+    {
+        $id_transaksi = 'TRM-' . date('Ymdhis') .rand(100,999); // Generate id transaksi
+        $data = [ // Data yang akan disimpan
+            'id_transaksi' => $id_transaksi,
+            'tanggal_transaksi' => $this->request->getPost('tanggal_transaksi'),
+            'ket_transaksi' => $this->request->getPost('ket_transaksi'),
+            'total_transaksi' => $this->request->getPost('total_transaksi'),
+            'jenis' => '0',
+            'status_transaksi' => '1',
+        ];
+
+        $this->transaksiModel->insert($data); // Simpan data transaksi
+        $data_barang = $this->request->getPost('data_barang'); // Mengambil data id tipe barang
+        $data_barang = json_decode($data_barang, true); // Decode data json
+
+        foreach ($data_barang as $key => $value) { // Looping data barang
+
+            $data_detail_transaksi = [ // Data yang akan disimpan
+                'id_transaksi' => $id_transaksi,
+                'id_tipe_barang' => $value['id_tipe_barang'],
+                'jumlah_transaksi' => $value['jumlah'],
+                'sub_total_transaksi' => $value['subtotal'],
+                'harga_barang' => $value['harga'],
+            ];
+
+            $this->detailTransaksiModel->save($data_detail_transaksi); // Simpan data detail transaksi
+            $tipe_barang = $this->tipeBarangModel->getTipeBarang($value['id_tipe_barang']); // Mengambil data tipe barang
+            $stok = $tipe_barang['stok_tipe_barang'] + $value['jumlah']; // Menghitung stok barang
+            $this->tipeBarangModel->update($value['id_tipe_barang'], ['stok_tipe_barang' => $stok]); // Update stok barang
+                
+        }
+        session()->setFlashdata('success', 'Data transaksi masuk berhasil disimpan'); // Set flashdata
+        
+        // set response json
+        $response = [
+            'status' => '200',
+            'pesan' => 'Data transaksi masuk berhasil disimpan',
+        ];
+
+        return $this->response->setJSON($response); // Load view
+
     }
 }
 ?>

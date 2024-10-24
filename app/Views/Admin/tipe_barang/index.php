@@ -30,7 +30,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <a href="<?= base_url('barang'); ?>" class="btn btn-primary btn-sm"><i class="fa fa-arrow-left"></i>
+                <a href="<?= base_url('Barang'); ?>" class="btn btn-primary btn-sm"><i class="fa fa-arrow-left"></i>
                     Kembali</a>
             </div>
             <div class="card-header">

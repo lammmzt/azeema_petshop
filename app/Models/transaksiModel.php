@@ -7,7 +7,7 @@ class transaksiModel extends Model
 {
     protected $table = 'transaksi';
     protected $primaryKey = 'id_transaksi';
-    protected $allowedFields = ['id_transaksi', 'nama_pelanggan', 'jenis_transaksi', 'tanggaL_tranaksi', 'total_transaksi', 'status_transaksi'];
+    protected $allowedFields = ['id_transaksi', 'ket_transaksi', 'jenis_transaksi', 'tanggal_transaksi', 'total_transaksi', 'status_transaksi'];
 
     public function getTransaksi($id = false)
     {

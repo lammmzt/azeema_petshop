@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/vendor/owl-carousel/css/owl.carousel.min.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/vendor/owl-carousel/css/owl.theme.default.min.css'); ?>">
     <link href="<?= base_url('assets/vendor/jqvmap/css/jqvmap.min.css'); ?>" rel="stylesheet">
+    <link href="<?= base_url('assets/vendor/select2/css/select2.min.css'); ?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/style.css'); ?>" rel="stylesheet">
 
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>vendor/select2/css/select2.min.css">
@@ -178,7 +179,24 @@
     <script src="<?= base_url('assets/'); ?>js/plugins-init/select2-init.js"></script>
     <!-- Datatable -->
     <script src="<?= base_url('assets/vendor/datatables/js/jquery.dataTables.min.js'); ?>"></script>
+    <script type="text/javascript">
+    // format rupiah
+    function formatRupiah(angka) {
+        var number_string = angka.toString().replace(/[^,\d]/g, ''),
+            split = number_string.split(','),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return rupiah;
+    }
+    </script>
     <?= $this->renderSection('dataTables'); ?>
 
     <!-- Vectormap -->
@@ -206,6 +224,11 @@
 
 
     <script src="<?= base_url('assets/js/dashboard/dashboard-1.js'); ?>"></script>
+
+    <!-- select2 -->
+    <script src="<?= base_url('assets/js/plugins-init/select2-init.js'); ?>"></script>
+    <script src="<?= base_url('assets/vendor/select2/js/select2.full.min.js'); ?>"></script>
+
 
     <script>
     $(document).ready(function() {
