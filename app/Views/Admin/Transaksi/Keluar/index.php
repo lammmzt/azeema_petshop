@@ -58,7 +58,6 @@ $detailTransaksiModel = new detailTransaksiModel();
                                 <td><?= $value['id_transaksi']; ?></td>
                                 <td><?= $value['tanggal_transaksi']; ?></td>
                                 <td><?php echo "Rp. " . number_format($value['total_transaksi'], 0, ',', '.'); ?></td>
-                                ?>
                                 <td>
                                     <button type="button" data-toggle="modal"
                                         data-target="#detail<?= $value['id_transaksi']; ?>" href=""
@@ -102,8 +101,8 @@ $detailTransaksiModel = new detailTransaksiModel();
                 <hr>
                 <h5>Detail Barang</h5>
                 <div class="row">
-                    <div class="col-lg-12">
-                        <table class="table table-striped table-responsive-sm text-black-50">
+                    <div class="col-lg-12 table-responsive">
+                        <table class="table table-striped text-black-50">
                             <thead>
                                 <tr>
                                     <th>#</th>
