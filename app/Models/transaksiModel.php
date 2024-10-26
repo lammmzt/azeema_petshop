@@ -12,9 +12,13 @@ class transaksiModel extends Model
     public function getTransaksi($id = false)
     {
         if($id === false){
-            return $this->findAll();
+            return $this
+            ->orderBy('tanggal_transaksi', 'DESC')
+            ->findAll();
         } else {
-            return $this->getWhere(['id_transaksi' => $id]);
+            return $this
+            ->where(['id_transaksi' => $id])
+            ->first();
         }   
     }
 
@@ -22,6 +26,7 @@ class transaksiModel extends Model
     {
         return $this
             ->where(['jenis_transaksi' => $jenis])
+            ->orderBy('tanggal_transaksi', 'DESC')
             ->findAll();
     }
 }
