@@ -58,7 +58,7 @@
                                     <button type="button" data-toggle="modal"
                                         data-target="#hapus<?= $value['id_barang']; ?>" href=""
                                         class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-                                    <a href="<?= base_url('tipe_barang/' . $value['id_barang']); ?>"
+                                    <a href="<?= base_url('TipeBarang/' . $value['id_barang']); ?>"
                                         class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
                                 </td>
 

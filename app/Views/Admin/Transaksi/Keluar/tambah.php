@@ -104,7 +104,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
+                            <button type="submit" class="btn btn-primary btn-sm" id="btn_simpan">Simpan</button>
                         </div>
                     </div>
                 </form>
@@ -181,6 +181,11 @@ $('#tambah_barang').on('click', function() {
 
     if (id_tipe_barang == '') { // jika barang belum dipilih
         alert('Pilih barang');
+        return false;
+    }
+
+    if (jumlah > stok) { // jika jumlah melebihi stok
+        alert('Stok barang tidak mencukupi (Stok: ' + stok + ')');
         return false;
     }
 
@@ -265,6 +270,10 @@ $('form').submit(function() {
         return false;
     }
 
+    // ubah btn simpan to loading
+    $('#btn_simpan').html('<i class="fa fa-spin fa-spinner"></i> Loading...');
+    $('#btn_simpan').attr('disabled', true);
+
     var form_data = $(this).serializeArray(); // ambil semua data form
     form_data.push({ // tambahkan total transaksi
         name: 'total_transaksi',
@@ -284,8 +293,11 @@ $('form').submit(function() {
             if (hasil.status == 200) {
                 location.href = '<?= base_url('Transaksi/Keluar'); ?>';
                 // console.log(hasil.data);
+
             } else {
                 alert(hasil.pesan);
+                $('#btn_simpan').html('Simpan');
+                $('#btn_simpan').attr('disabled', false);
             }
         }
     });

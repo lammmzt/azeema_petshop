@@ -13,7 +13,7 @@ class transaksiModel extends Model
     {
         if($id === false){
             return $this
-            ->orderBy('tanggal_transaksi', 'DESC')
+            ->orderBy('id_transaksi', 'DESC')
             ->findAll();
         } else {
             return $this
@@ -26,7 +26,7 @@ class transaksiModel extends Model
     {
         return $this
             ->where(['jenis_transaksi' => $jenis])
-            ->orderBy('tanggal_transaksi', 'DESC')
+            ->orderBy('id_transaksi', 'DESC')
             ->findAll();
     }
 }
