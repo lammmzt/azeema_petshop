@@ -13,6 +13,9 @@ use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
 
+use App\Filters\filterAdmin;
+use App\Filters\Middleware;
+use App\Filters\filterUser;
 class Filters extends BaseFilters
 {
     /**
@@ -34,6 +37,9 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        'filterAdmin'   => filterAdmin::class,
+        'Middleware'    => Middleware::class,
+        'filterUser'    => filterUser::class,
     ];
 
     /**
@@ -68,14 +74,19 @@ class Filters extends BaseFilters
      * @var array<string, array<string, array<string, string>>>|array<string, list<string>>
      */
     public array $globals = [
-        'before' => [
-            // 'honeypot',
-            // 'csrf',
-            // 'invalidchars',
+         'before' => [
+            'Middleware' => ['except' => ['/','Auth','Auth/*', 'LandingPage', 'LandingPage/*',]],
         ],
         'after' => [
-            // 'honeypot',
-            // 'secureheaders',
+            'filterAdmin' => ['except' => [ 
+                '/', 'Auth/logout','Auth/login', 'Barang', 'Barang/*', 'Dashboard', 'Dashboard/*',
+                'LandingPage', 'LandingPage/*', 'Home', 'Home/*', 'Layanan', 'Layanan/*', 'TipeBarang', 'TipeBarang/*', 'Transaksi', 'Transaksi/*', 'User', 'User/*',
+            ]],
+            'filterUser' => ['except' => [ 
+                '/', 'Auth/logout','Auth/login',
+                'LandingPage', 'LandingPage/*', 
+            ]],
+
         ],
     ];
 

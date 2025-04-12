@@ -7,7 +7,7 @@ class layananModel extends Model
 {
     protected $table = 'layanan';
     protected $primaryKey = 'id_layanan';
-    protected $allowedFields = ['id_layanan','nama_layanan', 'harga_layanan', 'deskripsi_layanan', 'promo_layanan', 'foto_layanan'];
+    protected $allowedFields = ['id_layanan','nama_layanan', 'harga_layanan', 'deskripsi_layanan', 'foto_layanan', 'icon_layanan', 'satuan_layanan'];
 
     public function getLayanan($id_layanan = false)
     {

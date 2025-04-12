@@ -43,7 +43,6 @@
                                 <th>Nama Layanan</th>
                                 <th class="text-center">Foto</th>
                                 <th>Harga</th>
-                                <th>Promo</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -57,8 +56,8 @@
                                 <td class="text-center"><img
                                         src="<?= base_url('assets/img/Layanan/' . $value['foto_layanan']); ?>"
                                         alt="foto_layanan" width="100px"></td>
-                                <td><?= $value['harga_layanan']; ?></td>
-                                <td><?= $value['promo_layanan']; ?>%</td>
+                                <td>Rp. <?= number_format($value['harga_layanan'], 0, ',', '.'); ?></td>
+
                                 <td>
                                     <button type="button" data-toggle="modal"
                                         data-target="#edit<?= $value['id_layanan']; ?>" href=""
@@ -123,13 +122,13 @@
                         </div>
 
                         <div class="col-lg-12 mb-2">
-                            <label for="">Promo</label>
-                            <div class="input-group mb-3">
-                                <input type="number" name="promo_layanan" class="form-control"
-                                    placeholder="Masukan promo layanan" id="promo_layanan">
-                                <div class="input-group-append">
-                                    <span class="input-group-text">%</span>
-                                </div>
+                            <label for="">Satuan Layanan</label>
+                            <input type="text" name="satuan_layanan" class="form-control"
+                                placeholder="Masukan satuan layanan">
+
+                            <!-- validation -->
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('satuan_layanan'); ?>
                             </div>
                         </div>
 
@@ -144,6 +143,11 @@
                             </div>
                         </div>
 
+                        <div class="col-lg-12 mb-2">
+                            <label for="">Icon Layanan</label>
+                            <input type="text" name="icon_layanan" class="form-control"
+                                placeholder="Masukan icon layanan">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -204,14 +208,13 @@ foreach ($layanan as $key => $value) : ?>
                             </div>
                         </div>
                         <div class="col-lg-12 mb-2">
-                            <label for="">Promo</label>
-                            <div class="input-group mb-3">
-                                <input type="number" name="promo_layanan" class="form-control"
-                                    placeholder="Masukan promo layanan" id="promo_layanan"
-                                    value="<?= $value['promo_layanan']; ?>">
-                                <div class="input-group-append">
-                                    <span class="input-group-text">%</span>
-                                </div>
+                            <label for="">Satuan layanan</label>
+                            <input type="text" name="satuan_layanan" class="form-control"
+                                placeholder="Masukan satuan layanan" value="<?= $value['satuan_layanan']; ?>">
+
+                            <!-- validation -->
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('satuan_layanan'); ?>
                             </div>
                         </div>
                         <input type="hidden" value="<?= $value['foto_layanan']; ?>" name="foto_layanan_lama">
@@ -224,6 +227,12 @@ foreach ($layanan as $key => $value) : ?>
                             <div class=" invalid-feedback">
                                 <?= $validation->getError('foto_layanan'); ?>
                             </div>
+                        </div>
+                        <div class="col-lg-12 mb-2">
+                            <label for="">Icon layanan</label>
+                            <input type="text" name="icon_layanan" class="form-control"
+                                placeholder="Masukan icon layanan" value="<?= $value['icon_layanan']; ?>">
+
                         </div>
                     </div>
                 </div>

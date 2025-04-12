@@ -80,6 +80,32 @@
         font-weight: bold;
     }
 
+    @page {
+        size: 50mm auto;
+        margin: 0 !important;
+        -webkit-print-color-adjust: exact;
+        font-color-adjust: exact;
+
+
+    }
+
+    body {
+        width: 50mm;
+        margin: 0 !important;
+        padding: 0;
+        box-shadow: none;
+        border: 0;
+        background-color: #fff;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    .logo {
+        width: 100px;
+    }
+
     /* on print auto width to rool paper */
     /* @media print {
         body {

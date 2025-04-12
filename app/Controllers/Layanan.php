@@ -46,12 +46,6 @@ class Layanan extends BaseController
                     'required' => '{field} layanan harus diisi.'
                 ]
                 ],
-            'promo_layanan' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '{field} layanan harus diisi.'
-                ]
-                ],
             'foto_layanan' => [
                 'rules' => 'uploaded[foto_layanan]|max_size[foto_layanan,1024]|is_image[foto_layanan]|mime_in[foto_layanan,image/jpg,image/jpeg,image/png]',
                 'errors' => [
@@ -73,8 +67,9 @@ class Layanan extends BaseController
             'nama_layanan' => $this->request->getVar('nama_layanan'),
             'harga_layanan' => $this->request->getVar('harga_layanan'),
             'deskripsi_layanan' => $this->request->getVar('deskripsi_layanan'),
-            'promo_layanan' => $this->request->getVar('promo_layanan'),
-            'foto_layanan' => $namaFoto
+            'foto_layanan' => $namaFoto,
+            'icon_layanan' => $this->request->getVar('icon_layanan'),
+            'satuan_layanan' => $this->request->getVar('satuan_layanan')
         ]);
 
         session()->setFlashdata('success', 'Data berhasil ditambahkan.');
@@ -104,8 +99,9 @@ class Layanan extends BaseController
             'nama_layanan' => $this->request->getVar('nama_layanan'),
             'harga_layanan' => $this->request->getVar('harga_layanan'),
             'deskripsi_layanan' => $this->request->getVar('deskripsi_layanan'),
-            'promo_layanan' => $this->request->getVar('promo_layanan'),
-            'foto_layanan' => $namaFoto
+            'foto_layanan' => $namaFoto,
+            'icon_layanan' => $this->request->getVar('icon_layanan'),
+            'satuan_layanan' => $this->request->getVar('satuan_layanan')
         ]);
 
         session()->setFlashdata('success', 'Data berhasil diubah.');
