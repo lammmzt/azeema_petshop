@@ -14,7 +14,7 @@ class Auth extends BaseController
             'active' => 'Login',
         ];
         if(session()->get('logged_in')){
-            return redirect()->to(base_url('Dashboard'));
+            return redirect()->to(base_url('/'));
         }else{
             return view('Template/auth', $data);
         }
@@ -64,7 +64,7 @@ class Auth extends BaseController
             return $this->response->setJSON([
                 'error' => true,
                 'status' => 409,
-                'message' => 'Username Sudah Terdaftar'
+                'message' => 'Email Sudah Terdaftar'
             ]);
         }else{
             $model->insert([
@@ -84,6 +84,44 @@ class Auth extends BaseController
         }
         
     }
+
+    public function loginUser(){
+        $username = $this->request->getPost('username');
+        $password = $this->request->getPost('password');
+        // dd($username, $password);
+        $model = new usersModel();
+        $user = $model->where('username', $username)->first();
+
+        if($user){
+            if(password_verify($password, $user['password'])){
+                $ses_data = [
+                    'username' => $user['username'],
+                    'nama_user' => $user['nama_user'],
+                    'role' => $user['role'],
+                    'logged_in' => TRUE,
+                ];
+                session()->set($ses_data);
+                return $this->response->setJSON([
+                    'error' => false,
+                    'status' => 200,
+                    'message' => 'Login Berhasil',
+                ]);
+            }else{
+                return $this->response->setJSON([
+                    'error' => true,
+                    'status' => 401,
+                    'message' => 'Password Salah'
+                ]);
+            }
+        }else{
+            return $this->response->setJSON([
+                'error' => true,
+                'status' => 404,
+                'message' => 'Email Tidak Ditemukan'
+            ]);
+        }
+    }
+    
     public function logout()
     {
         session()->destroy();
