@@ -12,7 +12,7 @@ class Middleware implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         if (!session()->get('logged_in')) {
-            return redirect()->to('Auth');
+            return redirect()->to('LandingPage');
         }
     }
 

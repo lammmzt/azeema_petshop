@@ -75,15 +75,14 @@ class Filters extends BaseFilters
      */
     public array $globals = [
          'before' => [
-            'Middleware' => ['except' => ['/','Auth','Auth/*', 'LandingPage', 'LandingPage/*',]],
+            'Middleware' => ['except' => ['Auth','Auth/*', 'LandingPage', 'LandingPage/*',]],
         ],
         'after' => [
             'filterAdmin' => ['except' => [ 
-                '/', 'Auth/logout','Auth/login', 'Barang', 'Barang/*', 'Dashboard', 'Dashboard/*',
+                '/', 'Auth/logout','Auth/login','Auth/Register','Barang', 'Barang/*', 'Dashboard', 'Dashboard/*',
                 'LandingPage', 'LandingPage/*', 'Home', 'Home/*', 'Layanan', 'Layanan/*', 'TipeBarang', 'TipeBarang/*', 'Transaksi', 'Transaksi/*', 'User', 'User/*',
             ]],
-            'filterUser' => ['except' => [ 
-                '/', 'Auth/logout','Auth/login',
+            'filterUser' => ['except' => ['Auth/logout',
                 'LandingPage', 'LandingPage/*', 
             ]],
 

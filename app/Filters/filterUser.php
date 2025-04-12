@@ -17,7 +17,7 @@ class filterUser implements FilterInterface
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        if (session()->get('role') == 'User') {
+        if (session()->get('role') == '3') {
             return redirect()->to('LandingPage');
         }
     }

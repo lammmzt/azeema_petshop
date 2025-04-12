@@ -25,6 +25,7 @@
 
     <link rel="stylesheet" href="<?= base_url('assets/Landing/'); ?>css/flaticon.css">
     <link rel="stylesheet" href="<?= base_url('assets/Landing/'); ?>css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -69,9 +70,30 @@
                     <li class="nav-item"><a href="#layanan" class="nav-link">Layanan</a></li>
                     <li class="nav-item"><a href="#faq" class="nav-link">FAQ</a></li>
                     <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+                    <?php 
+                    if(session()->get('role') == '3') : ?>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                            aria-expanded="false">
+                            <span class="fa fa-user mr-2"></span> <?= session()->get('username'); ?>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="<?= base_url('LandingPage/Profil'); ?>">
+                                Profil</a>
+                            <a class="dropdown-item" href="<?= base_url('LandingPage/Pesanan'); ?>">
+                                Pesanan</a>
+                            <a class="dropdown-item" href="<?= base_url('LandingPage/Riwayat'); ?>">
+                                Riwayat</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="<?= base_url('Auth/logout'); ?>">Logout</a>
+                        </div>
+                    </li>
+                    <?php 
+                    else : ?>
                     <li class="text-white"><a data-toggle="modal" data-target="#exampleModal" href="#"
                             class="btn btn-primary mt-4 ml-2">
                             Login</a></li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
@@ -721,13 +743,13 @@
                             </form>
                         </div>
                         <div class="tab-pane fade" id="daftar_akun" role="tabpanel" aria-labelledby="daftar_akun-tab">
-                            <form action="<?= base_url('Users/Simpan'); ?>" method="post">
+                            <form id="formDaftar" class="px-4 py-3" method="post">
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-lg-12 mb-2">
                                             <label for="">Username</label>
                                             <input type="text" name="username" class="form-control"
-                                                placeholder="Username">
+                                                placeholder="Username" required>
 
                                             <!-- validation -->
                                             <div class="invalid-feedback">
@@ -737,7 +759,7 @@
                                         <div class="col-lg-12 mb-2">
                                             <label for="">Password</label>
                                             <input type="password" name="password" class="form-control"
-                                                placeholder="Password">
+                                                placeholder="Password" required>
                                             <!-- validation -->
                                             <div class="invalid-feedback">
                                                 <?= $validation->getError('password'); ?>
@@ -747,38 +769,35 @@
                                         <div class="col-lg-12 mb-2">
                                             <label for="">Nama User</label>
                                             <input type="text" name="nama_user" class="form-control"
-                                                placeholder="Nama User">
+                                                placeholder="Nama User" required>
                                             <!-- validation -->
                                             <div class="invalid-feedback">
                                                 <?= $validation->getError('nama_user'); ?>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 mb-2">
-                                            <label for="">Role</label>
-                                            <select name="role" class="form-control">
-                                                <option value="">-- Pilih Role --</option>
-                                                <option value="1">Owner</option>
-                                                <option value="2">Admin</option>
-                                                <option value="3">User</option>
-                                                <!-- validation -->
-                                                <div class="invalid-feedback">
-                                                    <?= $validation->getError('role'); ?>
-                                                </div>
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-12 mb-2">
                                             <label for="">No Hp</label>
                                             <input type="text" name="no_hp_user" class="form-control"
-                                                placeholder="No Hp">
+                                                placeholder="No Hp" required>
                                             <!-- validation -->
                                             <div class="invalid-feedback">
                                                 <?= $validation->getError('no_hp_user'); ?>
                                             </div>
                                         </div>
+                                        <div class="col-lg-12 mb-2">
+                                            <label for="alamat_user">Alamat</label>
+                                            <textarea type="text" name="alamat_user" class="form-control" rows="3"
+                                                required placeholder="Alamat"></textarea>
+
+                                            <!-- validation -->
+                                            <div class="invalid-feedback">
+                                                <?= $validation->getError('alamat_user'); ?>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>
-                                <button type="submit" class="btn btn-primary mt-2">Daftar</button>
+                                <button type="submit" class="btn btn-primary mt-2" id="btnDaftar">Daftar</button>
                             </form>
                         </div>
                     </div>
@@ -808,6 +827,8 @@
     </script>
     <script src="<?= base_url('assets/Landing/'); ?>js/google-map.js"></script>
     <script src="<?= base_url('assets/Landing/'); ?>js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.all.min.js"></script>
+
     <script>
     // when scrole add navbar fixed top and bg blur
     $(window).scroll(function() {
@@ -825,6 +846,44 @@
         $('.navbar-nav li').click(function() {
             $('.navbar-nav li').removeClass('active');
             $(this).addClass('active');
+        });
+    });
+
+    // when post daftar
+    $('#formDaftar').submit(function(e) {
+        e.preventDefault();
+        $('#btnDaftar').attr('disabled', true);
+        $('#btnDaftar').html('<i class="fa fa-spinner fa-spin"></i> Loading...');
+
+        $.ajax({
+            url: '<?= base_url('Auth/Register '); ?>',
+            type: 'POST',
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if (response.error) {
+                    // alert(response.message);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: response.message,
+                    })
+                    $('#btnDaftar').attr('disabled', false);
+                    $('#btnDaftar').html('Daftar');
+                } else {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: response.message,
+                    })
+                    // auto to tab login
+                    $('#login-tab').click();
+                    // clear form
+                    $('#formDaftar')[0].reset();
+                    $('#btnDaftar').attr('disabled', false);
+                    $('#btnDaftar').html('Daftar');
+                }
+            }
         });
     });
     </script>

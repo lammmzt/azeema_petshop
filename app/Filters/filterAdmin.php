@@ -17,7 +17,7 @@ class filterAdmin implements FilterInterface
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == '2') {
             return redirect()->to('');
         }
     }

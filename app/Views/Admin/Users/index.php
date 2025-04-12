@@ -203,9 +203,9 @@ foreach ($users as $key => $value) : ?>
                             <label for="">Role</label>
                             <select name="role" class="form-control">
                                 <option value="">-- Pilih Role --</option>
-                                <option value="1" <?= ($value['role'] == 1) ? 'selected' : ''; ?>>Owner</option>
-                                <option value="2" <?= ($value['role'] == 2) ? 'selected' : ''; ?>>Admin</option>
-                                <option value="3" <?= ($value['role'] == 3) ? 'selected' : ''; ?>>User</option>
+                                <option value="1" <?= ($value['role'] == '1') ? 'selected' : ''; ?>>Owner</option>
+                                <option value="2" <?= ($value['role'] == '2') ? 'selected' : ''; ?>>Admin</option>
+                                <option value="3" <?= ($value['role'] == '3') ? 'selected' : ''; ?>>User</option>
                                 <!-- validation -->
                                 <div class="invalid-feedback">
                                     <?= $validation->getError('role'); ?>
