@@ -3,9 +3,9 @@
 namespace App\Controllers;
 use App\Models\layananModel;
 use App\Models\usersModel;
-use App\Models\transaksiModel;
-use App\Models\transaksiDetailModel;
-
+use App\Models\orderModel;
+use App\Models\detailOrderModel;
+use Ramsey\Uuid\Uuid;
 
 class LandingPage extends BaseController
 {
@@ -129,12 +129,115 @@ class LandingPage extends BaseController
     }
 
     public function Keranjang(){
+        $layananModel = new layananModel();
+        $data_layanan = $layananModel->findAll();
         $data = [
             'title' => 'Keranjang | Azema Petshop',
             'menu_aktif' => 'Keranjang',
             'main_menu' => 'Home',
+            'data_layanan' => $data_layanan,
             'validation' => \Config\Services::validation()
         ];
         return view('Landing/Keranjang', $data);
+    }
+
+    public function Checkout(){
+        $layananModel = new layananModel();
+        $userModel = new usersModel();
+        $data_user = $userModel->where('username', session()->get('username'))->first();
+        $data_layanan = $layananModel->findAll();
+        $data = [
+            'title' => 'Checkout | Azema Petshop',
+            'menu_aktif' => 'Checkout',
+            'main_menu' => 'Home',
+            'data_layanan' => $data_layanan,
+            'data_user' => $data_user,
+            'validation' => \Config\Services::validation()
+        ];
+        return view('Landing/Checkout', $data);
+    }
+
+    public function saveCheckout(){
+        $orderModel = new orderModel();
+        $detailOrderModel = new detailOrderModel();
+        $layananModel = new layananModel();
+        $userModel = new usersModel();
+        // dd($this->request->getPost());
+        $data_user = $userModel->where('username', session()->get('username'))->first();
+
+        $data_layanan = $this->request->getPost('data_layanan');
+        $tanggal_datang = $this->request->getPost('tanggal_datang');
+        $total_harga = 0;
+        $data_layanan = json_decode($data_layanan, true);
+        
+        for ($i = 0; $i < count($data_layanan); $i++) {
+            $total_harga += $data_layanan[$i]['harga_layanan'] * $data_layanan[$i]['qty'];
+        }
+
+        if($this->request->getPost('tipe_pembayaran') == 'Transfer'){
+            $bukti = $this->request->getFile('bukti_pembayaran');
+            if ($bukti->getError() == 4) {
+                return $this->response->setJSON([
+                    'error' => true,
+                    'status' => 400,
+                    'message' => 'Bukti Pembayaran Harus Diisi'
+                ]);
+            } else {
+                $nama_bukti = $bukti->getRandomName();
+                $bukti->move('assets/img/bukti_pembayaran', $nama_bukti);
+            }
+        } else {
+            $nama_bukti = null;
+        }
+        $id_order = 'ORD-' . date('Ymdhis') .rand(100,999);
+        $data_order = [
+            'id_order' => $id_order,
+            'id_user' => $data_user['id_user'],
+            'tanggal_order' => date('Y-m-d'),
+            'tanggal_datang' => $this->request->getPost('tanggal_datang'),
+            'jam_datang' => $this->request->getPost('jam_datang'),
+            'tipe_pembayaran' => $this->request->getPost('tipe_pembayaran'),
+            'total_order' => $total_harga,
+            'status_order' => '1',
+            'ket_order' => $this->request->getPost('ket_order'),
+            'bukti_pembayaran' => $nama_bukti,
+        ];
+
+        $orderModel->insert($data_order);
+
+        for ($i = 0; $i < count($data_layanan); $i++) {
+            $data_detail_order = [
+                'id_order' => $id_order,
+                'id_layanan' => $data_layanan[$i]['id_layanan'],
+                'jumlah_order' => $data_layanan[$i]['qty'],
+                'sub_total_order' => $data_layanan[$i]['harga_layanan'] * $data_layanan[$i]['qty'],
+            ];
+            $detailOrderModel->save($data_detail_order);
+        }
+
+        return $this->response->setJSON([
+            'error' => false,
+            'status' => 200,
+            'message' => 'Checkout Berhasil',
+        ]);
+    }
+
+    public function Riwayat(){
+        $orderModel = new orderModel();
+        $userModel = new usersModel();
+        $detailOrderModel = new detailOrderModel();
+        $data_user =  $userModel->where('username', session()->get('username'))->first();
+        $data_order = $orderModel->getOrderByUser($data_user['id_user']);
+        if (!$data_order) {
+            return redirect()->to(base_url('/'));
+        }
+        $data = [
+            'title' => 'Riwayat | Azema Petshop',
+            'menu_aktif' => 'Riwayat',
+            'main_menu' => 'Home',
+            'data_order' => $data_order,
+            'validation' => \Config\Services::validation()
+        ];
+        return view('Landing/Riwayat', $data);
     }
 }
