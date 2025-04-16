@@ -236,6 +236,7 @@ class LandingPage extends BaseController
             'menu_aktif' => 'Riwayat',
             'main_menu' => 'Home',
             'data_order' => $data_order,
+            'detailOrderModel' => $detailOrderModel,
             'validation' => \Config\Services::validation()
         ];
         return view('Landing/Riwayat', $data);

@@ -26,6 +26,8 @@
     <link rel="stylesheet" href="<?= base_url('assets/Landing/'); ?>css/flaticon.css">
     <link rel="stylesheet" href="<?= base_url('assets/Landing/'); ?>css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap4.css" rel="stylesheet"
+        integrity="sha384-rG5DsaAzNwlm3IGqEawoGl4WHaT0NO8/VVdjY5kZpnl/b2feukhYTIb89Y184cgr" crossorigin="anonymous">
 </head>
 
 <body>
@@ -222,6 +224,14 @@
     <script src="<?= base_url('assets/Landing/'); ?>js/google-map.js"></script>
     <script src="<?= base_url('assets/Landing/'); ?>js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.all.min.js"></script>
+
+
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"
+        integrity="sha384-gGekiWQ/bm8p71RTsvhPShoIBxcf8BsVjRTi0WY8FvxuQa2nKS0PKHiSXV9nfW/A" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap4.js"
+        integrity="sha384-zNhLQXVfbsNMy4yxmaWgoZ7RVDmzTYQ3/y1HXPwR2sakXOh563PWfrivaYmDAzDz" crossorigin="anonymous">
+    </script>
 
     <script>
     // when scrole add navbar fixed top and bg blur
