@@ -163,7 +163,6 @@ class Transaksi extends BaseController
 
     }
 
-
     // ================================== PRINT STRUK ==================================
     public function print_struk($id_transaksi) // Menampilkan halaman print struk 
     {

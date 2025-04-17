@@ -13,7 +13,7 @@ class orderModel extends Model
     {
         if ($id_order == false) {
             return $this
-            ->select('order.*, users.nama_user')
+            ->select('order.*, users.nama_user, users.username, users.no_hp_user, users.alamat_user')
             ->join('users', 'users.id_user = order.id_user')
             ->orderBy('id_order', 'DESC')
             ->findAll();
@@ -25,7 +25,7 @@ class orderModel extends Model
     public function getOrderByUser($id_user)
     {
         return $this
-        ->select('order.*, users.nama_user')
+        ->select('order.*, users.nama_user, users.username, users.no_hp_user, users.alamat_user')
         ->join('users', 'users.id_user = order.id_user')
         ->where(['order.id_user' => $id_user])
         ->orderBy('order.id_order', 'DESC')

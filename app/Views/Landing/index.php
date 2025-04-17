@@ -144,6 +144,11 @@
                         <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
                                 title="Instagram"><span class="fa fa-instagram"></span></a></li>
                     </ul>
+                    <?php 
+                    if(session()->get('role') != '3') : ?>
+
+                    <a href="<?= base_url('Auth'); ?>" class="btn btn-primary mt-4 ml-2">Portal Admin</a>
+                    <?php endif; ?>
                 </div>
                 <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
                     <h2 class="footer-heading">Kontak</h2>

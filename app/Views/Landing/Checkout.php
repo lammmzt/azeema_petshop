@@ -77,8 +77,8 @@
                                 <label for="tipe_pembayaran">Tipe Pembayaran</label>
                                 <select name="tipe_pembayaran" id="tipe_pembayaran" class="form-control" required>
                                     <option value="">Pilih Tipe Pembayaran</option>
-                                    <option value="Cash">Cash</option>
-                                    <option value="Transfer">Transfer</option>
+                                    <option value="0">Cash</option>
+                                    <option value="1">Transfer</option>
                                 </select>
                             </div>
                         </div>
@@ -201,7 +201,7 @@ tampilkanKeranjang();
 
 // when tipe_pembayaran is changed, show or hide div_bukti_pembayaran
 $('#tipe_pembayaran').change(function() {
-    if ($(this).val() == 'Transfer') {
+    if ($(this).val() == '1') {
         $('#div_bukti_pembayaran').show();
         $('#div_bukti_pembayaran1').show();
     } else {
@@ -216,7 +216,7 @@ $('#form_keranjang').submit(function(e) {
     let formData = new FormData(this);
     formData.append('data_layanan', JSON.stringify(keranjang));
     let tipe_pembayaran = $('#tipe_pembayaran').val();
-    if (tipe_pembayaran == 'Transfer') {
+    if (tipe_pembayaran == '1') {
         if ($('#bukti_pembayaran').val() == '') {
             getSweetAlert('warning', 'Peringatan', 'Upload Bukti Pembayaran!');
             return false;

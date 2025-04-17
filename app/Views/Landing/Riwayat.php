@@ -69,89 +69,101 @@
                 </button>
             </div>
             <div class="modal-body">
+                <h5>Data Pemesanan</h5>
                 <div class="row">
                     <div class="col-md-6">
-                        <h5>Data Pemesan</h5>
-                        <table class="table table-bordered table-striped">
-                            <tr>
-                                <th>Nama</th>
-                                <td><?= $row['nama_user'] ?></td>
-                            </tr>
-                            <tr>
-                                <th>Username</th>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th>No HP</th>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th>Alamat</th>
-                                <td></td>
-                            </tr>
-                        </table>
-
+                        <div class="form-group">
+                            <label for="">Nama Pemesan</label>
+                            <input type="text" class="form-control" value="<?= $row['nama_user'] ?>" readonly>
+                        </div>
                     </div>
-
                     <div class="col-md-6">
-                        <h5>Data Order</h5>
-                        <table class="table table-bordered table-striped">
-                            <tr>
-                                <th>Tanggal Order</th>
-                                <td><?= date('d-m-Y', strtotime($row['tanggal_order'])) ?></td>
-                            </tr>
-                            <tr>
-                                <th>Tanggal Datang</th>
-                                <td><?= date('d-m-Y', strtotime($row['tanggal_datang'])) ?></td>
-                            </tr>
-                            <tr>
-                                <th>Jam Datang</th>
-                                <td><?= $row['jam_datang'] ?></td>
-                            </tr>
-                            <tr>
-                                <th>Tipe Pembayaran</th>
-                                <td><?= $row['tipe_pembayaran'] ?></td>
-                            </tr>
-
-                        </table>
-
+                        <div class="form-group">
+                            <label for="">No. Hp</label>
+                            <input type="text" class="form-control" value="<?= $row['no_hp_user'] ?>" readonly>
+                        </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Alamat</label>
+                            <input type="text" class="form-control" value="<?= $row['alamat_user'] ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Tanggal Order</label>
+                            <input type="text" class="form-control"
+                                value="<?= date('d-m-Y', strtotime($row['tanggal_order'])) ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Tanggal Datang</label>
+                            <input type="text" class="form-control"
+                                value="<?= date('d-m-Y', strtotime($row['tanggal_datang'])) ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Jam Datang</label>
+                            <input type="text" class="form-control" value="<?= $row['jam_datang'] ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Tipe Pembayaran</label>
+                            <input type="text" class="form-control"
+                                value="<?= ($row['tipe_pembayaran'] == 1) ? 'Transfer' : 'Cash' ?>" readonly>
+                        </div>
+                    </div>
+                    <?php 
+                    if ($row['bukti_pembayaran'] != null) : ?>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Bukti Pembayaran</label><br>
+                            <img src="<?= base_url('assets/img/bukti_pembayaran/' . $row['bukti_pembayaran']) ?>"
+                                alt="Bukti Pembayaran" class="img-fluid" width="200px">
+                        </div>
+                    </div>
+                    <?php endif; ?>
                 </div>
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Layanan</th>
-                            <th>Harga Layanan</th>
-                            <th>Jumlah</th>
-                            <th>Sub Total</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody_keranjang">
-                        <?php 
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Layanan</th>
+                                    <th>Harga Layanan</th>
+                                    <th>Jumlah</th>
+                                    <th>Sub Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody_keranjang">
+                                <?php 
                             $no = 1;
                             $detall_order = $detailOrderModel->getDetailOrderByOrder($row['id_order']);
 
                             foreach ($detall_order as $row_detail) : ?>
-                        <tr>
-                            <td class="text-center"><?= $no++ ?></td>
-                            <td><?= $row_detail['nama_layanan'] ?></td>
-                            <td>Rp. <?= number_format($row_detail['harga_layanan'], 0, ',', '.') ?></td>
-                            <td><?= $row_detail['jumlah_order'] ?></td>
-                            <td>Rp. <?= number_format($row_detail['sub_total_order'], 0, ',', '.') ?></td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th colspan="4" class="text-center">Total</th>
-                            <th>Rp. <?= number_format($row['total_order'], 0, ',', '.') ?></th>
-                        </tr>
-                    </tfoot>
-                </table>
-
+                                <tr>
+                                    <td class="text-center"><?= $no++ ?></td>
+                                    <td><?= $row_detail['nama_layanan'] ?></td>
+                                    <td>Rp. <?= number_format($row_detail['harga_layanan'], 0, ',', '.') ?></td>
+                                    <td><?= $row_detail['jumlah_order'] ?></td>
+                                    <td>Rp. <?= number_format($row_detail['sub_total_order'], 0, ',', '.') ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="4" class="text-center">Total</th>
+                                    <th>Rp. <?= number_format($row['total_order'], 0, ',', '.') ?></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
 </div>
