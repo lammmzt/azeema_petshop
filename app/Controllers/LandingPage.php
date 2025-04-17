@@ -193,7 +193,7 @@ class LandingPage extends BaseController
         $data_order = [
             'id_order' => $id_order,
             'id_user' => $data_user['id_user'],
-            'tanggal_order' => date('Y-m-d'),
+            'tanggal_order' => date('Y-m-d H:i:s'),
             'tanggal_datang' => $this->request->getPost('tanggal_datang'),
             'jam_datang' => $this->request->getPost('jam_datang'),
             'tipe_pembayaran' => $this->request->getPost('tipe_pembayaran'),

@@ -21,7 +21,7 @@ class detailTransaksiModel extends Model
     public function getDetailTransaksiByTransaksi($id_transaksi)
     {
         return $this
-            ->select('detail_transaksi.*, tipe_barang.id_barang, barang.nama_barang, tipe_barang.merk_tipe_barang, tipe_barang.satuan')
+            ->select('detail_transaksi.*, order.*, tipe_barang.id_barang, barang.nama_barang, tipe_barang.merk_tipe_barang, tipe_barang.satuan')
             ->join('tipe_barang', 'tipe_barang.id_tipe_barang = detail_transaksi.id_tipe_barang')
             ->join('barang', 'barang.id_barang = tipe_barang.id_barang')
             ->join('transaksi', 'transaksi.id_transaksi = detail_transaksi.id_transaksi')

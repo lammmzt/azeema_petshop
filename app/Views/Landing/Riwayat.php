@@ -35,7 +35,7 @@
                                     if ($row['status_order'] == 1) {
                                         echo '<span class="badge badge-warning">Menunggu Persetujuan</span>';
                                     } elseif ($row['status_order'] == 2) {
-                                        echo '<span class="badge badge-info">Menunggu Pengerjaan</span>';
+                                        echo '<span class="badge badge-info">Menunggu Jadwal Pengerjaan</span>';
                                     } elseif ($row['status_order'] == 3) {
                                         echo '<span class="badge badge-secondary">Menunggu Proses Pengerjaan</span>';
                                     } elseif ($row['status_order'] == 4) {

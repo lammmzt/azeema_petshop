@@ -64,7 +64,7 @@
                                     <?php if ($value['status_order'] == 1) : ?>
                                     <span class="badge badge-warning">Menunggu Persetujuan</span>
                                     <?php elseif ($value['status_order'] == 2) : ?>
-                                    <span class="badge badge-info">Menunggu Pengerjaan</span>
+                                    <span class="badge badge-info">Menunggu Jadwal Pengerjaan</span>
                                     <?php elseif ($value['status_order'] == 3) : ?>
                                     <span class="badge badge-secondary">Menunggu Proses Pengerjaan</span>
                                     <?php elseif ($value['status_order'] == 4) : ?>
@@ -152,7 +152,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="">Tipe Pembayaran</label>
+                            <label for="">Metode Pembayaran</label>
                             <input type="text" class="form-control"
                                 value="<?= ($value['tipe_pembayaran'] == 1) ? 'Transfer' : 'Cash' ?>" readonly>
                         </div>
@@ -223,31 +223,70 @@
                                                 <li>
                                                     <div class="timeline-badge primary"></div>
                                                     <a class="timeline-panel text-muted" href="#">
-                                                        <span><?= date('d-m-Y', strtotime($value['tanggal_order'])) ?></span>
+                                                        <span><?= date('d-m-Y h:i', strtotime($value['tanggal_order'])) ?></span>
                                                         <h6 class="m-t-5">
                                                             <?= $value['nama_user'] ?> melakukan pemesanan layanan.
                                                         </h6>
                                                     </a>
                                                 </li>
 
-                                                <?php if ($value['tanggal_proses'] != null) : ?>
+                                                <?php if ($value['tanggal_disetujui'] != null) : ?>
                                                 <?php 
-                                                if($value['status_order'] == 2) : ?>
+                                                if($value['status_order'] != '1' || $value['tanggal_disetujui'] != null) : ?>
                                                 <li>
-                                                    <div class="timeline-badge info"></div>
+                                                    <div class="timeline-badge warning"></div>
                                                     <a class="timeline-panel text-muted" href="#">
-                                                        <span><?= date('d-m-Y', strtotime($value['tanggal_proses'])) ?></span>
-                                                        <h6 class="m-t-5">
-                                                            <?= $value['nama_user'] ?> Menunggu Persetujuan.
+                                                        <span><?= date('d-m-Y h:i', strtotime($value['tanggal_disetujui'])) ?></span>
+                                                        <h6 class="m-t-5">Orderan telah disetujui oleh petugas,
+                                                            selanjutnya menunggu jadwal
+                                                            pengerjaan
                                                         </h6>
                                                     </a>
                                                 </li>
                                                 <?php endif; ?>
+
                                                 <?php 
-                                                endif; ?>
+                                                    if($value['status_order'] != '1' || $value['status_order'] != '2' || $value['tanggal_proses'] != null) : ?>
+                                                <li>
+                                                    <div class="timeline-badge info"></div>
+                                                    <a class="timeline-panel text-muted" href="#">
+                                                        <span><?= date('d-m-Y h:i', strtotime($value['tanggal_proses'])) ?></span>
+                                                        <h6 class="m-t-5"> Menunggu Proses Pengerjaan
+                                                        </h6>
+                                                    </a>
+                                                </li>
 
+                                                <?php 
+                                                endif; 
+                                                ?>
+                                                <?php
+                                                if($value['status_order'] == '4') : ?>
+                                                <li>
+                                                    <div class="timeline-badge success"></div>
+                                                    <a class="timeline-panel text-muted" href="#">
+                                                        <span><?= date('d-m-Y h:i', strtotime($value['tanggal_selesai'])) ?></span>
+                                                        <h6 class="m-t-5">
+                                                            <?= $value['nama_user'] ?> Proses Pengerjaan Selesai
+                                                        </h6>
+                                                    </a>
+                                                </li>
+                                                <?php endif; ?>
+                                                <?php endif; ?>
 
-
+                                                <?php
+                                                if($value['status_order'] == '0') : ?>
+                                                <li>
+                                                    <div class="timeline-badge danger"></div>
+                                                    <a class="timeline-panel text-muted" href="#">
+                                                        <span><?= date('d-m-Y h:i', strtotime($value['tanggal_selesai'])) ?></span>
+                                                        <h6 class="m-t-5">
+                                                            <?= $value['nama_user'] ?> Orderan Ditolak oleh petugas
+                                                            dengan alasan
+                                                            <?= $value['ket_order'] ?>
+                                                        </h6>
+                                                    </a>
+                                                </li>
+                                                <?php endif; ?>
 
                                             </ul>
                                         </div>
@@ -272,112 +311,158 @@
 <?php foreach ($order as $key => $value) : ?>
 <div class="modal fade" id="proses<?= $value['id_order']; ?>">
     <div class="modal-dialog modal-dialog-centered modal-lg text-black-50" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Proses Order</h5>
-                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5>Data Pemesanan</h5>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Nama Pemesan</label>
-                            <input type="text" class="form-control" value="<?= $value['nama_user'] ?>" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">No. Hp</label>
-                            <input type="text" class="form-control" value="<?= $value['no_hp_user'] ?>" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Alamat</label>
-                            <input type="text" class="form-control" value="<?= $value['alamat_user'] ?>" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Tanggal Order</label>
-                            <input type="text" class="form-control"
-                                value="<?= date('d-m-Y', strtotime($value['tanggal_order'])) ?>" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Tanggal Datang</label>
-                            <input type="text" class="form-control"
-                                value="<?= date('d-m-Y', strtotime($value['tanggal_datang'])) ?>" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Jam Datang</label>
-                            <input type="text" class="form-control" value="<?= $value['jam_datang'] ?>" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Tipe Pembayaran</label>
-                            <input type="text" class="form-control"
-                                value="<?= ($value['tipe_pembayaran'] == 1) ? 'Transfer' : 'Cash' ?>" readonly>
-                        </div>
-                    </div>
-                    <?php 
-                    if ($value['bukti_pembayaran'] != null) : ?>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Bukti Pembayaran</label><br>
-                            <img src="<?= base_url('assets/img/bukti_pembayaran/' . $value['bukti_pembayaran']) ?>"
-                                alt="Bukti Pembayaran" class="img-fluid" width="200px">
-                        </div>
-                    </div>
-                    <?php endif; ?>
+        <form action="<?= base_url('Order/proses_order'); ?>" method="post">
+            <input type="hidden" name="id_order" value="<?= $value['id_order']; ?>">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Proses Order</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                    </button>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama Layanan</th>
-                                    <th>Harga Layanan</th>
-                                    <th>Jumlah</th>
-                                    <th>Sub Total</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody_keranjang">
-                                <?php 
+                <div class="modal-body">
+                    <h5>Data Pemesanan</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Nama Pemesan</label>
+                                <input type="text" class="form-control" value="<?= $value['nama_user'] ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">No. Hp</label>
+                                <input type="text" class="form-control" value="<?= $value['no_hp_user'] ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Alamat</label>
+                                <input type="text" class="form-control" value="<?= $value['alamat_user'] ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Tanggal Order</label>
+                                <input type="text" class="form-control"
+                                    value="<?= date('d-m-Y', strtotime($value['tanggal_order'])) ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Tanggal Datang</label>
+                                <input type="text" class="form-control"
+                                    value="<?= date('d-m-Y', strtotime($value['tanggal_datang'])) ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Jam Datang</label>
+                                <input type="text" class="form-control" value="<?= $value['jam_datang'] ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Metode Pembayaran</label>
+                                <input type="text" class="form-control"
+                                    value="<?= ($value['tipe_pembayaran'] == 1) ? 'Transfer' : 'Cash' ?>" readonly>
+                            </div>
+                        </div>
+                        <?php 
+                    if ($value['bukti_pembayaran'] != null) : ?>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Bukti Pembayaran</label><br>
+                                <img src="<?= base_url('assets/img/bukti_pembayaran/' . $value['bukti_pembayaran']) ?>"
+                                    alt="Bukti Pembayaran" class="img-fluid" width="200px">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="">Keterangan</label>
+                                <textarea name="ket_order" id="" cols="30" rows="5" class="form-control"
+                                    placeholder="Keterangan" readonly><?= $value['ket_order'] ?></textarea>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Layanan</th>
+                                        <th>Harga Layanan</th>
+                                        <th>Jumlah</th>
+                                        <th>Sub Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_keranjang">
+                                    <?php 
                             $no = 1;
                             $detall_order = $detailOrderModel->getDetailOrderByOrder($value['id_order']);
 
                             foreach ($detall_order as $value_detail) : ?>
-                                <tr>
-                                    <td class="text-center"><?= $no++ ?></td>
-                                    <td><?= $value_detail['nama_layanan'] ?></td>
-                                    <td>Rp. <?= number_format($value_detail['harga_layanan'], 0, ',', '.') ?></td>
-                                    <td><?= $value_detail['jumlah_order'] ?></td>
-                                    <td>Rp. <?= number_format($value_detail['sub_total_order'], 0, ',', '.') ?></td>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="4" class="text-center">Total</th>
-                                    <th>Rp. <?= number_format($value['total_order'], 0, ',', '.') ?></th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                                    <tr>
+                                        <td class="text-center"><?= $no++ ?></td>
+                                        <td><?= $value_detail['nama_layanan'] ?></td>
+                                        <td>Rp. <?= number_format($value_detail['harga_layanan'], 0, ',', '.') ?></td>
+                                        <td><?= $value_detail['jumlah_order'] ?></td>
+                                        <td>Rp. <?= number_format($value_detail['sub_total_order'], 0, ',', '.') ?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="4" class="text-center">Total</th>
+                                        <th>Rp. <?= number_format($value['total_order'], 0, ',', '.') ?></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <hr style="border: 1px ;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Status Order</label>
+                                <select name="status_order" id="" class="form-control" required>
+                                    <option value="">-- Pilih Status --</option>
+                                    <?php 
+                                    if ($value['status_order'] == '1' || $value['status_order'] == '0' || $value['status_order'] == '2') : ?>
+                                    <option value="2" <?= ($value['status_order'] == '2') ? 'selected' : '' ?>>Setujui
+                                    </option>
+                                    <?php endif; ?>
+                                    <?php 
+                                    if ($value['status_order'] == '2' || $value['status_order'] == '1' || $value['status_order'] == '3') : ?>
+                                    <option value="3" <?= ($value['status_order'] == '3') ? 'selected' : '' ?>>Proses
+                                        Pengerjaan</option>
+                                    <?php endif; ?>
+                                    <?php
+                                    if ($value['status_order'] == '3' || $value['status_order'] == '2' || $value['status_order'] == '4') : ?>
+                                    <option value="4" <?= ($value['status_order'] == '4') ? 'selected' : '' ?>>Selesai
+                                    </option>
+                                    <?php endif; ?>
+                                    <option value="0" <?= ($value['status_order'] == '0') ? 'selected' : '' ?>>Tolak
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Keterangan</label>
+                                <textarea name="ket_proses" id="" cols="30" rows="5" class="form-control"
+                                    placeholder="Keterangan"><?= $value['ket_proses'] ?></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success btn-sm">Proses</button>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 <?php endforeach; ?>
