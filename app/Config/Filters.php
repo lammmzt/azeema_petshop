@@ -80,7 +80,7 @@ class Filters extends BaseFilters
         'after' => [
             'filterAdmin' => ['except' => [ 
                 '/', 'Auth/logout','Auth/login','Auth/Register','Barang', 'Barang/*', 'Dashboard', 'Dashboard/*',
-                'LandingPage', 'LandingPage/*', 'Home', 'Home/*', 'Layanan', 'Layanan/*', 'TipeBarang', 'TipeBarang/*', 'Transaksi', 'Transaksi/*', 'User', 'User/*', 'Order', 'Order/*', 
+                'LandingPage', 'LandingPage/*', 'Home', 'Home/*', 'Layanan', 'Layanan/*', 'TipeBarang', 'TipeBarang/*', 'Transaksi', 'Transaksi/*', 'Users', 'Users/*', 'Order', 'Order/*', 
             ]],
             'filterUser' => ['except' => ['Auth/logout',
                 'LandingPage', 'LandingPage/*', 

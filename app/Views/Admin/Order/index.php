@@ -147,7 +147,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Jam Datang</label>
-                            <input type="text" class="form-control" value="<?= $value['jam_datang'] ?>" readonly>
+                            <input type="text" class="form-control"
+                                value="<?= date('H:i', strtotime($value['jam_datang'])) ?>" readonly>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -167,16 +168,23 @@
                         </div>
                     </div>
                     <?php endif; ?>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="">Keterangan</label>
+                            <textarea name="ket_order" id="" cols="30" rows="5" class="form-control"
+                                placeholder="Keterangan" readonly><?= $value['ket_order'] ?></textarea>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>No</th>
+                                    <th class="text-center">No</th>
                                     <th>Nama Layanan</th>
                                     <th>Harga Layanan</th>
-                                    <th>Jumlah</th>
+                                    <th class="text-center">Jumlah</th>
                                     <th>Sub Total</th>
                                 </tr>
                             </thead>
@@ -190,7 +198,7 @@
                                     <td class="text-center"><?= $no++ ?></td>
                                     <td><?= $value_detail['nama_layanan'] ?></td>
                                     <td>Rp. <?= number_format($value_detail['harga_layanan'], 0, ',', '.') ?></td>
-                                    <td><?= $value_detail['jumlah_order'] ?></td>
+                                    <td class="text-center"><?= $value_detail['jumlah_order'] ?></td>
                                     <td>Rp. <?= number_format($value_detail['sub_total_order'], 0, ',', '.') ?></td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -265,8 +273,7 @@
                                                     <div class="timeline-badge success"></div>
                                                     <a class="timeline-panel text-muted" href="#">
                                                         <span><?= date('d-m-Y h:i', strtotime($value['tanggal_selesai'])) ?></span>
-                                                        <h6 class="m-t-5">
-                                                            <?= $value['nama_user'] ?> Proses Pengerjaan Selesai
+                                                        <h6 class="m-t-5">Proses Pengerjaan Selesai
                                                         </h6>
                                                     </a>
                                                 </li>
@@ -279,8 +286,7 @@
                                                     <div class="timeline-badge danger"></div>
                                                     <a class="timeline-panel text-muted" href="#">
                                                         <span><?= date('d-m-Y h:i', strtotime($value['tanggal_selesai'])) ?></span>
-                                                        <h6 class="m-t-5">
-                                                            <?= $value['nama_user'] ?> Orderan Ditolak oleh petugas
+                                                        <h6 class="m-t-5">Orderan Ditolak oleh petugas
                                                             dengan alasan
                                                             <?= $value['ket_order'] ?>
                                                         </h6>
@@ -357,7 +363,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Jam Datang</label>
-                                <input type="text" class="form-control" value="<?= $value['jam_datang'] ?>" readonly>
+                                <input type="text" class="form-control"
+                                    value="<?= date('H:i', strtotime($value['jam_datang'])) ?>" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -390,10 +397,10 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th class="text-center">No</th>
                                         <th>Nama Layanan</th>
                                         <th>Harga Layanan</th>
-                                        <th>Jumlah</th>
+                                        <th class="text-center">Jumlah</th>
                                         <th>Sub Total</th>
                                     </tr>
                                 </thead>
@@ -407,7 +414,7 @@
                                         <td class="text-center"><?= $no++ ?></td>
                                         <td><?= $value_detail['nama_layanan'] ?></td>
                                         <td>Rp. <?= number_format($value_detail['harga_layanan'], 0, ',', '.') ?></td>
-                                        <td><?= $value_detail['jumlah_order'] ?></td>
+                                        <td class="text-center"><?= $value_detail['jumlah_order'] ?></td>
                                         <td>Rp. <?= number_format($value_detail['sub_total_order'], 0, ',', '.') ?></td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -429,7 +436,7 @@
                                 <select name="status_order" id="" class="form-control" required>
                                     <option value="">-- Pilih Status --</option>
                                     <?php 
-                                    if ($value['status_order'] == '1' || $value['status_order'] == '0' || $value['status_order'] == '2') : ?>
+                                    if ($value['status_order'] == '1' ||  $value['status_order'] == '2') : ?>
                                     <option value="2" <?= ($value['status_order'] == '2') ? 'selected' : '' ?>>Setujui
                                     </option>
                                     <?php endif; ?>
@@ -443,8 +450,13 @@
                                     <option value="4" <?= ($value['status_order'] == '4') ? 'selected' : '' ?>>Selesai
                                     </option>
                                     <?php endif; ?>
+                                    <?php 
+                                    if($value['status_order'] == '1') : ?>
+
                                     <option value="0" <?= ($value['status_order'] == '0') ? 'selected' : '' ?>>Tolak
                                     </option>
+                                    <?php endif; ?>
+
                                 </select>
                             </div>
                         </div>
@@ -466,6 +478,11 @@
     </div>
 </div>
 <?php endforeach; ?>
+<style>
+.img-fluid {
+    cursor: pointer;
+}
+</style>
 <?= $this->endSection('content'); ?>
 <?= $this->section('dataTables'); ?>
 <script>
@@ -479,6 +496,11 @@ $(document).ready(function() {
 
     });
 
+});
+
+$('.img-fluid').on('click', function() {
+    var src = $(this).attr('src');
+    window.open(src, '_blank');
 });
 </script>
 <?= $this->endSection('dataTables'); ?>

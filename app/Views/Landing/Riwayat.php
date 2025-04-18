@@ -16,7 +16,7 @@
                     <table class="table table-bordered table-striped" id="table_keranjang">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th class="text-center">No</th>
                                 <th>ID Order</th>
                                 <th>Tanggal Order</th>
                                 <th>Status</th>
@@ -132,10 +132,10 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>No</th>
+                                    <th class="text-center">No</th>
                                     <th>Nama Layanan</th>
                                     <th>Harga Layanan</th>
-                                    <th>Jumlah</th>
+                                    <th class="text-center">Jumlah</th>
                                     <th>Sub Total</th>
                                 </tr>
                             </thead>
@@ -149,7 +149,7 @@
                                     <td class="text-center"><?= $no++ ?></td>
                                     <td><?= $row_detail['nama_layanan'] ?></td>
                                     <td>Rp. <?= number_format($row_detail['harga_layanan'], 0, ',', '.') ?></td>
-                                    <td><?= $row_detail['jumlah_order'] ?></td>
+                                    <td class="text-center"><?= $row_detail['jumlah_order'] ?></td>
                                     <td>Rp. <?= number_format($row_detail['sub_total_order'], 0, ',', '.') ?></td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -185,6 +185,11 @@ $(document).ready(function() {
             "infoEmpty": "",
             "infoFiltered": ""
         }
+    });
+
+    $('.img-fluid').on('click', function() {
+        var src = $(this).attr('src');
+        window.open(src, '_blank');
     });
 });
 </script>
