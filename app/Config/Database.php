@@ -30,7 +30,7 @@ class Database extends Config
         // 'username'     => 'root',
         // 'password'     => '',
         // 'database'     => 'azeema_petshop',
-
+        
         'username'     => 'azeema-petshop',
         'password'     => 'azeema-petshop',
         'database'     => 'azeema_petshop',
