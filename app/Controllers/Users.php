@@ -15,13 +15,19 @@ class Users extends BaseController
 
     public function index()
     {
+        if(session()->get('role') == '1') {
+            $data_user = $this->userModel->where('role !=', '1')->findAll();
+         }else{
+            $data_user = $this->userModel->where('role', '3')->findAll();
+         }
         $data = [
             'title' => 'Users',
             'subtitle' => 'Data Users',
             'main_menu' => 'Users',
             'menu_aktif' => 'Users',
+            'users' => $data_user,
             'validation' => \Config\Services::validation(),
-            'users' => $this->userModel->getUsers()
+            
         ];
         return view('Admin/Users/index', $data);
     }
@@ -65,9 +71,10 @@ class Users extends BaseController
             'nama_user' => $this->request->getVar('nama_user'),
             'role' => $this->request->getVar('role'),
             'no_hp_user' => $this->request->getVar('no_hp_user'),
+            'alamat_user' => $this->request->getVar('alamat_user'),
         ]);
         session()->setFlashdata('success', 'Data Berhasil Ditambahkan');
-        return redirect()->to('/Users');
+        return redirect()->to('Users');
     }
 
     public function Update()
@@ -86,9 +93,10 @@ class Users extends BaseController
             'nama_user' => $this->request->getVar('nama_user'),
             'role' => $this->request->getVar('role'),
             'no_hp_user' => $this->request->getVar('no_hp_user'),
+            'alamat_user' => $this->request->getVar('alamat_user'),
         ]);
         session()->setFlashdata('success', 'Data Berhasil Diubah');
-        return redirect()->to('/Users');
+        return redirect()->to('Users');
     }
 
     public function Hapus()

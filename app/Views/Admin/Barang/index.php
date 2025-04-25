@@ -133,7 +133,7 @@ foreach ($barang as $key => $value) : ?>
                                 <?= $validation->getError('nama_barang'); ?>
                             </div>
                         </div>
-                        ]
+
                     </div>
                 </div>
                 <div class="modal-footer">

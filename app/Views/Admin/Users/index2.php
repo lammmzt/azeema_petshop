@@ -98,7 +98,7 @@
                     <div class="row">
                         <div class="col-lg-12 mb-2">
                             <label for="">Username</label>
-                            <input type="email" name="username" class="form-control" placeholder="Username">
+                            <input type="text" name="username" class="form-control" placeholder="Username">
 
                             <!-- validation -->
                             <div class="invalid-feedback">
@@ -114,7 +114,6 @@
 
                             </div>
                         </div>
-
                         <div class="col-lg-12 mb-2">
                             <label for="">Nama User</label>
                             <input type="text" name="nama_user" class="form-control" placeholder="Nama User">
@@ -123,9 +122,6 @@
                                 <?= $validation->getError('nama_user'); ?>
                             </div>
                         </div>
-                        <?php 
-                        if(session()->get('role') == 1) : 
-                        ?>
                         <div class="col-lg-12 mb-2">
                             <label for="">Role</label>
                             <select name="role" class="form-control">
@@ -140,11 +136,6 @@
                                 </div>
                             </select>
                         </div>
-                        <?php 
-                        else:
-                            echo '<input type="hidden" name="role" value="3">';
-                        endif; 
-                        ?>
                         <div class="col-lg-12 mb-2">
                             <label for="">No Hp</label>
                             <input type="text" name="no_hp_user" class="form-control" placeholder="No Hp">
@@ -153,14 +144,7 @@
                                 <?= $validation->getError('no_hp_user'); ?>
                             </div>
                         </div>
-                        <div class="col-lg-12 mb-2">
-                            <label for="">Alamat User</label>
-                            <textarea name="alamat_user" class="form-control" placeholder="Alamat User"></textarea>
-                            <!-- validation -->
-                            <div class="invalid-feedback">
-                                <?= $validation->getError('alamat_user'); ?>
-                            </div>
-                        </div>
+                        <input type="hidden" name="alamat_user" value="">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -193,7 +177,7 @@ foreach ($users as $key => $value) : ?>
                         <input type="hidden" value="<?= $value['id_user']; ?>" name="id_user">
                         <div class="col-lg-12 mb-2">
                             <label for="">Username</label>
-                            <input type="email" name="username" class="form-control" placeholder="Username"
+                            <input type="text" name="username" class="form-control" placeholder="Username"
                                 value="<?= $value['username']; ?>">
 
                             <!-- validation -->
@@ -219,42 +203,22 @@ foreach ($users as $key => $value) : ?>
                                 <?= $validation->getError('nama_user'); ?>
                             </div>
                         </div>
-
-                        <?php 
-                        if(session()->get('role') == 1) :
-                        ?>
-
                         <div class="col-lg-12 mb-2">
                             <label for="">Role</label>
                             <select name="role" class="form-control">
-                                <option value="<?= $value['role']; ?>">
-                                    <?php
-                                        if ($value['role'] == 1) {
-                                            echo 'Owner';
-                                        } elseif ($value['role'] == 2) {
-                                            echo 'Admin Gudang';
-                                        } elseif ($value['role'] == 3) {
-                                            echo 'User';
-                                        }elseif ($value['role'] == 4) {
-                                            echo 'Kasir';
-                                        }
-                                        ?>
+                                <option value="">-- Pilih Role --</option>
+                                <option value="1" <?= ($value['role'] == '1') ? 'selected' : ''; ?>>Owner</option>
+                                <option value="2" <?= ($value['role'] == '2') ? 'selected' : ''; ?>>Admin Gudang
                                 </option>
-                                <option value="1">Owner</option>
-                                <option value="2">Admin Gudang</option>
-                                <option value="4">Kasir</option>
-                                <option value="3">User</option>
+                                <option value="2" <?= ($value['role'] == '4') ? 'selected' : ''; ?>>Kasir</option>
+                                <option value="3" <?= ($value['role'] == '3') ? 'selected' : ''; ?>>User</option>
                                 <!-- validation -->
                                 <div class="invalid-feedback">
                                     <?= $validation->getError('role'); ?>
                                 </div>
                             </select>
+
                         </div>
-                        <?php 
-                        else:
-                            echo '<input type="hidden" name="role" value="3">';
-                            endif;
-                        ?>
                         <div class="col-lg-12 mb-2">
                             <label for="">No Hp</label>
                             <input type="text" name="no_hp_user" class="form-control" placeholder="No Hp"
@@ -264,16 +228,7 @@ foreach ($users as $key => $value) : ?>
                                 <?= $validation->getError('no_hp_user'); ?>
                             </div>
                         </div>
-
-                        <div class="col-lg-12 mb-2">
-                            <label for="">Alamat User</label>
-                            <textarea name="alamat_user" class="form-control"
-                                placeholder="Alamat User"><?= $value['alamat_user']; ?></textarea>
-                            <!-- validation -->
-                            <div class="invalid-feedback">
-                                <?= $validation->getError('alamat_user'); ?>
-                            </div>
-                        </div>
+                        <input type="hidden" name="alamat_user" value="">
                     </div>
                 </div>
                 <div class="modal-footer">

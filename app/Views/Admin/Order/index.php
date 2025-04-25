@@ -30,7 +30,7 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title"><?= $title; ?></h4>
-                <a href="<?= base_url('Order/tambah_order'); ?>" class="btn btn-primary btn-sm float-right"><i
+                <a href="<?= base_url('Order/tambah_orderan'); ?>" class="btn btn-primary btn-sm float-right"><i
                         class="fa fa-plus"></i></a>
             </div>
             <div class="card-body">
@@ -441,7 +441,7 @@
                                     </option>
                                     <?php endif; ?>
                                     <?php 
-                                    if ($value['status_order'] == '2' || $value['status_order'] == '1' || $value['status_order'] == '3') : ?>
+                                    if ($value['status_order'] == '2' || $value['status_order'] == '3') : ?>
                                     <option value="3" <?= ($value['status_order'] == '3') ? 'selected' : '' ?>>Proses
                                         Pengerjaan</option>
                                     <?php endif; ?>

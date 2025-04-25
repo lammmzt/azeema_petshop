@@ -14,6 +14,8 @@ use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
 
 use App\Filters\filterAdmin;
+use App\Filters\filterKasir;
+use App\Filters\filterOwner;
 use App\Filters\Middleware;
 use App\Filters\filterUser;
 class Filters extends BaseFilters
@@ -40,6 +42,8 @@ class Filters extends BaseFilters
         'filterAdmin'   => filterAdmin::class,
         'Middleware'    => Middleware::class,
         'filterUser'    => filterUser::class,
+        'filterKasir'   => filterKasir::class,
+        'filterOwner'  => filterOwner::class,
     ];
 
     /**
@@ -80,7 +84,15 @@ class Filters extends BaseFilters
         'after' => [
             'filterAdmin' => ['except' => [ 
                 '/', 'Auth/logout','Auth/login','Auth/Register','Barang', 'Barang/*', 'Dashboard', 'Dashboard/*',
-                'LandingPage', 'LandingPage/*', 'Home', 'Home/*', 'Layanan', 'Layanan/*', 'TipeBarang', 'TipeBarang/*', 'Transaksi', 'Transaksi/*', 'Users', 'Users/*', 'Order', 'Order/*', 
+                'Home', 'Home/*', 'Layanan', 'Layanan/*', 'TipeBarang', 'TipeBarang/*', 'Transaksi/Masuk','Transaksi/tambah_transaksi_masuk', 'Transaksi/simpan_transaksi_masuk', 
+            ]],
+            'filterKasir' => ['except' => [ 
+                '/', 'Auth/logout','Auth/login','Auth/Register', 'Dashboard', 'Dashboard/*',
+                'Home', 'Home/*', 'Order', 'Order/*', 'Transaksi/Keluar','Transaksi/tambah_transaksi_keluar', 'Transaksi/simpan_transaksi_keluar',  'Transaksi/print_struk', 'Transaksi/print_struk/*', 'Users', 'Users/reset_password', 'Users/Update', 'Users/Simpan',
+            ]],
+            'filterOwner' => ['except' => [ 
+                '/', 'Auth/logout','Auth/login','Auth/Register','Barang', 'Barang/*', 'Dashboard', 'Dashboard/*',
+                'Home', 'Home/*', 'Layanan', 'Layanan/*', 'TipeBarang', 'TipeBarang/*', 'Users', 'Users/*', 
             ]],
             'filterUser' => ['except' => ['Auth/logout',
                 'LandingPage', 'LandingPage/*', 

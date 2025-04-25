@@ -162,8 +162,6 @@ class LandingPage extends BaseController
         $detailOrderModel = new detailOrderModel();
         $layananModel = new layananModel();
         $userModel = new usersModel();
-        // dd($this->request->getPost());
-        $data_user = $userModel->where('username', session()->get('username'))->first();
 
         $data_layanan = $this->request->getPost('data_layanan');
         $tanggal_datang = $this->request->getPost('tanggal_datang');
@@ -174,7 +172,7 @@ class LandingPage extends BaseController
             $total_harga += $data_layanan[$i]['harga_layanan'] * $data_layanan[$i]['qty'];
         }
 
-        if($this->request->getPost('tipe_pembayaran') == 'Transfer'){
+        if($this->request->getPost('tipe_pembayaran') == '1'){
             $bukti = $this->request->getFile('bukti_pembayaran');
             if ($bukti->getError() == 4) {
                 return $this->response->setJSON([
@@ -192,7 +190,7 @@ class LandingPage extends BaseController
         $id_order = 'ORD-' . date('Ymdhis') .rand(100,999);
         $data_order = [
             'id_order' => $id_order,
-            'id_user' => $data_user['id_user'],
+            'id_user' => $this->request->getPost('id_user'),
             'tanggal_order' => date('Y-m-d H:i:s'),
             'tanggal_datang' => $this->request->getPost('tanggal_datang'),
             'jam_datang' => $this->request->getPost('jam_datang'),

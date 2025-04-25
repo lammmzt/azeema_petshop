@@ -37,6 +37,7 @@
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="id_user" id="id_user" value="<?= $data_user['id_user'] ?>">
                     <div class="row mb-2">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -237,7 +238,7 @@ $('#form_keranjang').submit(function(e) {
                 localStorage.removeItem('keranjang');
                 getSweetAlert('success', 'Berhasil', response.message);
                 setTimeout(function() {
-                    window.location.href = '<?= base_url('LandingPage/History') ?>';
+                    window.location.href = '<?= base_url('LandingPage/Riwayat') ?>';
                 }, 2000);
             } else {
                 getSweetAlert('error', 'Gagal', response.message);

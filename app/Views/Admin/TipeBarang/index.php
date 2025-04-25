@@ -61,13 +61,21 @@
                                 <td><?= $value['satuan']; ?></td>
                                 <td><?= $value['stok_tipe_barang']; ?></td>
                                 <td><?= $value['harga_tipe_barang']; ?></td>
-                                <td>
+                                <td class="text-center">
+                                    <?php 
+                                    if (session()->get('role') == '1') : 
+                                    ?>
                                     <button type="button" data-toggle="modal"
                                         data-target="#edit<?= $value['id_tipe_barang']; ?>" href=""
                                         class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
                                     <button type="button" data-toggle="modal"
                                         data-target="#hapus<?= $value['id_tipe_barang']; ?>" href=""
                                         class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                    <?php 
+                                    else:
+                                        echo '-';
+                                    endif;
+                                    ?>
                                 </td>
 
                             </tr>

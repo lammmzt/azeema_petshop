@@ -30,8 +30,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <a href="<?= base_url('Transaksi/Keluar'); ?>" class="btn btn-primary btn-sm"><i
-                        class="fa fa-arrow-left"></i>
+                <a href="<?= base_url('Order'); ?>" class="btn btn-primary btn-sm"><i class="fa fa-arrow-left"></i>
                     Kembali</a>
             </div>
             <div class="card-header">
@@ -41,7 +40,7 @@
             </div>
             <div class="card-body">
                 <!-- form -->
-                <form method="post">
+                <form method="post" enctype="multipart/form-data" id="form_order">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
@@ -50,26 +49,70 @@
                                     value="<?= date('Y-m-d'); ?>" readonly>
                             </div>
                         </div>
-                        <!-- <div class="col-lg-6">
+                        <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="">Ket Transaksi</label>
-                                <textarea name="ket_transaksi" class="form-control" placeholder="Masukan keterangan"
+                                <label for="">Nama Pelanggan</label>
+                                <select name="id_user" id="id_user" class="form-control" required style="width: 100%">
+                                    <option value="">Pilih Pelanggan</option>
+                                    <?php foreach ($data_user as $u) : ?>
+                                    <option value="<?= $u['id_user']; ?>"><?= $u['nama_user']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <a href="<?= base_url('Users/tambah_user'); ?>" class="btn btn-warning btn-sm mt-2"
+                                    target="_blank"><i class="fa fa-plus"></i> Tambah Pelanggan</a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="">Tgl Kedatangan</label>
+                                <input type="date" name="tanggal_datang" class="form-control" required
+                                    value="<?= date('Y-m-d'); ?>" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="">Jam Datang</label>
+                                <input type="time" name="jam_datang" class="form-control" required
+                                    value="<?= date('H:i'); ?>" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="">Tipe Pembayaran</label>
+                                <select name="tipe_pembayaran" id="tipe_pembayaran" class="form-control" required>
+                                    <option value="">Pilih Tipe Pembayaran</option>
+                                    <option value="0">Cash</option>
+                                    <option value="1">Transfer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6" id="bank" style="display: none;">
+                            <div class="form-group">
+                                <label for="">Upload Bukti</label>
+                                <input type="file" name="bukti_pembayaran" class="form-control" accept="image/*">
+                                <small class="text-danger">*Upload bukti pembayaran jika menggunakan transfer</small>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="">Catatan</label>
+                                <textarea name="ket_order" class="form-control" placeholder="Masukan keterangan"
                                     required rows="3" required></textarea>
                             </div>
-                        </div> -->
+                        </div>
                         <!-- add nama barang dan tombol plus -->
                         <div class="col-lg-11">
                             <div class="form-group">
-                                <label for="">Nama Barang</label>
+                                <label for="">Nama Layanan</label>
                                 <div class="input-group">
-                                    <select name="id_tipe_barang" id="id_tipe_barang" class="form-control">
-                                        <option value="">Pilih Barang</option>
-                                        <?php foreach ($tipe_barang as $b) : ?>
-                                        <option value="<?= $b['id_tipe_barang']; ?>"
-                                            data-harga="<?= $b['harga_tipe_barang']; ?>"
-                                            data-stok="<?= $b['stok_tipe_barang']; ?>">
-                                            <?= $b['nama_barang']; ?>
-                                            (<?= $b['merk_tipe_barang']; ?>) @ <?= $b['satuan']; ?></option>
+                                    <select name="id_layanan" id="id_layanan" class="form-control">
+                                        <option value="">Pilih Layanan</option>
+                                        <?php foreach ($data_layanan as $l) : ?>
+                                        <option value="<?= $l['id_layanan']; ?>"
+                                            data-satuan="<?= $l['satuan_layanan']; ?>"
+                                            data-harga_layanan="<?= $l['harga_layanan']; ?>">
+                                            <?= $l['nama_layanan']; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -97,7 +140,7 @@
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody id="tabel_transaksi_keluar">
+                            <tbody id="tabel_order">
 
                             </tbody>
                         </table>
@@ -118,33 +161,46 @@
 <script>
 // select2
 $(document).ready(function() {
-    $('#id_tipe_barang').select2();
+    $('#id_layanan').select2();
+    $('#id_user').select2({
+        placeholder: 'Pilih Pelanggan',
+        allowClear: true
+    });
 });
 
-var data_barang = [];
+// tipe pembayaran
+$('#tipe_pembayaran').on('change', function() {
+    var tipe = $(this).val();
+    if (tipe == '1') { // jika transfer
+        $('#bank').show(); // tampilkan upload bukti
+    } else {
+        $('#bank').hide(); // sembunyikan upload bukti
+    }
+});
+
+var data_order_layanan = [];
 var total = 0;
 // tambah barang
-function tampilBarang() {
+function tampilData() {
     var html = '';
     var no = 1;
 
-    if (data_barang.length > 0) { // jika ada data barang
-        data_barang.forEach(function(item) { // tampilkan data barang
+    if (data_order_layanan.length > 0) { // jika ada data barang
+        data_order_layanan.forEach(function(item) { // tampilkan data barang
             html += '<tr>';
             html += '<td class="text-center">' + no + '</td>';
             html += '<td>' + item.nama_barang + '</td>';
-            html += '<td> <input type="text" name="harga[]" class="form-control" min="1" value="' + item
-                .harga +
-                '" > </td>';
+            html += '<td> ' + formatRupiah(item.harga_layanan) + ' / ' + item.satuan_layanan +
+                '</td>';
             html +=
-                '<td> <input type="number" name="jumlah[]" class="form-control text-center" min="1" style="max-width: 100px;" value="' +
+                '<td> <input type="number" name="qty[]" class="form-control text-center" min="1" style="max-width: 100px;" value="' +
                 item
-                .jumlah +
+                .qty +
                 '" > </td>';
             html += '<td> <input type="text" name="subtotal[]" class="form-control" value="' + formatRupiah(item
                     .subtotal) +
                 '" readonly> </td>';
-            html += '<td><button type="button" class="btn btn-danger btn-sm" onclick="hapusBarang(' + no +
+            html += '<td><button type="button" class="btn btn-danger btn-sm" onclick="hapusLayanan(' + no +
                 ')"><i class="fa fa-trash"></i></button></td>';
             no++;
             html += '</tr>';
@@ -164,134 +220,127 @@ function tampilBarang() {
         html += '</tr>';
     }
 
-    $('#tabel_transaksi_keluar').html(html);
+    $('#tabel_order').html(html);
 }
 
-tampilBarang(); // tampilkan barang
+tampilData(); // tampilkan barang
 
 // tambah barang
 $('#tambah_barang').on('click', function() {
     // alert('tambah barang');
-    var id_tipe_barang = $('#id_tipe_barang').val();
-    var nama_barang = $('#id_tipe_barang option:selected').text();
-    var harga = $('#id_tipe_barang option:selected').data('harga');
-    var stok = $('#id_tipe_barang option:selected').data('stok');
-    var jumlah = 1;
-    var subtotal = harga * jumlah;
+    var id_layanan = $('#id_layanan').val();
+    var nama_barang = $('#id_layanan option:selected').text();
+    var harga_layanan = $('#id_layanan option:selected').data('harga_layanan');
+    var satuan_layanan = $('#id_layanan option:selected').data('satuan');
+    var qty = 1;
+    var subtotal = harga_layanan * qty;
 
-    if (id_tipe_barang == '') { // jika barang belum dipilih
+    if (id_layanan == '') { // jika barang belum dipilih
         alert('Pilih barang');
-        return false;
-    }
-
-    if (jumlah > stok) { // jika jumlah melebihi stok
-        alert('Stok barang tidak mencukupi (Stok: ' + stok + ')');
         return false;
     }
 
     // jika barang sudah ada
-    var index = data_barang.findIndex(x => x.id_tipe_barang == id_tipe_barang);
+    var index = data_order_layanan.findIndex(x => x.id_layanan == id_layanan);
 
     if (index == -1) { // jika barang belum ada
-        data_barang.push({
-            id_tipe_barang: id_tipe_barang,
+        data_order_layanan.push({
+            id_layanan: id_layanan,
             nama_barang: nama_barang,
-            harga: harga,
-            jumlah: jumlah,
-            stok: stok,
+            harga_layanan: harga_layanan,
+            satuan_layanan: satuan_layanan,
+            qty: qty,
             subtotal: subtotal
         });
-    } else { // jika barang sudah ada
-        if (data_barang[index].jumlah >= data_barang[index].stok) {
-            alert('Stok barang tidak mencukupi (Stok: ' + data_barang[index].stok + ')');
-            return false;
-        }
-        parseInt(data_barang[index].jumlah++);
-        data_barang[index].subtotal = data_barang[index].jumlah * data_barang[index].harga;
+    } else {
+        parseInt(data_order_layanan[index].qty++);
+        data_order_layanan[index].subtotal = data_order_layanan[index].qty * data_order_layanan[index]
+            .harga_layanan;
     }
 
-    tampilBarang(); // tampilkan barang
+    tampilData(); // tampilkan barang
 });
 
-// ubah jumlah barang
-$('#tabel_transaksi_keluar').on('change', 'input[name="jumlah[]"]', function() {
-    // alert('ubah jumlah barang');
+// ubah qty barang
+$('#tabel_order').on('change', 'input[name="qty[]"]', function() {
+    // alert('ubah qty barang');
     var index = $(this).closest('tr').index(); // index baris
-    var jumlah = $(this).val(); // jumlah barang
-    if (jumlah < 1) { // jika jumlah kurang dari 1
-        alert('Jumlah tidak boleh kurang dari 1');
+    var qty = $(this).val(); // qty barang
+    if (qty < 1) { // jika qty kurang dari 1
+        alert('qty tidak boleh kurang dari 1');
         $(this).val(1);
-        jumlah = 1;
-    } else if (jumlah > data_barang[index].stok) { // jika jumlah melebihi stok
-        alert('Jumlah stok tidak mencukupi (Stok: ' + data_barang[index].stok + ')');
-        $(this).val(data_barang[index].stok);
-        jumlah = data_barang[index].stok;
+        qty = 1;
     }
 
-    var harga = data_barang[index].harga; // harga barang
-    var subtotal = jumlah * harga; // subtotal
+    var harga_layanan = data_order_layanan[index].harga_layanan; // harga_layanan barang
+    var subtotal = qty * harga_layanan; // subtotal
 
-    data_barang[index].jumlah = jumlah; // ubah jumlah barang
-    data_barang[index].subtotal = subtotal; // ubah subtotal barang
+    data_order_layanan[index].qty = qty; // ubah qty barang
+    data_order_layanan[index].subtotal = subtotal; // ubah subtotal barang
 
     total = 0; // reset total
-    tampilBarang(); // tampilkan barang
+    tampilData(); // tampilkan barang
 });
 
-// ubah harga barang
-$('#tabel_transaksi_keluar').on('change', 'input[name="harga[]"]', function() {
-    // alert('ubah harga barang');
+// ubah harga_layanan barang
+$('#tabel_order').on('change', 'input[name="harga_layanan[]"]', function() {
+    // alert('ubah harga_layanan barang');
     var index = $(this).closest('tr').index(); // index baris
-    var harga = $(this).val(); // harga barang
-    var jumlah = data_barang[index].jumlah; // jumlah barang
-    var subtotal = jumlah * harga; // subtotal
+    var harga_layanan = $(this).val(); // harga_layanan barang
+    var qty = data_order_layanan[index].qty; // qty barang
+    var subtotal = qty * harga_layanan; // subtotal
 
-    data_barang[index].harga = harga; // ubah harga barang
-    data_barang[index].subtotal = subtotal; // ubah subtotal barang
+    data_order_layanan[index].harga_layanan = harga_layanan; // ubah harga_layanan barang
+    data_order_layanan[index].subtotal = subtotal; // ubah subtotal barang
 
-    tampilBarang(); // tampilkan barang
+    tampilData(); // tampilkan barang
 });
 
 
 // hapus barang
-function hapusBarang(index) {
+function hapusLayanan(index) {
     // alert('hapus barang ' + index);
-    data_barang.splice(index - 1, 1);
+    data_order_layanan.splice(index - 1, 1);
     total = 0; // reset total
-    tampilBarang(); // tampilkan barang
+    tampilData(); // tampilkan barang
 }
 
 
 // simpan data
-$('form').submit(function() {
+$('#form_order').on('submit', function(e) {
+    e.preventDefault();
     // alert('submit');
-    if (data_barang.length == 0) { // jika tidak ada data barang
+    if (data_order_layanan.length == 0) { // jika tidak ada data barang
         alert('Pilih barang');
         return false;
     }
 
+    // jia tipe pembayaran transfer
+    if ($('#tipe_pembayaran').val() == '1') {
+        var bukti = $('input[name="bukti_pembayaran"]').val(); // ambil file bukti
+        if (bukti == '') { // jika file bukti kosong
+            alert('Upload bukti pembayaran');
+            return false;
+        }
+    }
     // ubah btn simpan to loading
     $('#btn_simpan').html('<i class="fa fa-spin fa-spinner"></i> Loading...');
     $('#btn_simpan').attr('disabled', true);
 
-    var form_data = $(this).serializeArray(); // ambil semua data form
-    form_data.push({ // tambahkan total transaksi
-        name: 'total_transaksi',
-        value: total
-    });
-    form_data.push({ // tambahkan data barang
-        name: 'data_barang',
-        value: JSON.stringify(data_barang)
-    });
-    // console.log(form_data);
+    let formData = new FormData(this);
+    formData.append('data_layanan', JSON.stringify(data_order_layanan));
+    console.log(formData);
     $.ajax({
-        url: '<?= base_url('Transaksi/simpan_transaksi_keluar'); ?>',
+        url: '<?= base_url('LandingPage/saveCheckout'); ?>',
         type: 'post',
-        data: form_data,
+        data: formData,
         dataType: 'json',
+        processData: false,
+        contentType: false,
         success: function(hasil) {
             if (hasil.status == 200) {
-                location.href = '<?= base_url('Transaksi/Keluar'); ?>';
+
+                location.href = '<?= base_url('Order'); ?>'; // redirect ke halaman order
                 // console.log(hasil.data);
 
             } else {
