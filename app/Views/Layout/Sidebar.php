@@ -73,14 +73,14 @@
             ?>
              <li class="nav-label">Master Laporan</li>
              <li
-                 class="<?= ($menu_aktif == 'laporan_barang' || $menu_aktif == 'laporan_orderan') ? 'mm-active' : ''; ?>">
+                 class="<?= ($menu_aktif == 'laporan_transaksi' || $menu_aktif == 'laporan_orderan') ? 'mm-active' : ''; ?>">
                  <a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-chart-bar-33">
 
                      </i><span class="nav-text">Laporan</span></a>
                  <ul aria-expanded="false"
-                     class="<?= ($menu_aktif == 'laporan_barang' || $menu_aktif == 'laporan_orderan') ? 'mm-show' : ''; ?>">
-                     <li><a class="<?= ($menu_aktif == 'laporan_barang') ? 'mm-active' : ''; ?>"
-                             href="<?= base_url('Laporan/Barang'); ?>">Laporan Barang</a></li>
+                     class="<?= ($menu_aktif == 'laporan_transaksi' || $menu_aktif == 'laporan_orderan') ? 'mm-show' : ''; ?>">
+                     <li><a class="<?= ($menu_aktif == 'laporan_transaksi') ? 'mm-active' : ''; ?>"
+                             href="<?= base_url('Laporan/Transaksi'); ?>">Laporan Transaksi</a></li>
                      <li><a class="<?= ($menu_aktif == 'laporan_orderan') ? 'mm-active' : ''; ?>"
                              href="<?= base_url('Laporan/Orderan'); ?>">Laporan Orderan</a></li>
                  </ul>

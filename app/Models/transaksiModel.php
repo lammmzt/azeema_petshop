@@ -29,6 +29,26 @@ class transaksiModel extends Model
             ->orderBy('id_transaksi', 'DESC')
             ->findAll();
     }
+
+    public function getLaporanTransaksi($tgl_awal = null, $tgl_akhir = null, $jenis_transaksi = null)
+    {
+        if ($jenis_transaksi == null) {
+            return $this
+                ->select('transaksi.*')
+                ->where('tanggal_transaksi >=', $tgl_awal)
+                ->where('tanggal_transaksi <=', $tgl_akhir)
+                ->orderBy('id_transaksi', 'DESC')
+                ->findAll();
+        } else {
+            return $this
+                ->select('transaksi.*')
+                ->where('tanggal_transaksi >=', $tgl_awal)
+                ->where('tanggal_transaksi <=', $tgl_akhir)
+                ->where('jenis_transaksi', $jenis_transaksi)
+                ->orderBy('id_transaksi', 'DESC')
+                ->findAll();
+        }
+    }
 }
 
 

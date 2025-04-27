@@ -31,6 +31,17 @@ class orderModel extends Model
         ->orderBy('order.id_order', 'DESC')
         ->findAll();
     }
+
+    public function getLaporan($tgl_awal, $tgl_akhir)
+    {
+        return $this
+        ->select('order.*, users.nama_user, users.username, users.no_hp_user, users.alamat_user')
+        ->join('users', 'users.id_user = order.id_user')
+        ->where(['order.tanggal_order >=' => $tgl_awal, 'order.tanggal_order <=' => $tgl_akhir])
+        ->orderBy('id_order', 'DESC')
+        ->findAll();
+        
+    }
 }
 
 

@@ -220,7 +220,7 @@
     <script src="<?= base_url('assets/vendor/jqvmap/js/jquery.vmap.min.js'); ?>"></script>
     <script src="<?= base_url('assets/vendor/jqvmap/js/jquery.vmap.usa.js'); ?>"></script>
     <script src="<?= base_url('assets/vendor/jquery.counterup/jquery.counterup.min.js'); ?>"></script>
-
+    <script src="<?= base_url('assets/vendor/chart.js/Chart.bundle.min.js')?>"></script>
 
 
     <script src="<?= base_url('assets/js/dashboard/dashboard-1.js'); ?>"></script>
