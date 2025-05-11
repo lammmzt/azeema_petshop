@@ -6,6 +6,58 @@ use App\Models\detailOrderModel;
 $detailOrderModel = new detailOrderModel();
 ?>
 
+
+<style>
+@media print {
+    @page {
+        margin-top: 0px;
+        margin: 10px;
+        size: 29.7cm 21cm;
+    }
+
+    body {
+        margin: 0px;
+        padding: 0px;
+        background: #fff;
+        width: 100%;
+    }
+
+    .container-fluid {
+        margin: 0px !important;
+        padding: 0px !important;
+        width: 100%;
+        height: 100%;
+    }
+
+    .content-body {
+        margin: 0px !important;
+        padding: 0px !important;
+        width: 100%;
+        height: 100%;
+    }
+
+    .btn,
+    .nav-header,
+    .page-titles,
+    .header,
+    #header,
+    #sidebar,
+    footer,
+    header,
+    aside,
+    .fixed-top,
+    form,
+    .breadcrumb,
+    .aksi,
+    .alert,
+    h1,
+    a {
+        display: none;
+        visibility: hidden;
+    }
+}
+</style>
+
 <div class="row">
     <div class="col-lg-12">
         <?php if (session()->getFlashdata('success')) : ?>
@@ -33,7 +85,7 @@ $detailOrderModel = new detailOrderModel();
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title"><?= $title; ?></h4>
+                <h4 class="card-title"><?= $title_laporan; ?></h4>
 
             </div>
             <div class="card-body">
@@ -57,8 +109,9 @@ $detailOrderModel = new detailOrderModel();
                         <div class="col-lg-3 mt-4">
                             <button type="submit" class="btn btn-primary justify-content-end align-items-center"><i
                                     class="mdi mdi-magnify"></i> Filter</button>
-                            <button type="button" class="btn btn-success justify-content-end align-items-center"><i
-                                    class="mdi mdi-printer"></i> Print</button>
+                            <button type="button"
+                                class="btn btn-success justify-content-end align-items-center btn_print"><i
+                                    class="mdi mdi-printer" id="btn_print"></i> Print</button>
                         </div>
                     </div>
                 </form>
@@ -150,6 +203,10 @@ $(document).ready(function() {
 
     });
 
+});
+
+$('.btn_print').on('click', function() {
+    window.print();
 });
 </script>
 <?= $this->endSection('dataTables'); ?>

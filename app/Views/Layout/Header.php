@@ -1,5 +1,5 @@
  <div class="nav-header">
-     <a href="index.html" class="brand-logo">
+     <a href="<?= base_url('/'); ?>" class="brand-logo">
          <img class="logo-abbr" src="<?= base_url('assets/images/logo.png'); ?>" alt="">
          <img class="logo-compact" src="<?= base_url('assets/images/logo-text.png'); ?>" alt="">
          <!-- <img class="brand-title" src="<?= base_url('assets/images/logo-text.png'); ?>" alt=""> -->
@@ -36,7 +36,7 @@
                  </div>
 
                  <ul class="navbar-nav header-right">
-                     <li class="nav-item dropdown notification_dropdown">
+                     <!-- <li class="nav-item dropdown notification_dropdown">
                          <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                              <i class="mdi mdi-bell"></i>
                              <div class="pulse-css"></div>
@@ -98,10 +98,11 @@
                              <a class="all-notification" href="#">Lihat semua notifikasi <i
                                      class="ti-arrow-right"></i></a>
                          </div>
-                     </li>
+                     </li> -->
                      <li class="nav-item dropdown header-profile">
-                         <a class="nav-link" href="#" role="button" data-toggle="dropdown">
-                             <i class="mdi mdi-account"></i>
+                         <a class="nav-link text-sm" href="#" role="button" data-toggle="dropdown">
+                             <?= session()->get('nama_user'); ?>
+                             <i class="mdi mdi-account "></i>
                          </a>
                          <div class="dropdown-menu dropdown-menu-right">
                              <!-- <a href="./app-profile.html" class="dropdown-item">

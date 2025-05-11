@@ -68,7 +68,7 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active"><a href="#home" class="nav-link">Home</a></li>
                     <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="#testimoni" class="nav-link">Testimoni</a></li>
+                    <!-- <li class="nav-item"><a href="#testimoni" class="nav-link">Testimoni</a></li> -->
                     <li class="nav-item"><a href="#layanan" class="nav-link">Layanan</a></li>
                     <li class="nav-item"><a href="#faq" class="nav-link">FAQ</a></li>
                     <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>

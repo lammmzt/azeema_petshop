@@ -49,6 +49,17 @@ class transaksiModel extends Model
                 ->findAll();
         }
     }
+
+    public function getTransaksiByYearMonth($year, $month)
+    {
+        return $this
+            ->select('COUNT(*) as jml_transaksi')
+            ->where('YEAR(tanggal_transaksi)', $year)
+            ->where('MONTH(tanggal_transaksi)', $month)
+            ->groupBy('MONTH(tanggal_transaksi)')
+            ->orderBy('MONTH(tanggal_transaksi)', 'ASC')
+            ->findAll();
+    }
 }
 
 

@@ -42,6 +42,18 @@ class orderModel extends Model
         ->findAll();
         
     }
+
+    public function getOrderByYearMonth($year, $month)
+    {
+        return $this
+        // jumlah order dibulan $month di tahun $year
+        ->select('COUNT(*) as jml_order')
+        ->where('YEAR(tanggal_order)', $year)
+        ->where('MONTH(tanggal_order)', $month)
+        ->groupBy('MONTH(tanggal_order)')
+        ->orderBy('MONTH(tanggal_order)', 'ASC')
+        ->findAll();
+    }
 }
 
 

@@ -120,7 +120,7 @@
                 <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>Hi, </h4>
+                            <h4>Hi, <?= session()->get('nama_user'); ?></h4>
                         </div>
                     </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -197,7 +197,7 @@
         return rupiah;
     }
     </script>
-    <?= $this->renderSection('dataTables'); ?>
+
 
     <!-- Vectormap -->
     <script src="<?= base_url('assets/vendor/raphael/raphael.min.js'); ?>"></script>
@@ -228,7 +228,7 @@
     <!-- select2 -->
     <script src="<?= base_url('assets/js/plugins-init/select2-init.js'); ?>"></script>
     <script src="<?= base_url('assets/vendor/select2/js/select2.full.min.js'); ?>"></script>
-
+    <?= $this->renderSection('dataTables'); ?>
 
     <script>
     $(document).ready(function() {

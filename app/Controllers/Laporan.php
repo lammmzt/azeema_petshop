@@ -48,7 +48,8 @@ class Laporan extends BaseController
         }
         // dd($data_transaksi);
         $data = [ // Data yang akan dikirim ke view
-            'title' => 'Daftar Transaksi Masuk',
+            'title' => 'Laporan Transaksi',
+            'title_laporan' => 'Laporan Transaksi ' . $jenis_transaksi . ' ' . $tgl_awal . ' s/d ' . $tgl_akhir,
             'main_menu' => 'Laporan',
             'menu_aktif' => 'laporan_transaksi',
             'validation' => \Config\Services::validation(),
@@ -75,7 +76,8 @@ class Laporan extends BaseController
         }
         // dd($data_order);
         $data = [ // Data yang akan dikirim ke view
-            'title' => 'Daftar Orderan',
+            'title' => 'Laporan Orderan',
+            'title_laporan' => 'Laporan Orderan ' . $tgl_awal . ' s/d ' . $tgl_akhir,
             'main_menu' => 'Laporan',
             'menu_aktif' => 'laporan_orderan',
             'validation' => \Config\Services::validation(),

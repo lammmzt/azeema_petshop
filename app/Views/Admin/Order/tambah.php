@@ -58,7 +58,7 @@
                                     <option value="<?= $u['id_user']; ?>"><?= $u['nama_user']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
-                                <a href="<?= base_url('Users/tambah_user'); ?>" class="btn btn-warning btn-sm mt-2"
+                                <a href="<?= base_url('Users'); ?>" class="btn btn-warning btn-sm mt-2"
                                     target="_blank"><i class="fa fa-plus"></i> Tambah Pelanggan</a>
                             </div>
                         </div>

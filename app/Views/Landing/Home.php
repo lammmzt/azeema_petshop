@@ -162,7 +162,7 @@
         </div>
     </div>
 </section>
-
+<!-- 
 <section class="ftco-section testimony-section"
     style="background-image: url(<?= base_url('assets/Landing/'); ?>'<?= base_url('assets/Landing/'); ?>images/bg_2.jpg');"
     id="testimoni">
@@ -275,7 +275,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 <section class="ftco-section bg-light" id="layanan">
     <div class="container">
