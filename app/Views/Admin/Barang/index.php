@@ -31,8 +31,14 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title"><?= $title; ?></h4>
+                <?php 
+                    if (session()->get('role') == '2') : 
+                ?>
                 <button type="button" data-toggle="modal" data-target="#add" href=""
                     class="btn btn-primary btn-sm float-right"><i class="fa fa-plus"></i></button>
+                <?php
+                    endif;
+                ?>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -52,16 +58,27 @@
                                 <td><?= $no++; ?></td>
                                 <td><?= $value['nama_barang']; ?></td>
                                 <td>
+                                    <?php 
+                                    if (session()->get('role') == '2') : 
+                                    ?>
                                     <button type="button" data-toggle="modal"
                                         data-target="#edit<?= $value['id_barang']; ?>" href=""
                                         class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
-                                    <button type="button" data-toggle="modal"
+                                    <!-- <button type="button" data-toggle="modal"
                                         data-target="#hapus<?= $value['id_barang']; ?>" href=""
-                                        class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                        class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> -->
                                     <a href="<?= base_url('TipeBarang/' . $value['id_barang']); ?>"
                                         class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
-                                </td>
+                                    <?php
+                                        else :
+                                    ?>
+                                    <a href="<?= base_url('TipeBarang/' . $value['id_barang']); ?>"
+                                        class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
 
+                                    <?php
+                                        endif;
+                                    ?>
+                                </td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>

@@ -90,6 +90,7 @@
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th>Nama Barang</th>
+                                    <th>Exp Barang</th>
                                     <th>Harga</th>
                                     <th>Jumlah</th>
                                     <th>Subtotal</th>
@@ -126,12 +127,16 @@ var total = 0;
 function tampilBarang() {
     var html = '';
     var no = 1;
-
+    total = 0; // reset total
+    // console.log(data_barang);
     if (data_barang.length > 0) { // jika ada data barang
         data_barang.forEach(function(item) { // tampilkan data barang
             html += '<tr>';
             html += '<td class="text-center">' + no + '</td>';
             html += '<td>' + item.nama_barang + '</td>';
+            html += '<td> <input type="date" name="exp_barang[]" class="form-control" value="' + item
+                .exp_barang +
+                '" > </td>';
             html += '<td> <input type="text" name="harga[]" class="form-control" min="1" value="' + item
                 .harga +
                 '" > </td>';
@@ -152,14 +157,14 @@ function tampilBarang() {
         });
 
         html += '<tr>';
-        html += '<td colspan="4" class="text-right">Total</td>';
+        html += '<td colspan="5" class="text-right">Total</td>';
         html += '<td><input type="text" name="total" class="form-control" value="' + formatRupiah(total) +
             '" readonly></td>';
         html += '<td></td>';
         html += '</tr>';
     } else { // jika tidak ada data barang
         html += '<tr>';
-        html += '<td colspan="6" class="text-center">Tidak ada data</td>';
+        html += '<td colspan="7" class="text-center">Tidak ada data</td>';
         html += '</tr>';
     }
 
@@ -189,6 +194,7 @@ $('#tambah_barang').on('click', function() {
         data_barang.push({
             id_tipe_barang: id_tipe_barang,
             nama_barang: nama_barang,
+            exp_barang: '',
             harga: harga,
             jumlah: jumlah,
             subtotal: subtotal
@@ -230,6 +236,18 @@ $('#tabel_transaksi_masuk').on('change', 'input[name="harga[]"]', function() {
     tampilBarang(); // tampilkan barang
 });
 
+// ubah tanggal exp barang
+$('#tabel_transaksi_masuk').on('change', 'input[name="exp_barang[]"]', function() {
+    // alert('ubah exp barang');
+    var index = $(this).closest('tr').index(); // index baris
+    var exp_barang = $(this).val(); // tanggal exp barang
+
+    data_barang[index].exp_barang = exp_barang; // ubah tanggal exp barang
+    console.log(data_barang);
+    tampilBarang(); // tampilkan barang
+});
+
+
 
 // hapus barang
 function hapusBarang(index) {
@@ -245,6 +263,12 @@ $('form').submit(function() {
     // alert('submit');
     if (data_barang.length == 0) { // jika tidak ada data barang
         alert('Pilih barang');
+        return false;
+    }
+
+    var exp_barang = data_barang.filter(x => x.exp_barang == '');
+    if (exp_barang.length > 0) {
+        alert('Isi tanggal kadaluarsa barang yang belum diisi');
         return false;
     }
 

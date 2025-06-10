@@ -94,6 +94,22 @@ class Layanan extends BaseController
             }
         }
 
+        // check if the name is unique
+        $dataLama = $this->layananModel->find($id_layanan);
+        if ($dataLama['nama_layanan'] != $this->request->getVar('nama_layanan')) {
+            if (!$this->validate([
+                'nama_layanan' => [
+                    'rules' => 'required|is_unique[layanan.nama_layanan]',
+                    'errors' => [
+                        'required' => '{field} layanan harus diisi.',
+                        'is_unique' => '{field} layanan sudah terdaftar.'
+                    ]
+                ]
+            ])) {
+                session()->setFlashdata('error', 'Nama layanan sudah terdaftar.');
+                return redirect()->to('/Layanan')->withInput();
+            }
+        }
         $this->layananModel->save([
             'id_layanan' => $id_layanan,
             'nama_layanan' => $this->request->getVar('nama_layanan'),

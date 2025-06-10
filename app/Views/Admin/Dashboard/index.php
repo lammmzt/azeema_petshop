@@ -65,7 +65,7 @@
     <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Grafik Transkasi dan Orderan</h4>
+                <h4 class="card-title">Grafik Penjulan dan Pemesanan</h4>
                 <form action="<?= base_url('/'); ?>" method="post" id="form_grafik_transaksi">
                     <!-- tahun -->
                     <select name="tahun_grafik_transaksi" id="tahun_grafik_transaksi" class="form-control"
@@ -80,6 +80,26 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-xl-12 col-lg-12">
+                        <!-- warna penjelsan grafik -->
+                        <div class="text-center mb-4">
+                            <span class="badge badge_penjualan">Jumlah Penjualan</span>
+                            <span class="badge badge_pemesanan">Jumlah Pemesanan</span>
+                        </div>
+                        <style>
+                        .badge_penjualan {
+                            background-color: #343957;
+                            color: white;
+                            padding: 10px;
+                            border-radius: 5px;
+                        }
+
+                        .badge_pemesanan {
+                            background-color: #5873FE;
+                            color: white;
+                            padding: 10px;
+                            border-radius: 5px;
+                        }
+                        </style>
                         <div id="charts_grafiks"></div>
                     </div>
                 </div>
@@ -135,7 +155,7 @@ $('#tahun_grafik_transaksi').change(function() {
         ],
         xkey: 'y',
         ykeys: ['a', 'b'],
-        labels: ['Jumlah Transaksi', 'Jumlah Order'],
+        labels: ['Jumlah Penjualan', 'Jumlah Pemesanan'],
         barColors: ['#343957', '#5873FE'],
         hideHover: 'auto',
         gridLineColor: '#eef0f2',

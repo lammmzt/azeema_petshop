@@ -39,10 +39,10 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Kode Order</th>
-                                <th>Tgl Order</th>
+                                <th>Kode Pemesanan</th>
+                                <th>Tgl Pemesanan</th>
                                 <th>Nama Pelanggan</th>
-                                <th>Tgl Datang</th>
+                                <th>Tgl Booking</th>
                                 <th>Total</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
@@ -75,17 +75,23 @@
                                 </td>
                                 <td>
                                     <?php 
-                                    if($value['status_order'] == '1' || $value['status_order'] == '2' || $value['status_order'] == '3') : ?>
+                                        if($value['status_order'] == '1' || $value['status_order'] == '2' || $value['status_order'] == '3') : ?>
                                     <button type="button" data-toggle="modal"
                                         data-target="#proses<?= $value['id_order']; ?>"
-                                        class="btn btn-success btn-sm"><i class="fa fa-check"></i></b>
-                                        <?php 
+                                        class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>
+                                    <?php 
                                         endif; 
+                                        if($value['status_order'] == '4') : 
                                     ?>
-                                        <button type="button" data-toggle="modal"
-                                            data-target="#detail<?= $value['id_order']; ?>" href=""
-                                            class="btn btn-info btn-sm mx-2"><i class="fa fa-eye"></i></button>
-                                        <!-- <a href="<?= base_url('Order/print_struk/' . $value['id_order']); ?>"
+                                    <a href="<?= base_url('Order/print_struk/' . $value['id_order']); ?>"
+                                        target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-print"></i></a>
+                                    <?php 
+                                        endif;
+                                    ?>
+                                    <button type="button" data-toggle="modal"
+                                        data-target="#detail<?= $value['id_order']; ?>" href=""
+                                        class="btn btn-info btn-sm mx-2"><i class="fa fa-eye"></i></button>
+                                    <!-- <a href="<?= base_url('Order/print_struk/' . $value['id_order']); ?>"
                                             target="_blank" class="btn btn-primary btn-sm"><i
                                             class="fa fa-print"></i></a> -->
                                 </td>
@@ -105,7 +111,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg text-black-50" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Detail Order</h5>
+                <h5 class="modal-title">Detail Pemesanan</h5>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
@@ -132,14 +138,14 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="">Tanggal Order</label>
+                            <label for="">Tanggal Pemesanan</label>
                             <input type="text" class="form-control"
                                 value="<?= date('d-m-Y', strtotime($value['tanggal_order'])) ?>" readonly>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="">Tanggal Datang</label>
+                            <label for="">Tanggal Boking</label>
                             <input type="text" class="form-control"
                                 value="<?= date('d-m-Y', strtotime($value['tanggal_datang'])) ?>" readonly>
                         </div>
@@ -220,7 +226,7 @@
                             <div class="accordion__item">
                                 <div class="accordion__header" data-toggle="collapse"
                                     data-target="#bordered_collapseOne"> <span class="accordion__header--text">Timeline
-                                        Orde</span>
+                                        Pemesanan</span>
                                     <span class="accordion__header--indicator"></span>
                                 </div>
                                 <div id="bordered_collapseOne" class="collapse accordion__body"
@@ -245,7 +251,7 @@
                                                     <div class="timeline-badge warning"></div>
                                                     <a class="timeline-panel text-muted" href="#">
                                                         <span><?= date('d-m-Y h:i', strtotime($value['tanggal_disetujui'])) ?></span>
-                                                        <h6 class="m-t-5">Orderan telah disetujui oleh petugas,
+                                                        <h6 class="m-t-5">Pemesanan telah disetujui oleh petugas,
                                                             selanjutnya menunggu jadwal
                                                             pengerjaan
                                                         </h6>
@@ -286,7 +292,7 @@
                                                     <div class="timeline-badge danger"></div>
                                                     <a class="timeline-panel text-muted" href="#">
                                                         <span><?= date('d-m-Y h:i', strtotime($value['tanggal_selesai'])) ?></span>
-                                                        <h6 class="m-t-5">Orderan Ditolak oleh petugas
+                                                        <h6 class="m-t-5">Pemesanan Ditolak oleh petugas
                                                             dengan alasan
                                                             <?= $value['ket_order'] ?>
                                                         </h6>
@@ -321,7 +327,7 @@
             <input type="hidden" name="id_order" value="<?= $value['id_order']; ?>">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Proses Order</h5>
+                    <h5 class="modal-title">Proses Pemesanan</h5>
                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                     </button>
                 </div>
@@ -348,7 +354,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Tanggal Order</label>
+                                <label for="">Tanggal Pemesanan</label>
                                 <input type="text" class="form-control"
                                     value="<?= date('d-m-Y', strtotime($value['tanggal_order'])) ?>" readonly>
                             </div>
@@ -432,7 +438,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Status Order</label>
+                                <label for="">Status Pemesanan</label>
                                 <select name="status_order" id="" class="form-control" required>
                                     <option value="">-- Pilih Status --</option>
                                     <?php 

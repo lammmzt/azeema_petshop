@@ -138,7 +138,7 @@
         <p>Telp: (021) 123-4567</p>
         <p>Tanggal: <span id="date"></span></p>
         <p>Kasir: Andi</p>
-        <p>No. Struk: <?= $transaksi['id_transaksi']; ?></p>
+        <p>No. Struk: <?= $order['id_order']; ?></p>
     </div>
 
     <div class="separator"></div>
@@ -155,13 +155,12 @@
         <tbody>
             <?php
             $no = 1;
-            foreach ($detail_transaksi as $dt) : ?>
+            foreach ($detail_order as $dt) : ?>
             <tr>
-                <td><?= $dt['nama_barang']; ?>(<?= $dt['merk_tipe_barang']; ?>) @
-                    <?= $dt['satuan']; ?></td>
-                <td class="center"><?= $dt['jumlah_transaksi']; ?></td>
-                <td class="right"><?php echo "Rp. " . number_format($dt['harga_barang'], 0, ',', '.'); ?></td>
-                <td class="right"><?php echo "Rp. " . number_format($dt['sub_total_transaksi'], 0, ',', '.'); ?>
+                <td><?= $dt['nama_layanan']; ?></td>
+                <td class="center"><?= $dt['jumlah_order']; ?></td>
+                <td class="right"><?php echo "Rp. " . number_format($dt['harga_layanan'], 0, ',', '.'); ?></td>
+                <td class="right"><?php echo "Rp. " . number_format($dt['sub_total_order'], 0, ',', '.'); ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -170,7 +169,7 @@
             <tr>
                 <td colspan="3" class="total">Total</td>
                 <td class="right total">
-                    <?php echo "Rp. " . number_format($transaksi['total_transaksi'], 0, ',', '.'); ?>
+                    <?php echo "Rp. " . number_format($order['total_order'], 0, ',', '.'); ?>
             </tr>
         </tfoot>
     </table>

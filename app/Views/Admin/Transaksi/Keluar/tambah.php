@@ -127,7 +127,7 @@ var total = 0;
 function tampilBarang() {
     var html = '';
     var no = 1;
-
+    total = 0; // reset total
     if (data_barang.length > 0) { // jika ada data barang
         data_barang.forEach(function(item) { // tampilkan data barang
             html += '<tr>';

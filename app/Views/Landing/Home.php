@@ -549,6 +549,13 @@
                                 <input type="password" class="form-control" id="password" name="password" required
                                     placeholder="Masukkan password">
                             </div>
+                            <!-- lupa password -->
+                            <div class="form-group">
+                                <a href="<?= base_url('Auth/lupaPassword'); ?>" class="text-primary"
+                                    data-dismiss="modal" aria-label="Close" data-toggle="modal"
+                                    data-target="#modal_reset" href="#" class="btn btn-primary mt-4 ml-2">Lupa
+                                    Password?</a>
+                            </div>
                             <hr>
                             <button type="submit" class="btn btn-primary mt-2" id="btnLogin">Login</button>
                         </form>
@@ -620,6 +627,52 @@
         </div>
     </div>
 </div>
+
+<!-- modal reset password -->
+<div class="modal fade" id="modal_reset" tabindex="-1" aria-labelledby="resetLabel" aria-hidden="true"
+    data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resetLabel">Reset Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <form class="px-4 py-3" id="formResetPassword" method="post">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="username" required
+                                    placeholder="Masukkan email">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required
+                                    placeholder="Masukkan password">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Konfirmasi Password</label>
+                                <input type="password_confirm" class="form-control" id="password_confirm"
+                                    name="password_confirm" required placeholder="Masukkan ulangi password">
+                            </div>
+
+                            <hr>
+                            <button type="submit" class="btn btn-primary mt-2" id="btnLogin">Login</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+        </div>
+    </div>
+</div>
 <?= $this->endSection('content'); ?>
 <?= $this->section('script'); ?>
 <script type="text/javascript">
@@ -661,6 +714,40 @@ $('#formLogin').submit(function(e) {
 
     $.ajax({
         url: '<?= base_url('Auth/loginUser'); ?>',
+        type: 'POST',
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function(response) {
+            if (response.error == true) {
+                // alert(response.message);
+                getSweetAlert('error', 'Oops...', response.message);
+                $('#btnLogin').attr('disabled', false);
+                $('#btnLogin').html('Login');
+            } else {
+                getSweetAlert('success', 'Berhasil', response.message);
+                // redirect to home
+                setTimeout(function() {
+                    window.location.href = '<?= base_url('LandingPage'); ?>';
+                }, 2000);
+            }
+        },
+        error: function(xhr, status, error) {
+            // alert(xhr.responseText);
+            setTimeout(function() {
+                window.location.href = '<?= base_url('LandingPage'); ?>';
+            }, 2000);
+        }
+    });
+});
+
+// when post reset password
+$('#formResetPassword').submit(function(e) {
+    e.preventDefault();
+    $('#btnLogin').attr('disabled', true);
+    $('#btnLogin').html('<i class="fa fa-spinner fa-spin"></i> Loading...');
+
+    $.ajax({
+        url: '<?= base_url('Auth/resetPassword'); ?>',
         type: 'POST',
         data: $(this).serialize(),
         dataType: 'json',

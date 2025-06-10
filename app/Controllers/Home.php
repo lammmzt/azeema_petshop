@@ -36,7 +36,7 @@ class Home extends BaseController
         }
         $data_grafik= [];
         for($i=1; $i<=12; $i++){
-            $jml_transaksi_tahunan = $transaksiModel->getTransaksiByYearMonth($tahun_grafik_transaksi, $i);
+            $jml_transaksi_tahunan = $transaksiModel->getTransaksiKeluarByYearMonth($tahun_grafik_transaksi, $i);
             $jml_order_tahunan = $orderModel->getOrderByYearMonth($tahun_grafik_transaksi, $i);
             $data_grafik[$i] = [
                 'bulan' => $i,

@@ -73,6 +73,7 @@ class Transaksi extends BaseController
                 'jumlah_transaksi' => $value['jumlah'],
                 'sub_total_transaksi' => $value['subtotal'],
                 'harga_barang' => $value['harga'],
+                'exp_barang' => $value['exp_barang'] ?? null, // Menyimpan tanggal kadaluarsa jika ada
             ];
 
             $this->detailTransaksiModel->save($data_detail_transaksi); // Simpan data detail transaksi

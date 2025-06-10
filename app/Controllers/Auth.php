@@ -121,6 +121,44 @@ class Auth extends BaseController
             ]);
         }
     }
+
+    public function resetPassword()
+    {
+        $email = $this->request->getPost('username');
+        $model = new usersModel();
+        $newPassword = $this->request->getPost('password');
+        $newPasswordConfirm = $this->request->getPost('password_confirm');
+        // Validate the new password and confirmation
+        if ($newPassword !== $newPasswordConfirm) {
+            return $this->response->setJSON([
+                'error' => true,
+                'status' => 400,
+                'message' => 'Password dan Konfirmasi Password Tidak Cocok'
+            ]);
+        }
+        $user = $model->where('username', $email)->first();
+
+        if($user){
+            // Update the user's password
+            $model->update($user['id_user'], [
+                'password' => password_hash($newPassword, PASSWORD_DEFAULT)
+            ]);
+
+            // Here you would typically send the new password to the user's email
+            // For simplicity, we will just return it in the response
+            return $this->response->setJSON([
+                'error' => false,
+                'status' => 200,
+                'message' => 'Password berhasil direset',
+            ]);
+        }else{
+            return $this->response->setJSON([
+                'error' => true,
+                'status' => 404,
+                'message' => 'Email Tidak Ditemukan'
+            ]);
+        }
+    }
     
     public function logout()
     {

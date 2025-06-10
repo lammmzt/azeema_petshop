@@ -7,7 +7,7 @@ class detailTransaksiModel extends Model
 {
     protected $table = 'detail_transaksi';
     protected $primaryKey = 'id_detail_transaksi';
-    protected $allowedFields = ['id_transaksi', 'id_tipe_barang', 'jumlah_transaksi', 'sub_total_transaksi','harga_barang'];
+    protected $allowedFields = ['id_transaksi', 'id_tipe_barang', 'jumlah_transaksi', 'sub_total_transaksi','harga_barang','exp_barang'];
 
     public function getDetailTransaksi($id = false)
     {

@@ -82,5 +82,19 @@ class Order extends BaseController
         session()->setFlashdata('success', 'Status Order Berhasil Diubah');
         return redirect()->to(base_url('Order'));
     }
+
+    // ================================== PRINT STRUK ==================================
+    public function print_struk($id_order) // Menampilkan halaman print struk 
+    {
+        $data = [ // Data yang akan dikirim ke view
+            'title' => 'Print Struk Transaksi',
+            'order' => $this->orderModel->getOrder($id_order), // Mengambil data order berdasarkan id
+            'detail_order' => $this->detailOrderModel->getDetailOrderByOrder($id_order), // Mengambil detail order berdasarkan id order
+        ];
+        // dd($data);
+
+        return view('Admin/Order/print_struk', $data); // Load view
+
+    }
 }
 ?>

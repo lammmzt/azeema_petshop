@@ -17,8 +17,8 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th>ID Order</th>
-                                <th>Tanggal Order</th>
+                                <th>Kode Pemesanan</th>
+                                <th>Tanggal Booking</th>
                                 <th>Status</th>
                                 <th>Total</th>
                                 <th>Aksi</th>
@@ -63,7 +63,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Detail Order <?= $row['id_order'] ?></h5>
+                <h5 class="modal-title" id="exampleModalLabel">Detail Pemesanan <?= $row['id_order'] ?></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" class="border-0">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -91,7 +91,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="">Tanggal Order</label>
+                            <label for="">Tanggal Booking</label>
                             <input type="text" class="form-control"
                                 value="<?= date('d-m-Y', strtotime($row['tanggal_order'])) ?>" readonly>
                         </div>
@@ -105,7 +105,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="">Jam Datang</label>
+                            <label for="">Jam Booking</label>
                             <input type="text" class="form-control" value="<?= $row['jam_datang'] ?>" readonly>
                         </div>
                     </div>
@@ -123,6 +123,25 @@
                             <label for="">Bukti Pembayaran</label><br>
                             <img src="<?= base_url('assets/img/bukti_pembayaran/' . $row['bukti_pembayaran']) ?>"
                                 alt="Bukti Pembayaran" class="img-fluid" width="200px">
+                        </div>
+                    </div>
+                    <?php endif;
+                    if ($row['ket_order'] != null) : 
+                    ?>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Catatan Pemesanan</label>
+                            <textarea class="form-control" rows="3" readonly><?= $row['ket_order'] ?></textarea>
+                        </div>
+                    </div>
+                    <?php endif;
+                    if ($row['ket_proses'] != null) : 
+                    ?>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Catatan Proses Pengerjaan</label>
+                            <textarea class="form-control" rows="3"
+                                readonly><?= $row['ket_ket_prosesorder'] ?></textarea>
                         </div>
                     </div>
                     <?php endif; ?>
@@ -161,6 +180,95 @@
                                 </tr>
                             </tfoot>
                         </table>
+                    </div>
+                </div>
+                <hr>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <div id="accordion-two" class="accordion accordion-bordered">
+                            <div class="accordion__item">
+                                <div class="accordion__header" data-toggle="collapse"
+                                    data-target="#bordered_collapseOne"> <span class="accordion__header--text">Timeline
+                                        Pemesanan</span>
+                                    <span class="accordion__header--indicator"></span>
+                                </div>
+                                <div id="bordered_collapseOne" class="collapse accordion__body"
+                                    data-parent="#accordion-two">
+                                    <div class="accordion__body--text">
+                                        <div class="widget-timeline">
+                                            <ul class="timeline">
+                                                <li>
+                                                    <div class="timeline-badge primary"></div>
+                                                    <a class="timeline-panel text-muted" href="#">
+                                                        <span><?= date('d-m-Y h:i', strtotime($row['tanggal_order'])) ?></span>
+                                                        <h6 class="m-t-5">
+                                                            <?= $row['nama_user'] ?> melakukan pemesanan layanan.
+                                                        </h6>
+                                                    </a>
+                                                </li>
+
+                                                <?php if ($row['tanggal_disetujui'] != null) : ?>
+                                                <?php 
+                                                if($row['status_order'] != '1' || $row['tanggal_disetujui'] != null) : ?>
+                                                <li>
+                                                    <div class="timeline-badge warning"></div>
+                                                    <a class="timeline-panel text-muted" href="#">
+                                                        <span><?= date('d-m-Y h:i', strtotime($row['tanggal_disetujui'])) ?></span>
+                                                        <h6 class="m-t-5">Pemesanan telah disetujui oleh petugas,
+                                                            selanjutnya menunggu jadwal
+                                                            pengerjaan
+                                                        </h6>
+                                                    </a>
+                                                </li>
+                                                <?php endif; ?>
+
+                                                <?php 
+                                                    if($row['status_order'] != '1' || $row['status_order'] != '2' || $row['tanggal_proses'] != null) : ?>
+                                                <li>
+                                                    <div class="timeline-badge info"></div>
+                                                    <a class="timeline-panel text-muted" href="#">
+                                                        <span><?= date('d-m-Y h:i', strtotime($row['tanggal_proses'])) ?></span>
+                                                        <h6 class="m-t-5"> Menunggu Proses Pengerjaan
+                                                        </h6>
+                                                    </a>
+                                                </li>
+
+                                                <?php 
+                                                endif; 
+                                                ?>
+                                                <?php
+                                                if($row['status_order'] == '4') : ?>
+                                                <li>
+                                                    <div class="timeline-badge success"></div>
+                                                    <a class="timeline-panel text-muted" href="#">
+                                                        <span><?= date('d-m-Y h:i', strtotime($row['tanggal_selesai'])) ?></span>
+                                                        <h6 class="m-t-5">Proses Pengerjaan Selesai
+                                                        </h6>
+                                                    </a>
+                                                </li>
+                                                <?php endif; ?>
+                                                <?php endif; ?>
+
+                                                <?php
+                                                if($row['status_order'] == '0') : ?>
+                                                <li>
+                                                    <div class="timeline-badge danger"></div>
+                                                    <a class="timeline-panel text-muted" href="#">
+                                                        <span><?= date('d-m-Y h:i', strtotime($row['tanggal_selesai'])) ?></span>
+                                                        <h6 class="m-t-5">Pemesanan Ditolak oleh petugas
+                                                            dengan alasan
+                                                            <?= $row['ket_order'] ?>
+                                                        </h6>
+                                                    </a>
+                                                </li>
+                                                <?php endif; ?>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

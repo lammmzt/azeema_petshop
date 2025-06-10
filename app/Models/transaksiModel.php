@@ -50,12 +50,25 @@ class transaksiModel extends Model
         }
     }
 
-    public function getTransaksiByYearMonth($year, $month)
+    public function getTransaksiKeluarByYearMonth($year, $month)
     {
         return $this
             ->select('COUNT(*) as jml_transaksi')
             ->where('YEAR(tanggal_transaksi)', $year)
             ->where('MONTH(tanggal_transaksi)', $month)
+            ->where('jenis_transaksi', '1')
+            ->groupBy('MONTH(tanggal_transaksi)')
+            ->orderBy('MONTH(tanggal_transaksi)', 'ASC')
+            ->findAll();
+    }
+
+    public function getTransaksiMasukByYearMonth($year, $month)
+    {
+        return $this
+            ->select('COUNT(*) as jml_transaksi')
+            ->where('YEAR(tanggal_transaksi)', $year)
+            ->where('MONTH(tanggal_transaksi)', $month)
+            ->where('jenis_transaksi', '2')
             ->groupBy('MONTH(tanggal_transaksi)')
             ->orderBy('MONTH(tanggal_transaksi)', 'ASC')
             ->findAll();

@@ -36,10 +36,9 @@ class TipeBarang extends BaseController
     {
         if (!$this->validate([
             'merk_tipe_barang' => [
-                'rules' => 'required|is_unique[tipe_barang.merk_tipe_barang]',
+                'rules' => 'required',
                 'errors' => [
                     'required' => '{field} barang harus diisi.',
-                    'is_unique' => '{field} barang sudah terdaftar.'
                 ]
                 ],
             'id_barang' => [
@@ -71,6 +70,14 @@ class TipeBarang extends BaseController
             session()->setFlashdata('error','Data gagal ditambahkan.');
             return redirect()->to('TipeBarang/' .  $this->request->getVar('id_barang'))->withInput();
         }
+        // Cek apakah tipe barang sudah ada
+        $existingTipe = $this->tipeBarangModel->where('merk_tipe_barang', $this->request->getVar('merk_tipe_barang'))
+            ->where('id_barang', $this->request->getVar('id_barang'))
+            ->first();
+        if ($existingTipe) {
+            session()->setFlashdata('error', 'Tipe barang dengan merk tersebut sudah ada.');
+            return redirect()->to('TipeBarang/' .  $this->request->getVar('id_barang'))->withInput();
+        }
         $this->tipeBarangModel->save([
             'merk_tipe_barang' => $this->request->getVar('merk_tipe_barang'),
             'id_barang' => $this->request->getVar('id_barang'),
@@ -85,6 +92,17 @@ class TipeBarang extends BaseController
     public function update()
     {
         $id_tipe_barang = $this->request->getVar('id_tipe_barang');
+        $data_lama = $this->tipeBarangModel->find($id_tipe_barang);
+        if ($data_lama['merk_tipe_barang'] != $this->request->getVar('merk_tipe_barang')) {
+            // Cek apakah tipe barang sudah ada
+            $existingTipe = $this->tipeBarangModel->where('merk_tipe_barang', $this->request->getVar('merk_tipe_barang'))
+                ->where('id_barang', $this->request->getVar('id_barang'))
+                ->first();
+            if ($existingTipe) {
+                session()->setFlashdata('error', 'Tipe barang dengan merk tersebut sudah ada.');
+                return redirect()->to('TipeBarang/' .  $this->request->getVar('id_barang'))->withInput();
+            }
+        }
         $this->tipeBarangModel->save([
             'id_tipe_barang' => $id_tipe_barang,
             'id_barang' => $this->request->getVar('id_barang'),

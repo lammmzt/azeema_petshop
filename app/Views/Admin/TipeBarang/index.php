@@ -35,8 +35,14 @@
             </div>
             <div class="card-header">
                 <h4 class="card-title"><?= $title; ?> <?= $barang['nama_barang']; ?></h4>
+                <?php 
+                    if (session()->get('role') == '2') : 
+                ?>
                 <button type="button" data-toggle="modal" data-target="#add" href=""
                     class="btn btn-primary btn-sm float-right"><i class="fa fa-plus"></i></button>
+                <?php
+                    endif;
+                ?>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -63,14 +69,14 @@
                                 <td><?= $value['harga_tipe_barang']; ?></td>
                                 <td class="text-center">
                                     <?php 
-                                    if (session()->get('role') == '1') : 
+                                    if (session()->get('role') == '2') : 
                                     ?>
                                     <button type="button" data-toggle="modal"
                                         data-target="#edit<?= $value['id_tipe_barang']; ?>" href=""
                                         class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
-                                    <button type="button" data-toggle="modal"
+                                    <!-- <button type="button" data-toggle="modal"
                                         data-target="#hapus<?= $value['id_tipe_barang']; ?>" href=""
-                                        class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                        class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> -->
                                     <?php 
                                     else:
                                         echo '-';

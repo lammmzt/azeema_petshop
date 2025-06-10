@@ -109,6 +109,7 @@ $detailTransaksiModel = new detailTransaksiModel();
                                 <tr>
                                     <th>#</th>
                                     <th>Tipe Barang</th>
+                                    <th>Exp Barang</th>
                                     <th>Jumlah</th>
                                     <th>Harga</th>
                                     <th>Subtotal</th>
@@ -123,6 +124,7 @@ $detailTransaksiModel = new detailTransaksiModel();
                                     <td><?= $no++; ?></td>
                                     <td><?= $dt['nama_barang']; ?>(<?= $dt['merk_tipe_barang']; ?>) @
                                         <?= $dt['satuan']; ?></td>
+                                    <td><?= date('d-m-Y', strtotime($dt['exp_barang'])); ?></td>
                                     <td><?= $dt['jumlah_transaksi']; ?></td>
                                     <td><?php echo "Rp. " . number_format($dt['harga_barang'], 0, ',', '.'); ?></td>
                                     <td><?php echo "Rp. " . number_format($dt['sub_total_transaksi'], 0, ',', '.'); ?>
@@ -130,7 +132,7 @@ $detailTransaksiModel = new detailTransaksiModel();
                                 </tr>
                                 <?php endforeach; ?>
                                 <tr>
-                                    <td colspan="4" class="text-center">Total</td>
+                                    <td colspan="5" class="text-center">Total</td>
                                     <td><?php echo "Rp. " . number_format($value['total_transaksi'], 0, ',', '.'); ?>
                                     </td>
                                 </tr>

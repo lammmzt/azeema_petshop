@@ -35,7 +35,7 @@ class Barang extends BaseController
                 ]
             ]
         ])) {
-            session()->setFlashdata('error','Data gagal ditambahkan.');
+            session()->setFlashdata('error','Nama barang sudah terdaftar.');
             return redirect()->to('/Barang')->withInput();
         }
         $this->barangModel->insert([
@@ -58,6 +58,21 @@ class Barang extends BaseController
     public function update()
     {
         $id_barang = $this->request->getVar('id_barang');
+        $data_lama = $this->barangModel->getBarang($id_barang);
+        if($data_lama['nama_barang'] != $this->request->getVar('nama_barang')) {
+            if (!$this->validate([
+                'nama_barang' => [
+                    'rules' => 'required|is_unique[barang.nama_barang]',
+                    'errors' => [
+                        'required' => '{field} barang harus diisi.',
+                        'is_unique' => '{field} barang sudah terdaftar.'
+                    ]
+                ]
+            ])) {
+                session()->setFlashdata('error','Nama barang sudah terdaftar.');
+                return redirect()->to('/Barang')->withInput();
+            }
+        }
         $this->barangModel->save([
             'id_barang' => $id_barang,
             'nama_barang' => $this->request->getVar('nama_barang')
