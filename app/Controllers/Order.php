@@ -60,21 +60,25 @@ class Order extends BaseController
         if($status_order == '2') {
             $data = [
                 'status_order' => '2',
+                'ket_proses' => $this->request->getPost('ket_proses'),
                 'tanggal_disetujui' => date('Y-m-d H:i:s')
             ];
         } else if($status_order == '3') {
             $data = [
                 'status_order' => '3',
+                'ket_proses' => $this->request->getPost('ket_proses'),
                 'tanggal_proses' => date('Y-m-d H:i:s')
             ];
         } else if($status_order == '4') {
             $data = [
                 'status_order' => '4',
+                'ket_proses' => $this->request->getPost('ket_proses'),
                 'tanggal_selesai' => date('Y-m-d H:i:s')
             ];
         } else {
             $data = [
                 'status_order' => '0',
+                'ket_proses' => $this->request->getPost('ket_proses'),
                 'tanggal_selesai' => date('Y-m-d H:i:s')
             ];
         }

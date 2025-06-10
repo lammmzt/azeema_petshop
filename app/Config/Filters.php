@@ -84,11 +84,11 @@ class Filters extends BaseFilters
         'after' => [
             'filterAdmin' => ['except' => [ 
                 '/', 'Auth/logout','Auth/login','Auth/Register','Barang', 'Barang/*', 'Dashboard', 'Dashboard/*',
-                'Home', 'Home/*', 'Layanan', 'Layanan/*', 'TipeBarang', 'TipeBarang/*', 'Transaksi/Masuk','Transaksi/tambah_transaksi_masuk', 'Transaksi/simpan_transaksi_masuk', 'Laporan/', 'Laporan/*'
+                'Home', 'Home/*', 'Layanan', 'Layanan/*', 'TipeBarang', 'TipeBarang/*', 'Transaksi/Masuk','Transaksi/tambah_transaksi_masuk', 'Transaksi/simpan_transaksi_masuk', 'Laporan/Transaksi'
             ]],
             'filterKasir' => ['except' => [ 
                 '/', 'Auth/logout','Auth/login','Auth/Register', 'Dashboard', 'Dashboard/*',
-                'Home', 'Home/*', 'Order', 'Order/*', 'Transaksi/Keluar','Transaksi/tambah_transaksi_keluar', 'Transaksi/simpan_transaksi_keluar',  'Transaksi/print_struk', 'Transaksi/print_struk/*', 'Users', 'Users/reset_password', 'Users/Update', 'Users/Simpan',
+                'Home', 'Home/*', 'Order', 'Order/*', 'Transaksi/Keluar','Transaksi/tambah_transaksi_keluar', 'Transaksi/simpan_transaksi_keluar',  'Transaksi/print_struk', 'Transaksi/print_struk/*', 'Users', 'Users/reset_password', 'Users/Update', 'Users/Simpan', 'Laporan/Transaksi', 
             ]],
             'filterOwner' => ['except' => [ 
                 '/', 'Auth/logout','Auth/login','Auth/Register','Barang', 'Barang/*', 'Dashboard', 'Dashboard/*',

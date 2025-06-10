@@ -381,7 +381,7 @@
                             </div>
                         </div>
                         <?php 
-                    if ($value['bukti_pembayaran'] != null) : ?>
+                     if ($value['bukti_pembayaran'] != null) : ?>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Bukti Pembayaran</label><br>
@@ -389,6 +389,8 @@
                                     alt="Bukti Pembayaran" class="img-fluid" width="200px">
                             </div>
                         </div>
+
+                        <?php endif; ?>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="">Keterangan</label>
@@ -396,7 +398,6 @@
                                     placeholder="Keterangan" readonly><?= $value['ket_order'] ?></textarea>
                             </div>
                         </div>
-                        <?php endif; ?>
                     </div>
                     <div class="row">
                         <div class="col-12">

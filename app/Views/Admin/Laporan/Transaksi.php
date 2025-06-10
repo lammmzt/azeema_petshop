@@ -93,11 +93,25 @@ $detailTransaksiModel = new detailTransaksiModel();
                             <div class="form-group">
                                 <label for="">Tipe Transaksi</label>
                                 <select name="jenis_transaksi" class="form-control" id="jenis_transaksi">
+                                    <?php 
+                                    if (session()->get('role') == '1') :
+                                    ?>
                                     <option value="">Semua Transaksi</option>
+                                    <?php 
+                                    endif;
+                                    if (session()->get('role') == '1' || session()->get('role') == '2') :
+                                    ?>
                                     <option value="0" <?= $jenis_transaksi == '0' ? 'selected' : ''; ?>>Transaksi Masuk
                                     </option>
+                                    <?php
+                                    endif;
+                                    if (session()->get('role') == '1' || session()->get('role') == '4') :
+                                    ?>
                                     <option value="1" <?= $jenis_transaksi == '1' ? 'selected' : ''; ?>>Transaksi Keluar
                                     </option>
+                                    <?php
+                                    endif;
+                                    ?>
 
                                 </select>
                             </div>

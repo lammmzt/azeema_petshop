@@ -78,7 +78,7 @@
                      aria-expanded="false"><i class="fa fa-user"></i><span class="nav-text">Users</span></a></li>
              <?php 
                 endif; 
-                if (session()->get('role') == '1') :
+                if (session()->get('role') == '1' || session()->get('role') == '4') :
             ?>
              <li class="nav-label">Master Laporan</li>
              <li
