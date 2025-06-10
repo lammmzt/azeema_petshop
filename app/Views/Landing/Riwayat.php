@@ -130,7 +130,7 @@
                     ?>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="">Catatan Pemesanan</label>
+                            <label for="">Catatan Booking</label>
                             <textarea class="form-control" rows="3" readonly><?= $row['ket_order'] ?></textarea>
                         </div>
                     </div>

@@ -393,7 +393,7 @@
                         <?php endif; ?>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="">Keterangan</label>
+                                <label for="">Keterangan Booking</label>
                                 <textarea name="ket_order" id="" cols="30" rows="5" class="form-control"
                                     placeholder="Keterangan" readonly><?= $value['ket_order'] ?></textarea>
                             </div>
@@ -469,7 +469,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Keterangan</label>
+                                <label for="">Keterangan Pengerjaan</label>
                                 <textarea name="ket_proses" id="" cols="30" rows="5" class="form-control"
                                     placeholder="Keterangan"><?= $value['ket_proses'] ?></textarea>
                             </div>
