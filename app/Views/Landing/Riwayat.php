@@ -140,8 +140,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Catatan Admin </label>
-                            <textarea class="form-control" rows="3"
-                                readonly><?= $row['ket_ket_prosesorder'] ?></textarea>
+                            <textarea class="form-control" rows="3" readonly><?= $row['ket_proses'] ?></textarea>
                         </div>
                     </div>
                     <?php endif; ?>
