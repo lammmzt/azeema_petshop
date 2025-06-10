@@ -76,8 +76,8 @@ class Laporan extends BaseController
         }
         // dd($data_order);
         $data = [ // Data yang akan dikirim ke view
-            'title' => 'Laporan Orderan',
-            'title_laporan' => 'Laporan Orderan ' . $tgl_awal . ' s/d ' . $tgl_akhir,
+            'title' => 'Laporan Pemesanan',
+            'title_laporan' => 'Laporan Pemesanan ' . $tgl_awal . ' s/d ' . $tgl_akhir,
             'main_menu' => 'Laporan',
             'menu_aktif' => 'laporan_orderan',
             'validation' => \Config\Services::validation(),

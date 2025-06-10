@@ -120,7 +120,7 @@ $detailOrderModel = new detailOrderModel();
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Kode Order</th>
+                                <th>Kode Pemesanan</th>
                                 <th>Tanggal</th>
                                 <th>Detail Produk</th>
                                 <th>Sub Total</th>
@@ -161,7 +161,7 @@ $detailOrderModel = new detailOrderModel();
                             else:
                             ?>
                             <tr>
-                                <td colspan="5" class="text-center">Tidak ada data order</td>
+                                <td colspan="5" class="text-center">Tidak ada data pemesanan</td>
                             </tr>
                             <?php 
                             endif;
@@ -169,7 +169,7 @@ $detailOrderModel = new detailOrderModel();
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="4" class="text-right"><strong>Total order</strong></td>
+                                <td colspan="4" class="text-right"><strong>Total Pemesanan</strong></td>
                                 <td><strong><?php echo "Rp. " . number_format($total_order, 0, ',', '.'); ?></strong>
                                 </td>
                             </tr>

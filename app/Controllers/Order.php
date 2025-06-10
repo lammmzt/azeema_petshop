@@ -25,7 +25,7 @@ class Order extends BaseController
     {
         $detailOrderModel = new detailOrderModel();
         $data = [
-            'title' => 'Daftar Orderan',
+            'title' => 'Daftar Pemesanan',
             'main_menu' => 'Order',
             'menu_aktif' => 'Order',
             'validation' => \Config\Services::validation(),
@@ -41,9 +41,9 @@ class Order extends BaseController
         $data_user = $this->usersModel->where('role', '3')->findAll(); // Mengambil data user dengan level 'user'
         $data_layanan = $this->layananModel->getLayanan(); // Mengambil data layanan
         $data = [ // Data yang akan dikirim ke view
-            'title' => 'Tambah Orderan',
+            'title' => 'Tambah Pemesanan',
             'main_menu' => 'Order',
-            'menu_aktif' => 'Tambah Orderan',
+            'menu_aktif' => 'Tambah Pemesanan',
             'validation' => \Config\Services::validation(),
             'data_user' => $data_user,
             'data_layanan' => $data_layanan,
@@ -91,7 +91,7 @@ class Order extends BaseController
     public function print_struk($id_order) // Menampilkan halaman print struk 
     {
         $data = [ // Data yang akan dikirim ke view
-            'title' => 'Print Struk Transaksi',
+            'title' => 'Print Struk Pemesanan',
             'order' => $this->orderModel->getOrder($id_order), // Mengambil data order berdasarkan id
             'detail_order' => $this->detailOrderModel->getDetailOrderByOrder($id_order), // Mengambil detail order berdasarkan id order
         ];
