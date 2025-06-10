@@ -78,7 +78,8 @@
                      aria-expanded="false"><i class="fa fa-user"></i><span class="nav-text">Users</span></a></li>
              <?php 
                 endif; 
-                if (session()->get('role') == '1') :
+                if (session()->get('role') == '1' || session()->get('role') == '2' || session()->get('role') == '4') :
+                
             ?>
              <li class="nav-label">Master Laporan</li>
              <li
@@ -88,16 +89,18 @@
                      </i><span class="nav-text">Laporan</span></a>
                  <ul aria-expanded="false"
                      class="<?= ($menu_aktif == 'laporan_transaksi' || $menu_aktif == 'laporan_orderan') ? 'mm-show' : ''; ?>">
-                     <?php 
-                     if (session()->get('role') == '1' || session()->get('role') == '2' || session()->get('role') == '4') :
-                     ?>
+
                      <li><a class="<?= ($menu_aktif == 'laporan_transaksi') ? 'mm-active' : ''; ?>"
                              href="<?= base_url('Laporan/Transaksi'); ?>">Laporan Transaksi</a></li>
+
+                     <?php 
+                    if (session()->get('role') == '1' || session()->get('role') == '4') :
+                     ?>
+                     <li><a class="<?= ($menu_aktif == 'laporan_orderan') ? 'mm-active' : ''; ?>"
+                             href="<?= base_url('Laporan/Orderan'); ?>">Laporan Pemesanan</a></li>
                      <?php
                         endif;
                     ?>
-                     <li><a class="<?= ($menu_aktif == 'laporan_orderan') ? 'mm-active' : ''; ?>"
-                             href="<?= base_url('Laporan/Orderan'); ?>">Laporan Pemesanan</a></li>
                  </ul>
              </li>
              <?php 
