@@ -27,13 +27,13 @@ class Database extends Config
     public array $default = [
         'DSN'          => '',
         'hostname'     => 'localhost',
-        // 'username'     => 'root',
-        // 'password'     => '',
-        // 'database'     => 'azeema_petshop',
-        
-        'username'     => 'azeema-petshop',
-        'password'     => 'azeema-petshop',
+        'username'     => 'root',
+        'password'     => '',
         'database'     => 'azeema_petshop',
+        
+        // 'username'     => 'azeema-petshop',
+        // 'password'     => 'azeema-petshop',
+        // 'database'     => 'azeema_petshop',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,

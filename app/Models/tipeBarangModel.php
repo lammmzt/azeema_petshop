@@ -29,6 +29,14 @@ class tipeBarangModel extends Model
                     ->where(['tipe_barang.id_barang' => $id_barang])
                     ->findAll();
     }
+
+    public function getStokMinimal()
+    {
+        return $this->select('tipe_barang.*, barang.nama_barang')
+                    ->join('barang', 'barang.id_barang = tipe_barang.id_barang')
+                    ->where('stok_tipe_barang <=', 5)
+                    ->findAll();
+    }
 }
 
 ?>

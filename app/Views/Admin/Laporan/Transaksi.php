@@ -96,7 +96,7 @@ $detailTransaksiModel = new detailTransaksiModel();
                                     <?php 
                                     if (session()->get('role') == '1') :
                                     ?>
-                                    <option value="">Semua Transaksi</option>
+                                    <!-- <option value="">Semua Transaksi</option> -->
                                     <?php 
                                     endif;
                                     if (session()->get('role') == '1' || session()->get('role') == '2') :
@@ -143,10 +143,9 @@ $detailTransaksiModel = new detailTransaksiModel();
                     <table class="table table-striped table-responsive-sm text-black-50" id="tabel_data_transaksi">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Kode Transaksi</th>
-                                <th>Tipe Transaksi</th>
+                                <th>No</th>
                                 <th>Tanggal</th>
+                                <th>Kode Transaksi</th>
                                 <th>Detail Produk</th>
                                 <th>Sub Total</th>
                             </tr>
@@ -162,11 +161,8 @@ $detailTransaksiModel = new detailTransaksiModel();
                             ?>
                             <tr>
                                 <td class="text-center"><?= $no++; ?></td>
-                                <td><?= $value['id_transaksi']; ?></td>
-                                <td class="text-center">
-                                    <?= $value['jenis_transaksi'] == '0' ? '<span class="badge badge-success">Transaksi Masuk</span>' : '<span class="badge badge-danger">Transaksi Keluar</span>'; ?>
-                                </td>
                                 <td><?= $value['tanggal_transaksi']; ?></td>
+                                <td><?= $value['id_transaksi']; ?></td>
                                 <td class="list_detail_items">
                                     <?php 
                                     foreach ($data_detail_transaksi as $key => $dt) : 
@@ -188,7 +184,7 @@ $detailTransaksiModel = new detailTransaksiModel();
                             else:
                             ?>
                             <tr>
-                                <td colspan="6" class="text-center">Tidak ada data transaksi</td>
+                                <td colspan="5" class="text-center">Tidak ada data transaksi</td>
                             </tr>
                             <?php 
                             endif;
@@ -196,7 +192,7 @@ $detailTransaksiModel = new detailTransaksiModel();
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="5" class="text-right"><strong>Total Transaksi</strong></td>
+                                <td colspan="4" class="text-right"><strong>Total Transaksi</strong></td>
                                 <td colspan="2" class="text-left">
                                     <strong><?php echo "Rp. " . number_format($total_transaksi, 0, ',', '.'); ?></strong>
                                 </td>

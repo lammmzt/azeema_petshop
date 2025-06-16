@@ -34,14 +34,14 @@ class transaksiModel extends Model
     {
         if ($jenis_transaksi == null) {
             return $this
-                ->select('transaksi.*')
+                ->select('transaksi.*, transaksi.tanggal_transaksi as tanggal')
                 ->where('tanggal_transaksi >=', $tgl_awal)
                 ->where('tanggal_transaksi <=', $tgl_akhir)
                 ->orderBy('id_transaksi', 'DESC')
                 ->findAll();
         } else {
             return $this
-                ->select('transaksi.*')
+                ->select('transaksi.*, transaksi.tanggal_transaksi as tanggal')
                 ->where('tanggal_transaksi >=', $tgl_awal)
                 ->where('tanggal_transaksi <=', $tgl_akhir)
                 ->where('jenis_transaksi', $jenis_transaksi)

@@ -101,6 +101,14 @@
                      <?php
                         endif;
                     ?>
+                     <?php 
+                    if (session()->get('role') == '1') :
+                     ?>
+                     <li><a class="<?= ($menu_aktif == 'laporan_pendapatan') ? 'mm-active' : ''; ?>"
+                             href="<?= base_url('Laporan/Pendapatan'); ?>">Laporan Pendapatan</a></li>
+                     <?php
+                        endif;
+                    ?>
                  </ul>
              </li>
              <?php 

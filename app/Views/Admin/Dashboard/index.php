@@ -125,6 +125,63 @@
         </div>
     </div> -->
 </div>
+<?php 
+if(session()->get('role') == '2' || session()->get('role') == '1') :
+?>
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Daftar Stok Barang Menipis</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12">
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-responsive-sm text-black-50" id="tabel_stok_minim">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th>Kode Barang</th>
+                                        <th>Nama Barang</th>
+                                        <th class="text-center">Stok</th>
+                                        <td class="text-center">Detail</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $no = 1;
+                                    foreach ($data_stok_minimal as $key => $value) : ?>
+                                    <tr>
+                                        <td class="text-center"><?= $no++; ?></td>
+                                        <td><?= $value['id_barang']; ?></td>
+                                        <td><?= $value['nama_barang']; ?> - <?= $value['merk_tipe_barang']; ?>
+                                            (<?= $value['satuan']; ?>)</td>
+                                        <td class="text-center"><?= $value['stok_tipe_barang']; ?></td>
+                                        <td class="text-center">
+                                            <a href="<?= base_url('TipeBarang/' . $value['id_barang']); ?>"
+                                                class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                    <?php if (empty($data_stok_minimal)) : ?>
+                                    <tr>
+                                        <td colspan="4" class="text-center">Tidak ada data stok barang menipis</td>
+                                    </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+endif;
+?>
 <?= $this->endSection('content'); ?>
 <?= $this->section('dataTables'); ?>
 <!-- <script src="<?php // echo base_url('assets/js/plugins-init/chartjs-init.js')  
@@ -162,6 +219,18 @@ $('#tahun_grafik_transaksi').change(function() {
         resize: true
     });
 })(jQuery);
+
+$(document).ready(function() {
+    $('#tabel_stok_minim').DataTable({
+        "columnDefs": [{
+            "orderable": false,
+            "targets": 4
+
+        }]
+
+    });
+
+});
 </script>
 
 <?= $this->endSection('dataTables'); ?>

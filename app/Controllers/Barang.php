@@ -38,8 +38,13 @@ class Barang extends BaseController
             session()->setFlashdata('error','Nama barang sudah terdaftar.');
             return redirect()->to('/Barang')->withInput();
         }
+        $id_barang = 'KB-' . date('Ymd') . '-' . rand(1000, 9999);
+        if ($this->barangModel->where('id_barang', $id_barang)->first()) {
+            session()->setFlashdata('error', 'ID Barang sudah terdaftar, silakan coba lagi.');
+            return redirect()->to('/Barang')->withInput();
+        }
         $this->barangModel->insert([
-            'id_barang' => Uuid::uuid4()->toString(),
+            'id_barang' => $id_barang,
             'nama_barang' => $this->request->getVar('nama_barang')
         ]);
         session()->setFlashdata('success', 'Data berhasil ditambahkan.');

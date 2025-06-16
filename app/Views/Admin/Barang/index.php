@@ -46,6 +46,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Kode Barang</th>
                                 <th>Nama Barang</th>
                                 <th>Aksi</th>
                             </tr>
@@ -56,6 +57,7 @@
                             foreach ($barang as $key => $value) : ?>
                             <tr>
                                 <td><?= $no++; ?></td>
+                                <td><?= $value['id_barang']; ?></td>
                                 <td><?= $value['nama_barang']; ?></td>
                                 <td>
                                     <?php 

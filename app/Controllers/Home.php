@@ -34,6 +34,7 @@ class Home extends BaseController
         else{
             $tahun_grafik_transaksi = date('Y');
         }
+        
         $data_grafik= [];
         for($i=1; $i<=12; $i++){
             $jml_transaksi_tahunan = $transaksiModel->getTransaksiKeluarByYearMonth($tahun_grafik_transaksi, $i);
@@ -45,6 +46,9 @@ class Home extends BaseController
             ];
         }
         // dd($data_grafik);
+
+        $dataStokMinimal = $tipeBarangModel->getStokMinimal();
+        // dd($dataStokMinimal);
         $data = [
             'title' => 'Dashboard',
             'menu_aktif' => 'Dashboard',
@@ -55,6 +59,7 @@ class Home extends BaseController
             'jml_transaksi' => $jml_transaksi,
             'tahun_grafik_transaksi' => $tahun_grafik_transaksi,
             'data_grafik' => $data_grafik,
+            'data_stok_minimal' => $dataStokMinimal,
         ];
         return view('Admin/Dashboard/index', $data);
     }

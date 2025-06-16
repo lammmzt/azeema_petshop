@@ -88,5 +88,50 @@ class Laporan extends BaseController
         return view('Admin/Laporan/Orderan', $data); // Load view
     }
 
+    public function Pendapatan() // Menampilkan halaman daftar transaksi masuk
+    {
+        if($this->request->getPost('tgl_awal') && $this->request->getPost('tgl_akhir')) {
+            $tgl_awal = $this->request->getPost('tgl_awal');
+            $tgl_akhir = $this->request->getPost('tgl_akhir');
+            $jenis_pendapatan = $this->request->getPost('jenis_pendapatan');
+            // dd($tgl_awal, $tgl_akhir, $status_order);
+            if($this->request->getPost('jenis_pendapatan') == '1') {
+                $data_order = $this->orderModel->getLaporan($tgl_awal, $tgl_akhir); // Ambil data transaksi keluar sesuai filter
+                $data_transaksi = $this->transaksiModel->getLaporanTransaksi('1999-01-01', '1999-12-31', null); // Ambil semua data transaksi masuk
+            }elseif($this->request->getPost('jenis_pendapatan') == '0') {
+                $data_order = $this->orderModel->getLaporan('1999-01-01', '1999-12-31'); // Ambil semua data transaksi masuk
+                $data_transaksi = $this->transaksiModel->getLaporanTransaksi($tgl_awal, $tgl_akhir, null); // Ambil data transaksi masuk sesuai filter
+            } else {
+                $data_order = $this->orderModel->getLaporan($tgl_awal, $tgl_akhir); // Ambil data transaksi keluar sesuai filter
+                $data_transaksi = $this->transaksiModel->getLaporanTransaksi($tgl_awal, $tgl_akhir, null); // Ambil data transaksi masuk sesuai filter
+            }
+        } else {
+            $data_order = $this->orderModel->getLaporan('1999-01-01', '1999-12-31'); // Ambil semua data transaksi masuk
+            $data_transaksi = $this->transaksiModel->getLaporanTransaksi('1999-01-01', '1999-12-31', null); // Ambil semua data transaksi masuk
+            $tgl_awal = '';
+            $tgl_akhir = '';
+            $status_order = '';
+            $jenis_pendapatan = '';
+        }
+        // dd($data_order, $data_transaksi);
+
+
+        // dd($data_all_pendapatan);    
+        $data = [ // Data yang akan dikirim ke view
+            'title' => 'Laporan Pendapatan',
+            'title_laporan' => 'Laporan Pendapatan ' . $tgl_awal . ' s/d ' . $tgl_akhir,
+            'main_menu' => 'Laporan',
+            'menu_aktif' => 'laporan_pendapatan',
+            'validation' => \Config\Services::validation(),
+            'data_order' => $data_order,
+            'tgl_awal' => $tgl_awal,
+            'tgl_akhir' => $tgl_akhir,
+            'data_transaksi' => $data_transaksi,
+            'data_order' => $data_order,
+            'jenis_pendapatan' => $jenis_pendapatan,
+        ];
+        return view('Admin/Laporan/Pendapatan', $data); // Load view
+    }
+
 }
 ?>

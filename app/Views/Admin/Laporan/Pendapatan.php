@@ -1,12 +1,12 @@
 <?= $this->extend('Template/index') ?>
 <?= $this->section('content') ?>
 <?php 
+use App\Models\detailTransaksiModel;
 use App\Models\detailOrderModel;
 
 $detailOrderModel = new detailOrderModel();
+$detailTransaksiModel = new detailTransaksiModel();
 ?>
-
-
 <style>
 @media print {
     @page {
@@ -89,9 +89,39 @@ $detailOrderModel = new detailOrderModel();
 
             </div>
             <div class="card-body">
-                <form action="<?= base_url('Laporan/Orderan'); ?>" method="post">
+                <form action="<?= base_url('Laporan/Pendapatan'); ?>" method="post">
                     <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="">Jenis Pendapatan</label>
+                                <select name="jenis_pendapatan" class="form-control" id="jenis_pendapatan">
+                                    <?php 
+                                    if (session()->get('role') == '1') :
+                                    ?>
+                                    <option value="" <?= $jenis_pendapatan == '' ? 'selected' : ''; ?>>Semua
+                                        Pendapatan</option>
+                                    <?php 
+                                    endif;
+                                    if (session()->get('role') == '1' || session()->get('role') == '2') :
+                                    ?>
+                                    <option value="0" <?= $jenis_pendapatan == '0' ? 'selected' : ''; ?>>Penjualan
+                                        Barang
+                                    </option>
+                                    <?php
+                                    endif;
+                                    if (session()->get('role') == '1' || session()->get('role') == '4') :
+                                    ?>
+                                    <option value="1" <?= $jenis_pendapatan == '1' ? 'selected' : ''; ?>>Pemesanan
+                                        Layanan
 
+                                    </option>
+                                    <?php
+                                    endif;
+                                    ?>
+
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="">Tanggal Awal</label>
@@ -109,9 +139,9 @@ $detailOrderModel = new detailOrderModel();
                         <div class="col-lg-3 mt-4">
                             <button type="submit" class="btn btn-primary justify-content-end align-items-center"><i
                                     class="mdi mdi-magnify"></i> Filter</button>
-                            <button type="button"
-                                class="btn btn-success justify-content-end align-items-center btn_print"><i
-                                    class="mdi mdi-printer" id="btn_print"></i> Print</button>
+                            <button id="btn_print" type="button"
+                                class="btn btn-success justify-content-end align-items-center"><i
+                                    class="mdi mdi-printer"></i> Print</button>
                         </div>
                     </div>
                 </form>
@@ -121,7 +151,7 @@ $detailOrderModel = new detailOrderModel();
                             <tr>
                                 <th>#</th>
                                 <th>Tanggal</th>
-                                <th>Kode Pemesanan</th>
+                                <th>Kode</th>
                                 <th>Detail Produk</th>
                                 <th>Sub Total</th>
                             </tr>
@@ -129,17 +159,48 @@ $detailOrderModel = new detailOrderModel();
                         <tbody>
                             <?php
                             $no = 1;
-                            $total_order = 0;
+                            $total_pendapatan = 0;
+                            if(!empty($data_order) || !empty($data_transaksi)) :
+                                if(!empty($data_transaksi)) :
+                                    foreach ($data_transaksi as $key => $value) : 
+                                    $total_pendapatan += $value['total_transaksi'];
+                                    $data_detail_transaksi = $detailTransaksiModel->getDetailTransaksiByTransaksi($value['id_transaksi']);
+                                ?>
+                            <tr>
+                                <td class="text-center"><?= $no++; ?></td>
+                                <td><?= date('d-m-Y', strtotime($value['tanggal_transaksi'])); ?></td>
+                                <td><?= $value['id_transaksi']; ?></td>
+                                <td class="list_detail_items">
+                                    <?php 
+                                            foreach ($data_detail_transaksi as $key => $dt) : 
+                                            ?>
+                                    <p><?= $dt['nama_barang']; ?> <?= $dt['merk_tipe_barang']; ?>(<?= $dt['satuan']; ?>)
+                                        @ <?php echo "Rp. " . number_format($dt['harga_barang'], 0, ',', '.'); ?> x
+                                        <?= $dt['jumlah_transaksi']; ?> =
+                                        <?php echo "Rp. " . number_format($dt['sub_total_transaksi'], 0, ',', '.'); ?>
+                                    </p>
+
+                                    <?php 
+                                            endforeach; 
+                                            ?>
+                                </td>
+                                <td><?php echo "Rp. " . number_format($value['total_transaksi'], 0, ',', '.'); ?></td>
+
+                            </tr>
+                            <?php 
+                                endforeach; 
+                                endif;
+                            ?>
+                            <?php
                             if(!empty($data_order)) :
-                            foreach ($data_order as $key => $value) : 
-                            $total_order += $value['total_order'];
+                            foreach ($data_order as $key => $value) :
+                            $total_pendapatan += $value['total_order'];
                             $data_detail_order = $detailOrderModel->getDetailOrderByOrder($value['id_order']);
                             ?>
                             <tr>
                                 <td class="text-center"><?= $no++; ?></td>
                                 <td><?= date('d-m-Y', strtotime($value['tanggal_order'])); ?></td>
                                 <td><?= $value['id_order']; ?></td>
-
                                 <td class="list_detail_items">
                                     <?php 
                                     foreach ($data_detail_order as $key => $dt) : 
@@ -157,11 +218,15 @@ $detailOrderModel = new detailOrderModel();
                                 <td><?php echo "Rp. " . number_format($value['total_order'], 0, ',', '.'); ?></td>
 
                             </tr>
-                            <?php endforeach; 
+                            <?php 
+                            endforeach; 
+                            endif;
+                            ?>
+                            <?php
                             else:
                             ?>
                             <tr>
-                                <td colspan="5" class="text-center">Tidak ada data pemesanan</td>
+                                <td colspan="5" class="text-center">Tidak ada data</td>
                             </tr>
                             <?php 
                             endif;
@@ -169,8 +234,8 @@ $detailOrderModel = new detailOrderModel();
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="4" class="text-right"><strong>Total Pemesanan</strong></td>
-                                <td><strong><?php echo "Rp. " . number_format($total_order, 0, ',', '.'); ?></strong>
+                                <td colspan="4" class="text-right"><strong>Total Pendapatan</strong></td>
+                                <td><strong><?php echo "Rp. " . number_format($total_pendapatan, 0, ',', '.'); ?></strong>
                                 </td>
                             </tr>
                         </tfoot>
@@ -191,7 +256,7 @@ $detailOrderModel = new detailOrderModel();
 <?= $this->section('dataTables'); ?>
 <script>
 $(document).ready(function() {
-    $('#tabel_data_order').DataTable({
+    $('#tabel_data_transaksi').DataTable({
         "searching": false,
         "ordering": false,
         "paging": false,
@@ -205,7 +270,7 @@ $(document).ready(function() {
 
 });
 
-$('.btn_print').on('click', function() {
+$('#btn_print').on('click', function() {
     window.print();
 });
 </script>
