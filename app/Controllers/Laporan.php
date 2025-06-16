@@ -100,10 +100,10 @@ class Laporan extends BaseController
                 $data_transaksi = $this->transaksiModel->getLaporanTransaksi('1999-01-01', '1999-12-31', null); // Ambil semua data transaksi masuk
             }elseif($this->request->getPost('jenis_pendapatan') == '0') {
                 $data_order = $this->orderModel->getLaporan('1999-01-01', '1999-12-31'); // Ambil semua data transaksi masuk
-                $data_transaksi = $this->transaksiModel->getLaporanTransaksi($tgl_awal, $tgl_akhir, null); // Ambil data transaksi masuk sesuai filter
+                $data_transaksi = $this->transaksiModel->getLaporanTransaksi($tgl_awal, $tgl_akhir, '1'); // Ambil data transaksi masuk sesuai filter
             } else {
                 $data_order = $this->orderModel->getLaporan($tgl_awal, $tgl_akhir); // Ambil data transaksi keluar sesuai filter
-                $data_transaksi = $this->transaksiModel->getLaporanTransaksi($tgl_awal, $tgl_akhir, null); // Ambil data transaksi masuk sesuai filter
+                $data_transaksi = $this->transaksiModel->getLaporanTransaksi($tgl_awal, $tgl_akhir, '1'); // Ambil data transaksi masuk sesuai filter
             }
         } else {
             $data_order = $this->orderModel->getLaporan('1999-01-01', '1999-12-31'); // Ambil semua data transaksi masuk
