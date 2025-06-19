@@ -1,6 +1,9 @@
 <?= $this->extend('Template/index') ?>
 <?= $this->section('content') ?>
-
+<?php 
+use App\Models\detailStokTipeBarangModel;
+$detailStokTipeBarangModel = new detailStokTipeBarangModel();
+?>
 <!-- row -->
 
 <div class="row">
@@ -60,12 +63,16 @@
                         <tbody>
                             <?php
                             $no = 1;
-                            foreach ($tipe_barang as $key => $value) : ?>
+                            foreach ($tipe_barang as $key => $value) : 
+                            $data_detail_stok = $detailStokTipeBarangModel->getStokRilllByIdTipeBarang($value['id_tipe_barang']);
+                            ?>
                             <tr>
                                 <td><?= $no++; ?></td>
                                 <td><?= $value['merk_tipe_barang']; ?></td>
                                 <td><?= $value['satuan']; ?></td>
-                                <td class="text-center"><?= $value['total_stok']; ?></td>
+                                <td class="text-center">
+                                    <?= $data_detail_stok['total_stok'] > 0 ? $data_detail_stok['total_stok'] : '0'; ?>
+                                </td>
                                 <td>Rp. <?= number_format($value['harga_tipe_barang'], 0, ',', '.'); ?></td>
                                 <td class="text-center">
                                     <?php 

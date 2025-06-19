@@ -21,7 +21,7 @@ class TipeBarang extends BaseController
     public function index($id_barang = null)
     {
         $data_barang = $this->barangModel->getBarang($id_barang);
-        $tipe_barang = $this->detailStokTipeBarangModel->getStokTipeBarangByIdBarang($id_barang);
+        $tipe_barang = $this->tipeBarangModel->getTipeBarangByIdBarang($id_barang);
         if( !$data_barang) {
             session()->setFlashdata('error', 'Barang tidak ditemukan.');
             return redirect()->to('Barang');

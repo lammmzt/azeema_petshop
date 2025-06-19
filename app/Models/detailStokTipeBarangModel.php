@@ -75,15 +75,14 @@ class detailStokTipeBarangModel  extends Model
                     ->findAll();
     }
     
-    public function getStokMinimalByIdBarang($id_tipe_barang)
+    public function getStokRilllByIdTipeBarang($id_tipe_barang)
     {
         return $this->select('barang.nama_barang,barang.id_barang, tipe_barang.merk_tipe_barang, tipe_barang.satuan, SUM(detail_stok_tipe_barang.jumlah_detail_stok_tipe_barang) as total_stok')
                     ->join('tipe_barang', 'tipe_barang.id_tipe_barang = detail_stok_tipe_barang.id_tipe_barang')
                     ->join('barang', 'barang.id_barang = tipe_barang.id_barang')
                     ->where(['tipe_barang.id_tipe_barang' => $id_tipe_barang])
                     ->groupBy('detail_stok_tipe_barang.id_tipe_barang')
-                    ->having('SUM(detail_stok_tipe_barang.jumlah_detail_stok_tipe_barang) < 5') // Ganti 10 dengan stok minimal yang diinginkan
-                    ->findAll();
+                    ->first();
     }
 }
 
