@@ -158,7 +158,7 @@ if(session()->get('role') == '2' || session()->get('role') == '1') :
                                         <td><?= $value['id_barang']; ?></td>
                                         <td><?= $value['nama_barang']; ?> - <?= $value['merk_tipe_barang']; ?>
                                             (<?= $value['satuan']; ?>)</td>
-                                        <td class="text-center"><?= $value['stok_tipe_barang']; ?></td>
+                                        <td class="text-center"><?= $value['total_stok']; ?></td>
                                         <td class="text-center">
                                             <a href="<?= base_url('TipeBarang/' . $value['id_barang']); ?>"
                                                 class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a>

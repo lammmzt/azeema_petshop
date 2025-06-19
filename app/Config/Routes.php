@@ -6,5 +6,6 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
-$routes->get('/TipeBarang/(:any)', 'TipeBarang::index/$1');
+// $routes->post('/TipeBarang/detail_stok/(:any)', 'TipeBarang::detail_stok/$1');
+$routes->get('/TipeBarang/(:segment)', 'TipeBarang::index/$1');
 $routes->setAutoRoute(true);

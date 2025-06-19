@@ -9,6 +9,8 @@ use App\Models\orderModel;
 use App\Models\detailOrderModel;
 use App\Models\layananModel;
 use App\Models\usersModel;
+use App\Models\detailStokTipeBarangModel;
+
 
 class Home extends BaseController
 {
@@ -22,6 +24,7 @@ class Home extends BaseController
         $detailOrderModel = new detailOrderModel();
         $layananModel = new layananModel();
         $usersModel = new usersModel();
+        $detailStokTipeBarangModel = new detailStokTipeBarangModel();
 
         $jml_user = $usersModel->countAllResults();
         $jml_order = $orderModel->countAllResults();
@@ -47,7 +50,7 @@ class Home extends BaseController
         }
         // dd($data_grafik);
 
-        $dataStokMinimal = $tipeBarangModel->getStokMinimal();
+        $dataStokMinimal = $detailStokTipeBarangModel->getStokMinimal();
         // dd($dataStokMinimal);
         $data = [
             'title' => 'Dashboard',

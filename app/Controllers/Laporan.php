@@ -46,6 +46,8 @@ class Laporan extends BaseController
             $tgl_akhir = '';
             $jenis_transaksi = '';
         }
+
+        $jenis_transaksi = $jenis_transaksi == '0' ? 'Transaksi Masuk' : ($jenis_transaksi == '1' ? 'Transaksi Keluar' : 'Semua Transaksi');
         // dd($data_transaksi);
         $data = [ // Data yang akan dikirim ke view
             'title' => 'Laporan Transaksi',

@@ -62,14 +62,19 @@
                             <div class="form-group">
                                 <label for="">Nama Barang</label>
                                 <div class="input-group">
-                                    <select name="id_tipe_barang" id="id_tipe_barang" class="form-control">
+                                    <select name="id_detail_stok_tipe_barang" id="id_detail_stok_tipe_barang"
+                                        class="form-control">
                                         <option value="">Pilih Barang</option>
-                                        <?php foreach ($tipe_barang as $b) : ?>
-                                        <option value="<?= $b['id_tipe_barang']; ?>"
-                                            data-harga="<?= $b['harga_tipe_barang']; ?>"
-                                            data-stok="<?= $b['stok_tipe_barang']; ?>">
+                                        <?php foreach ($detail_stok_tipe_barang as $b) : ?>
+                                        <option value="<?= $b['id_detail_stok_tipe_barang']; ?>"
+                                            data-harga="<?= $b['harga_detail_stok_tipe_barang']; ?>"
+                                            data-stok="<?= $b['jumlah_detail_stok_tipe_barang']; ?>">
                                             <?= $b['nama_barang']; ?>
-                                            (<?= $b['merk_tipe_barang']; ?>) @ <?= $b['satuan']; ?></option>
+                                            (<?= $b['merk_tipe_barang']; ?>) | <b> Stok:
+                                                <?= $b['jumlah_detail_stok_tipe_barang']; ?> <?= $b['satuan']; ?> | Exp:
+                                                <?= $b['exp_detail_stok_tipe_barang'] ? date('d-m-Y', strtotime($b['exp_detail_stok_tipe_barang'])) : 'Tidak Ada'; ?>
+                                            </b>
+                                        </option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -118,7 +123,7 @@
 <script>
 // select2
 $(document).ready(function() {
-    $('#id_tipe_barang').select2();
+    $('#id_detail_stok_tipe_barang').select2();
 });
 
 var data_barang = [];
@@ -172,14 +177,14 @@ tampilBarang(); // tampilkan barang
 // tambah barang
 $('#tambah_barang').on('click', function() {
     // alert('tambah barang');
-    var id_tipe_barang = $('#id_tipe_barang').val();
-    var nama_barang = $('#id_tipe_barang option:selected').text();
-    var harga = $('#id_tipe_barang option:selected').data('harga');
-    var stok = $('#id_tipe_barang option:selected').data('stok');
+    var id_detail_stok_tipe_barang = $('#id_detail_stok_tipe_barang').val();
+    var nama_barang = $('#id_detail_stok_tipe_barang option:selected').text();
+    var harga = $('#id_detail_stok_tipe_barang option:selected').data('harga');
+    var stok = $('#id_detail_stok_tipe_barang option:selected').data('stok');
     var jumlah = 1;
     var subtotal = harga * jumlah;
 
-    if (id_tipe_barang == '') { // jika barang belum dipilih
+    if (id_detail_stok_tipe_barang == '') { // jika barang belum dipilih
         alert('Pilih barang');
         return false;
     }
@@ -190,11 +195,11 @@ $('#tambah_barang').on('click', function() {
     }
 
     // jika barang sudah ada
-    var index = data_barang.findIndex(x => x.id_tipe_barang == id_tipe_barang);
+    var index = data_barang.findIndex(x => x.id_detail_stok_tipe_barang == id_detail_stok_tipe_barang);
 
     if (index == -1) { // jika barang belum ada
         data_barang.push({
-            id_tipe_barang: id_tipe_barang,
+            id_detail_stok_tipe_barang: id_detail_stok_tipe_barang,
             nama_barang: nama_barang,
             harga: harga,
             jumlah: jumlah,

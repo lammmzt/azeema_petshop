@@ -52,8 +52,8 @@
                                 <th>#</th>
                                 <th>Merk Barang</th>
                                 <th>Satuan</th>
-                                <th>Stok Barang</th>
-                                <th>Harga Barang</th>
+                                <th class="text-center">Stok Barang</th>
+                                <th>Harga Jual</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -65,8 +65,8 @@
                                 <td><?= $no++; ?></td>
                                 <td><?= $value['merk_tipe_barang']; ?></td>
                                 <td><?= $value['satuan']; ?></td>
-                                <td><?= $value['stok_tipe_barang']; ?></td>
-                                <td><?= $value['harga_tipe_barang']; ?></td>
+                                <td class="text-center"><?= $value['total_stok']; ?></td>
+                                <td>Rp. <?= number_format($value['harga_tipe_barang'], 0, ',', '.'); ?></td>
                                 <td class="text-center">
                                     <?php 
                                     if (session()->get('role') == '2') : 
@@ -82,6 +82,8 @@
                                         echo '-';
                                     endif;
                                     ?>
+                                    <a href="<?= base_url('TipeBarang/detail_stok/' . $value['id_tipe_barang']); ?>"
+                                        class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
                                 </td>
 
                             </tr>
@@ -126,16 +128,7 @@
                                 <?= $validation->getError('harga_tipe_barang'); ?>
                             </div>
                         </div>
-                        <div class="col-lg-12 mb-2">
-                            <label for="">Stok Tipe Barang</label>
-                            <input type="text" name="stok_tipe_barang" class="form-control"
-                                placeholder="Masukan stok tipe barang">
 
-                            <!-- validation -->
-                            <div class="invalid-feedback">
-                                <?= $validation->getError('stok_tipe_barang'); ?>
-                            </div>
-                        </div>
                         <div class="col-lg-12 mb-2">
                             <label for="">Satuan</label>
                             <select name="satuan" class="form-control" id="tambah_satuan">
@@ -203,16 +196,7 @@ foreach ($tipe_barang as $key => $value) : ?>
                             </div>
                         </div>
                         <input type="hidden" value="<?= $barang['id_barang']; ?>" name="id_barang">
-                        <div class="col-lg-12 mb-2">
-                            <label for="">Stok Tipe Barang</label>
-                            <input type="text" name="stok_tipe_barang" class="form-control"
-                                placeholder="Masukan stok tipe barang" value="<?= $value['stok_tipe_barang']; ?>">
 
-                            <!-- validation -->
-                            <div class="invalid-feedback">
-                                <?= $validation->getError('stok_tipe_barang'); ?>
-                            </div>
-                        </div>
                         <div class="col-lg-12 mb-2">
                             <label for="">Satuan</label>
                             <select name="satuan" class="form-control" id="tambah_satuan">

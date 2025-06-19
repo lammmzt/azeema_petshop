@@ -140,66 +140,77 @@ $detailTransaksiModel = new detailTransaksiModel();
                     </div>
                 </form>
                 <div class="table-responsive mt-4">
-                    <table class="table table-striped table-responsive-sm text-black-50" id="tabel_data_transaksi">
+                    <table class="table table-bordered text-black-50" id="tabel_data_order">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Tanggal</th>
-                                <th>Kode Transaksi</th>
-                                <th>Detail Produk</th>
-                                <th>Sub Total</th>
+                                <th rowspan="2" class="text-center align-middle">No</th>
+                                <th rowspan="2" class="text-center align-middle">Tanggal</th>
+                                <th rowspan="2" class="text-center align-middle">Kode Transaksi</th>
+                                <th colspan="3" class="text-center align-middle">Detail Transaksi</th>
+                                <th rowspan="2" class="text-center align-middle">Subtotal Transaksi</th>
+                            </tr>
+                            <tr>
+                                <th class="text-center">Nama Barang</th>
+                                <th class="text-center">Harga</th>
+                                <th class="text-center">Jumlah</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $no = 1;
-                            $total_transaksi = 0;
-                            if(!empty($data_transaksi)) :
-                            foreach ($data_transaksi as $key => $value) : 
-                            $total_transaksi += $value['total_transaksi'];
-                            $data_detail_transaksi = $detailTransaksiModel->getDetailTransaksiByTransaksi($value['id_transaksi']);
+                                $no = 1;
+                                $total_transaksi = 0;
+                                if (!empty($data_transaksi)) :
+                                    foreach ($data_transaksi as $value) :
+                                        $total_transaksi += $value['total_transaksi'];
+                                        $data_detail_transaksi = $detailTransaksiModel->getDetailTransaksiByTransaksi($value['id_transaksi']);
+                                        $jm_data_detail = count($data_detail_transaksi);
+                                        $firstRow = true;
+                                        foreach ($data_detail_transaksi as $dt) :
                             ?>
                             <tr>
-                                <td class="text-center"><?= $no++; ?></td>
-                                <td><?= $value['tanggal_transaksi']; ?></td>
-                                <td><?= $value['id_transaksi']; ?></td>
-                                <td class="list_detail_items">
-                                    <?php 
-                                    foreach ($data_detail_transaksi as $key => $dt) : 
-                                    ?>
-                                    <p><?= $dt['nama_barang']; ?> <?= $dt['merk_tipe_barang']; ?>(<?= $dt['satuan']; ?>)
-                                        @ <?php echo "Rp. " . number_format($dt['harga_barang'], 0, ',', '.'); ?> x
-                                        <?= $dt['jumlah_transaksi']; ?> =
-                                        <?php echo "Rp. " . number_format($dt['sub_total_transaksi'], 0, ',', '.'); ?>
-                                    </p>
-
-                                    <?php 
-                                    endforeach; 
-                                    ?>
+                                <?php if ($firstRow) : ?>
+                                <td class="text-center align-middle" rowspan="<?= $jm_data_detail; ?>"><?= $no++; ?>
                                 </td>
-                                <td><?php echo "Rp. " . number_format($value['total_transaksi'], 0, ',', '.'); ?></td>
-
-                            </tr>
-                            <?php endforeach; 
-                            else:
-                            ?>
-                            <tr>
-                                <td colspan="5" class="text-center">Tidak ada data transaksi</td>
-                            </tr>
-                            <?php 
+                                <td class="text-center align-middle" rowspan="<?= $jm_data_detail; ?>">
+                                    <?= date('d-m-Y', strtotime($value['tanggal_transaksi'])); ?></td>
+                                <td class="text-center align-middle" rowspan="<?= $jm_data_detail; ?>">
+                                    <?= $value['id_transaksi']; ?></td>
+                                <?php endif; ?>
+                                <td><?= $dt['nama_barang']; ?> (<?= $dt['merk_tipe_barang']; ?>) @ <?= $dt['satuan']; ?>
+                                </td>
+                                <td class="text-center"><?= "Rp. " . number_format($dt['harga_barang'], 0, ',', '.'); ?>
+                                </td>
+                                <td class="text-center"><?= $dt['jumlah_transaksi']; ?></td>
+                                <?php if ($firstRow) : ?>
+                                <td class="text-center align-middle" rowspan="<?= $jm_data_detail; ?>">
+                                    <?= "Rp. " . number_format($value['total_transaksi'], 0, ',', '.'); ?>
+                                </td>
+                                <?php
+                                $firstRow = false;
                             endif;
                             ?>
+                            </tr>
+                            <?php
+                                    endforeach;
+                                endforeach;
+                            else :
+                            ?>
+                            <tr>
+                                <td colspan="7" class="text-center">Tidak ada data transaksi</td>
+                            </tr>
+                            <?php endif; ?>
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="4" class="text-right"><strong>Total Transaksi</strong></td>
-                                <td colspan="2" class="text-left">
-                                    <strong><?php echo "Rp. " . number_format($total_transaksi, 0, ',', '.'); ?></strong>
+                                <td colspan="6" class="text-right"><strong>Total Transaksi</strong></td>
+                                <td class="text-left">
+                                    <strong><?= "Rp. " . number_format($total_transaksi, 0, ',', '.'); ?></strong>
                                 </td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
+
             </div>
         </div>
     </div>
@@ -214,21 +225,6 @@ $detailTransaksiModel = new detailTransaksiModel();
 <?= $this->endSection('content'); ?>
 <?= $this->section('dataTables'); ?>
 <script>
-$(document).ready(function() {
-    $('#tabel_data_transaksi').DataTable({
-        "searching": false,
-        "ordering": false,
-        "paging": false,
-        "info": false,
-        "columnDefs": [{
-            "orderable": false,
-            "searchable": false,
-        }]
-
-    });
-
-});
-
 $('#btn_print').on('click', function() {
     window.print();
 });

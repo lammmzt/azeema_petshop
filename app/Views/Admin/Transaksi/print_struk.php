@@ -146,7 +146,7 @@
     <table>
         <thead>
             <tr>
-                <th>Item</th>
+                <th style="width: 60%; text-align: left;">Nama Barang</th>
                 <th style="width: 20px; text-align: center; margin-right: 10px;">Qty</th>
                 <th class="right">Harga</th>
                 <th class="right">Total</th>

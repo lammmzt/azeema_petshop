@@ -5,6 +5,7 @@ use App\Models\transaksiModel;
 use App\Models\detailTransaksiModel;
 use App\Models\barangModel;
 use App\Models\tipeBarangModel;
+use App\Models\detailStokTipeBarangModel;
 use Ramsey\Uuid\Uuid;
 
 class Transaksi extends BaseController
@@ -20,6 +21,7 @@ class Transaksi extends BaseController
         $this->detailTransaksiModel = new detailTransaksiModel();
         $this->barangModel = new barangModel();
         $this->tipeBarangModel = new tipeBarangModel();
+        $this->detailStokTipeBarangModel = new detailStokTipeBarangModel();
     }
 
 
@@ -66,20 +68,26 @@ class Transaksi extends BaseController
         $data_barang = json_decode($data_barang, true); // Decode data json
 
         foreach ($data_barang as $key => $value) { // Looping data barang
-
+            $data_detail_stok_tipe_barang = [ // Data yang akan disimpan
+                'id_tipe_barang' => $value['id_tipe_barang'],
+                'harga_detail_stok_tipe_barang' => $value['harga'],
+                'jumlah_detail_stok_tipe_barang' => $value['jumlah'],
+                'exp_detail_stok_tipe_barang' => $value['exp_barang'] ?? null,
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+            $this->detailStokTipeBarangModel->save($data_detail_stok_tipe_barang); // Simpan data detail stok tipe barang
+            $id_detail_stok_tipe_barang = $this->detailStokTipeBarangModel->insertID(); // Mendapatkan id detail stok tipe barang yang baru saja disimpan
+            // update harga tipe barang
+            $this->tipeBarangModel->update($value['id_tipe_barang'], ['harga_tipe_barang' => $value['harga']]); // Update harga tipe barang
             $data_detail_transaksi = [ // Data yang akan disimpan
                 'id_transaksi' => $id_transaksi,
-                'id_tipe_barang' => $value['id_tipe_barang'],
+                'id_detail_stok_tipe_barang' => $id_detail_stok_tipe_barang,
                 'jumlah_transaksi' => $value['jumlah'],
                 'sub_total_transaksi' => $value['subtotal'],
                 'harga_barang' => $value['harga'],
-                'exp_barang' => $value['exp_barang'] ?? null, // Menyimpan tanggal kadaluarsa jika ada
             ];
 
             $this->detailTransaksiModel->save($data_detail_transaksi); // Simpan data detail transaksi
-            $tipe_barang = $this->tipeBarangModel->getTipeBarang($value['id_tipe_barang']); // Mengambil data tipe barang
-            $stok = $tipe_barang['stok_tipe_barang'] + $value['jumlah']; // Menghitung stok barang
-            $this->tipeBarangModel->update($value['id_tipe_barang'], ['stok_tipe_barang' => $stok]); // Update stok barang
                 
         }
         session()->setFlashdata('success', 'Data transaksi masuk berhasil disimpan'); // Set flashdata
@@ -114,7 +122,7 @@ class Transaksi extends BaseController
             'main_menu' => 'Transaksi',
             'menu_aktif' => 'transaksi_keluar',
             'validation' => \Config\Services::validation(),
-            'tipe_barang' => $this->tipeBarangModel->getTipeBarang(), // Mengambil data tipe barang
+            'detail_stok_tipe_barang' => $this->detailStokTipeBarangModel->getStokTipeBarangActive(), // Mengambil data detail stok tipe barang
         ];
         
         return view('Admin/Transaksi/Keluar/tambah', $data); // Load view
@@ -140,16 +148,22 @@ class Transaksi extends BaseController
 
             $data_detail_transaksi = [ // Data yang akan disimpan
                 'id_transaksi' => $id_transaksi,
-                'id_tipe_barang' => $value['id_tipe_barang'],
+                'id_detail_stok_tipe_barang' => $value['id_detail_stok_tipe_barang'],
                 'jumlah_transaksi' => $value['jumlah'],
                 'sub_total_transaksi' => $value['subtotal'],
                 'harga_barang' => $value['harga'],
             ];
 
             $this->detailTransaksiModel->save($data_detail_transaksi); // Simpan data detail transaksi
-            $tipe_barang = $this->tipeBarangModel->getTipeBarang($value['id_tipe_barang']); // Mengambil data tipe barang
-            $stok = $tipe_barang['stok_tipe_barang'] - $value['jumlah']; // Menghitung stok barang
-            $this->tipeBarangModel->update($value['id_tipe_barang'], ['stok_tipe_barang' => $stok]); // Update stok barang
+            $tipe_barang = $this->detailStokTipeBarangModel->getStokTipeBarang($value['id_detail_stok_tipe_barang']); // Mengambil data stok tipe barang berdasarkan id detail stok tipe barang
+            if (!$tipe_barang) {
+                return $this->response->setJSON(['status' => '404', 'pesan' => 'Data stok tipe barang tidak ditemukan']);
+            }
+            if ($tipe_barang['jumlah_detail_stok_tipe_barang'] < $value['jumlah']) { // Mengecek apakah stok barang cukup
+                return $this->response->setJSON(['status' => '400', 'pesan' => 'Stok barang tidak cukup']);
+            }
+            $stok = $tipe_barang['jumlah_detail_stok_tipe_barang'] - $value['jumlah']; // Menghitung stok barang
+            $this->detailStokTipeBarangModel->update($value['id_detail_stok_tipe_barang'], ['jumlah_detail_stok_tipe_barang' => $stok]); // Update stok barang
                 
         }
         session()->setFlashdata('success', 'Data transaksi masuk berhasil disimpan'); // Set flashdata
