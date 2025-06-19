@@ -71,7 +71,7 @@ $detailStokTipeBarangModel = new detailStokTipeBarangModel();
                                 <td><?= $value['merk_tipe_barang']; ?></td>
                                 <td><?= $value['satuan']; ?></td>
                                 <td class="text-center">
-                                    <?= $data_detail_stok['total_stok'] > 0 ? $data_detail_stok['total_stok'] : '0'; ?>
+                                    <?= ($data_detail_stok != null) ? $data_detail_stok['total_stok'] : '0'; ?>
                                 </td>
                                 <td>Rp. <?= number_format($value['harga_tipe_barang'], 0, ',', '.'); ?></td>
                                 <td class="text-center">
