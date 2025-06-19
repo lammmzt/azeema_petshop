@@ -26,7 +26,8 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        // 'hostname'     => 'localhost',
+        'hostname'     => 'localhost',
+        
         // 'username'     => 'root',
         // 'password'     => '',
         // 'database'     => 'azeema_petshop',
