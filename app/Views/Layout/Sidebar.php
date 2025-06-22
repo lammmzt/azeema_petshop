@@ -108,6 +108,12 @@
                              href="<?= base_url('Laporan/Pendapatan'); ?>">Laporan Pendapatan</a></li>
                      <?php
                         endif;
+                        if (session()->get('role') == '1' || session()->get('role') == '2') :
+                     ?>
+                     <li><a class="<?= ($menu_aktif == 'laporan_stok_barang') ? 'mm-active' : ''; ?>"
+                             href="<?= base_url('Laporan/StokBarang'); ?>">Laporan Stok Barang</a></li>
+                     <?php
+                        endif;
                     ?>
                  </ul>
              </li>

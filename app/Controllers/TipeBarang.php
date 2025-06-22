@@ -135,7 +135,7 @@ class TipeBarang extends BaseController
         $detail_stok = $this->detailStokTipeBarangModel->getStokTipeBarangByIdTipeBarang($id_tipe_barang);
         if (!$tipe_barang) {
             session()->setFlashdata('error', 'Tipe barang tidak ditemukan.');
-            return redirect()->to('TipeBarang');
+            return redirect()->back();
         }
         $data = [
             'title' => 'Daftar Stok Tipe Barang',
@@ -147,6 +147,45 @@ class TipeBarang extends BaseController
         ];
 
         return view('Admin/DetailTipebarang/index', $data);
+    }
+
+    public function UpdateDetail()
+    {
+        if (!$this->validate([
+            'id_detail_stok_tipe_barang' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} harus diisi.'
+                ]
+            ],
+            'jumlah_detail_stok_tipe_barang' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => '{field} harus diisi.',
+                    'numeric' => '{field} harus berupa angka.'
+                ]
+            ],
+            'harga_detail_stok_tipe_barang' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => '{field} harus diisi.',
+                    'numeric' => '{field} harus berupa angka.'
+                ]
+            ],
+        ])) {
+            session()->setFlashdata('error', 'Data gagal diubah.');
+            return redirect()->to('TipeBarang/detail_stok/' . $this->request->getVar('id_tipe_barang'))->withInput();
+        }
+
+        $this->detailStokTipeBarangModel->save([
+            'id_detail_stok_tipe_barang' => $this->request->getVar('id_detail_stok_tipe_barang'),
+            'jumlah_detail_stok_tipe_barang' => $this->request->getVar('jumlah_detail_stok_tipe_barang'),
+            'harga_detail_stok_tipe_barang' => $this->request->getVar('harga_detail_stok_tipe_barang'),
+            // Exp bisa kosong
+            'exp_detail_stok_tipe_barang' => $this->request->getVar('exp_detail_stok_tipe_barang') ?: null
+        ]);
+        session()->setFlashdata('success', 'Data berhasil diubah.');
+        return redirect()->to('TipeBarang/detail_stok/' . $this->request->getVar('id_tipe_barang'));
     }
 }
 

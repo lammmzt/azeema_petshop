@@ -49,7 +49,8 @@ class Home extends BaseController
             ];
         }
         // dd($data_grafik);
-
+        $data_become_expired = $detailStokTipeBarangModel->getProductBecomeExpired();
+        // dd($data_become_expired);
         $dataStokMinimal = $detailStokTipeBarangModel->getStokMinimal();
         // dd($dataStokMinimal);
         $data = [
@@ -60,6 +61,7 @@ class Home extends BaseController
             'jml_order' => $jml_order,
             'jml_layanan' => $jml_layanan,
             'jml_transaksi' => $jml_transaksi,
+            'data_become_expired' => $data_become_expired,
             'tahun_grafik_transaksi' => $tahun_grafik_transaksi,
             'data_grafik' => $data_grafik,
             'data_stok_minimal' => $dataStokMinimal,

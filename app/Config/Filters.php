@@ -84,7 +84,7 @@ class Filters extends BaseFilters
         'after' => [
             'filterAdmin' => ['except' => [ 
                 '/', 'Auth/logout','Auth/login','Auth/Register','Barang', 'Barang/*', 'Dashboard', 'Dashboard/*',
-                'Home', 'Home/*', 'Layanan', 'Layanan/*', 'TipeBarang', 'TipeBarang/*', 'Transaksi/Masuk','Transaksi/tambah_transaksi_masuk', 'Transaksi/simpan_transaksi_masuk', 'Laporan/Transaksi'
+                'Home', 'Home/*', 'Layanan', 'Layanan/*', 'TipeBarang', 'TipeBarang/*', 'Transaksi/Masuk','Transaksi/tambah_transaksi_masuk', 'Transaksi/simpan_transaksi_masuk', 'Laporan/Transaksi', 'Laporan/StokBarang'
             ]],
             'filterKasir' => ['except' => [ 
                 '/', 'Auth/logout','Auth/login','Auth/Register', 'Dashboard', 'Dashboard/*',

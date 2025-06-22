@@ -64,14 +64,20 @@ $detailStokTipeBarangModel = new detailStokTipeBarangModel();
                             <?php
                             $no = 1;
                             foreach ($tipe_barang as $key => $value) : 
-                            $data_detail_stok = $detailStokTipeBarangModel->getStokRilllByIdTipeBarang($value['id_tipe_barang']);
+                            $checkStok = $detailStokTipeBarangModel->where(['id_tipe_barang' => $value['id_tipe_barang']])->findAll();
+                            if(!empty($checkStok)) {
+                                $data_detail_stok = $detailStokTipeBarangModel->getStokRilllByIdTipeBarang($value['id_tipe_barang']);
+                            } else {
+                                $data_detail_stok = null;
+                            }
+                            // dd($data_detail_stok);
                             ?>
                             <tr>
                                 <td><?= $no++; ?></td>
                                 <td><?= $value['merk_tipe_barang']; ?></td>
                                 <td><?= $value['satuan']; ?></td>
                                 <td class="text-center">
-                                    <?= ($data_detail_stok != null) ? $data_detail_stok['total_stok'] : '0'; ?>
+                                    <?= ($data_detail_stok != null) ? $data_detail_stok[0]['total_stok'] : 0; ?>
                                 </td>
                                 <td>Rp. <?= number_format($value['harga_tipe_barang'], 0, ',', '.'); ?></td>
                                 <td class="text-center">
@@ -81,16 +87,20 @@ $detailStokTipeBarangModel = new detailStokTipeBarangModel();
                                     <button type="button" data-toggle="modal"
                                         data-target="#edit<?= $value['id_tipe_barang']; ?>" href=""
                                         class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
+                                    <a href="<?= base_url('TipeBarang/detail_stok/' . $value['id_tipe_barang']); ?>"
+                                        class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
                                     <!-- <button type="button" data-toggle="modal"
                                         data-target="#hapus<?= $value['id_tipe_barang']; ?>" href=""
                                         class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> -->
                                     <?php 
                                     else:
-                                        echo '-';
-                                    endif;
                                     ?>
                                     <a href="<?= base_url('TipeBarang/detail_stok/' . $value['id_tipe_barang']); ?>"
                                         class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+                                    <?php
+                                    endif;
+                                    ?>
+
                                 </td>
 
                             </tr>

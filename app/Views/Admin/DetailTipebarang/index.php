@@ -52,6 +52,7 @@
                                 <th>Stok Barang</th>
                                 <th>Harga Jual</th>
                                 <th>Exp</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,11 +65,23 @@
                                 <td><?= $value['satuan']; ?></td>
                                 <td><?= $value['jumlah_detail_stok_tipe_barang']; ?></td>
                                 <td><?= $value['harga_detail_stok_tipe_barang']; ?></td>
-                                <td>
+                                <td
+                                    <?= ($value['exp_detail_stok_tipe_barang'] < date('Y-m-d')) ? 'class="text-danger"' : ''; ?>>
                                     <?php if ($value['exp_detail_stok_tipe_barang'] == '0000-00-00') : ?>
                                     <span class="badge badge-success">Tidak Ada Exp</span>
                                     <?php else : ?>
                                     <?= date('d-m-Y', strtotime($value['exp_detail_stok_tipe_barang'])); ?>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?php 
+                                if(session()->get('role') == '1' ): ?>
+                                    <button type="button" data-toggle="modal"
+                                        data-target="#edit<?= $value['id_detail_stok_tipe_barang']; ?>" href=""
+                                        class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
+                                    <?php 
+                                else: ?>
+                                    -
                                     <?php endif; ?>
                                 </td>
                             </tr>
@@ -80,6 +93,73 @@
         </div>
     </div>
 </div>
+<!-- modalEdit -->
+<?php
+foreach ($detail_stok as $key => $value) : ?>
+
+<!-- Modal tamabh-->
+<div class="modal fade" id="edit<?= $value['id_detail_stok_tipe_barang']; ?>">
+    <div class="modal-dialog modal-dialog-centered text-black-50" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url('TipeBarang/UpdateDetail'); ?>" method="post" enctype="multipart/form-data"
+                class="needs-validation" novalidate>
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" value="<?= $value['id_detail_stok_tipe_barang']; ?>"
+                            name="id_detail_stok_tipe_barang">
+                        <input type="hidden" value="<?= $tipe_barang['id_tipe_barang']; ?>" name="id_tipe_barang">
+                        <div class="col-lg-12 mb-2">
+                            <label for="">Tgl Exp</label>
+                            <input type="date" name="exp_detail_stok_tipe_barang" class="form-control"
+                                placeholder="Masukan merk tipe barang"
+                                value="<?= date('Y-m-d', strtotime($value['exp_detail_stok_tipe_barang'])); ?>"
+                                required>
+
+                            <!-- validation -->
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('exp_detail_stok_tipe_barang'); ?>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb-2">
+                            <label for="">Jumlah Stok</label>
+                            <input type="number" name="jumlah_detail_stok_tipe_barang" class="form-control"
+                                placeholder="Masukan jumlah stok"
+                                value="<?= $value['jumlah_detail_stok_tipe_barang']; ?>" required>
+
+                            <!-- validation -->
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('jumlah_detail_stok_tipe_barang'); ?>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb-2">
+                            <label for="">Harga Jual</label>
+                            <input type="number" name="harga_detail_stok_tipe_barang" class="form-control"
+                                placeholder="Masukan harga jual" value="<?= $value['harga_detail_stok_tipe_barang']; ?>"
+                                required>
+
+                            <!-- validation -->
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('harga_detail_stok_tipe_barang'); ?>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="Submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- endModal edit -->
+<?php endforeach; ?>
 <?= $this->endSection('content'); ?>
 <?= $this->section('dataTables'); ?>
 <script>

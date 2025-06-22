@@ -7,6 +7,7 @@ use App\Models\orderModel;
 use App\Models\detailOrderModel;
 use App\Models\barangModel;
 use App\Models\tipeBarangModel;
+use App\Models\detailStokTipeBarangModel;
 use Ramsey\Uuid\Uuid;
 
 class Laporan extends BaseController
@@ -26,6 +27,7 @@ class Laporan extends BaseController
         $this->tipeBarangModel = new tipeBarangModel();
         $this->orderModel = new orderModel();
         $this->detailOrderModel = new detailOrderModel();
+        $this->detailStokTipeBarangModel = new detailStokTipeBarangModel();
     }
 
     public function Transaksi() // Menampilkan halaman daftar transaksi masuk
@@ -133,6 +135,19 @@ class Laporan extends BaseController
             'jenis_pendapatan' => $jenis_pendapatan,
         ];
         return view('Admin/Laporan/Pendapatan', $data); // Load view
+    }
+
+    public function StokBarang(){
+        $detailStok = $this->detailStokTipeBarangModel->getAllStok(); // Ambil data stok barang 
+        $data = [ // Data yang akan dikirim ke view
+            'title' => 'Laporan Stok Barang',
+            'title_laporan' => 'Laporan Stok Barang',
+            'main_menu' => 'Laporan',
+            'menu_aktif' => 'laporan_stok_barang',
+            'data_stok' => $detailStok,
+            'validation' => \Config\Services::validation(),
+        ];
+        return view('Admin/Laporan/StokBarang', $data); // Load view
     }
 
 }

@@ -136,7 +136,7 @@ function tampilBarang() {
             html += '<td>' + item.nama_barang + '</td>';
             html += '<td> <input type="date" name="exp_barang[]" class="form-control" value="' + item
                 .exp_barang +
-                '" > </td>';
+                '" min="<?= date('Y-m-d'); ?>"> </td>';
             html += '<td> <input type="text" name="harga[]" class="form-control" min="1" value="' + item
                 .harga +
                 '" > </td>';
