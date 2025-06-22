@@ -216,7 +216,7 @@ if(session()->get('role') == '2' || session()->get('role') == '1') :
                                     <?php endforeach; ?>
                                     <?php if (empty($data_become_expired)) : ?>
                                     <tr>
-                                        <td colspan="5" class="text-center">Tidak ada data stok barang menipis</td>
+                                        <td colspan="5" class="text-center">Tidak ada data stok barang hampir exp</td>
                                     </tr>
                                     <?php endif; ?>
                                 </tbody>
