@@ -81,7 +81,7 @@ class detailStokTipeBarangModel  extends Model
         return $this->select('barang.nama_barang,barang.id_barang, tipe_barang.id_tipe_barang, tipe_barang.merk_tipe_barang, tipe_barang.satuan, SUM(detail_stok_tipe_barang.jumlah_detail_stok_tipe_barang) as total_stok')
                     ->join('tipe_barang', 'tipe_barang.id_tipe_barang = detail_stok_tipe_barang.id_tipe_barang')
                     ->join('barang', 'barang.id_barang = tipe_barang.id_barang')
-                    ->groupBy('detail_stok_tipe_barang.id_tipe_barang')
+                    ->groupBy('tipe_barang.id_tipe_barang')
                     ->findAll();
     }
     

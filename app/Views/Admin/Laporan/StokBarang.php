@@ -115,12 +115,19 @@ $detailStokTipeBarangModel = new \App\Models\detailStokTipeBarangModel();
                             $total_order = 0;
                             // Order
                            if (!empty($data_stok)) :
+                            // dd($data_stok);
                             foreach ($data_stok as $value) :
-                                
                                 $detailTipeBarang = $detailStokTipeBarangModel->getStokTipeBarangByIdTipeBarang($value['id_tipe_barang']);
-                                $jumlah_detail_stok = count($detailTipeBarang);
-                                $firstRow = true;
-                                foreach ($detailTipeBarang as $do) :
+                                if(!empty($detailTipeBarang) && is_array($detailTipeBarang)):
+                                    $jumlah_detail_stok = count($detailTipeBarang);
+                                    $firstRow = true;
+                                    $sub_total_stok = 0; // Inisialisasi sub total stok untuk tiap tipe barang
+                                    
+                                    foreach ($detailTipeBarang as $do) {
+                                        $sub_total_stok += $do['jumlah_detail_stok_tipe_barang'];
+                                    }
+                                
+                                    foreach ($detailTipeBarang as $do) :
                                 ?>
                             <tr>
                                 <?php if ($firstRow) : ?>
@@ -141,14 +148,31 @@ $detailStokTipeBarangModel = new \App\Models\detailStokTipeBarangModel();
                                 <td class="text-center "><?= $do['jumlah_detail_stok_tipe_barang']; ?></td>
                                 <?php if ($firstRow) : ?>
                                 <td class="text-center align-middle" rowspan="<?= $jumlah_detail_stok; ?>">
-                                    <?= $value['total_stok']; ?></td>
+                                    <?= $sub_total_stok; ?></td>
                                 <?php
-                                                    $firstRow = false;
-                                                endif;
-                                                ?>
+                                    $firstRow = false;
+                                    endif;
+                                    ?>
                             </tr>
                             <?php
                             endforeach;
+                            else :
+                            // dd($value);
+                            ?>
+                            <tr>
+                                <td class="text-center align-middle"><?= $no++; ?>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <?= $value['nama_barang']; ?> (<?= $value['merk_tipe_barang']; ?>)</td>
+
+                                <td class="text-center align-middle text-center">
+                                    -
+                                </td>
+                                <td class="text-center">0</td>
+                                <td class="text-center align-middle">0</td>
+                            </tr>
+                            <?php
+                            endif;
                             endforeach;
                             else:
                             ?>

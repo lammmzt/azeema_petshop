@@ -138,13 +138,15 @@ class Laporan extends BaseController
     }
 
     public function StokBarang(){
-        $detailStok = $this->detailStokTipeBarangModel->getAllStok(); // Ambil data stok barang 
+        // $detailStok = $this->detailStokTipeBarangModel->getAllStok(); // Ambil data stok barang 
+        $data_tipe_barang = $this->tipeBarangModel->getTipeBarang(); // Ambil data tipe barang
+        // dd($data_tipe_barang);
         $data = [ // Data yang akan dikirim ke view
             'title' => 'Laporan Stok Barang',
             'title_laporan' => 'Laporan Stok Barang',
             'main_menu' => 'Laporan',
             'menu_aktif' => 'laporan_stok_barang',
-            'data_stok' => $detailStok,
+            'data_stok' => $data_tipe_barang,
             'validation' => \Config\Services::validation(),
         ];
         return view('Admin/Laporan/StokBarang', $data); // Load view
