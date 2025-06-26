@@ -84,11 +84,11 @@ class Filters extends BaseFilters
         'after' => [
             'filterAdmin' => ['except' => [ 
                 '/', 'Auth/logout','Auth/login','Auth/Register','Barang', 'Barang/*', 'Dashboard', 'Dashboard/*',
-                'Home', 'Home/*', 'Layanan', 'Layanan/*', 'TipeBarang', 'TipeBarang/*', 'Transaksi/Masuk','Transaksi/tambah_transaksi_masuk', 'Transaksi/simpan_transaksi_masuk', 'Laporan/Transaksi', 'Laporan/StokBarang'
+                'Home', 'Home/*', 'Layanan', 'Layanan/*', 'TipeBarang', 'TipeBarang/*', 'Transaksi/Masuk','Transaksi/tambah_transaksi_masuk', 'Transaksi/simpan_transaksi_masuk', 'Laporan/Transaksi', 'Laporan/StokBarang', 'Laporan/cetak_transaksi/*', 'Laporan/cetak_stok_barang/*'
             ]],
             'filterKasir' => ['except' => [ 
                 '/', 'Auth/logout','Auth/login','Auth/Register', 'Dashboard', 'Dashboard/*',
-                'Home', 'Home/*', 'Order', 'Order/*', 'Transaksi/Keluar','Transaksi/tambah_transaksi_keluar', 'Transaksi/simpan_transaksi_keluar',  'Transaksi/print_struk', 'Transaksi/print_struk/*', 'Users', 'Users/reset_password', 'Users/Update', 'Users/Simpan', 'Laporan/Transaksi', 'Laporan/Orderan'
+                'Home', 'Home/*', 'Order', 'Order/*', 'Transaksi/Keluar','Transaksi/tambah_transaksi_keluar', 'Transaksi/simpan_transaksi_keluar',  'Transaksi/print_struk', 'Transaksi/print_struk/*', 'Users', 'Users/reset_password', 'Users/Update', 'Users/Simpan', 'Laporan/Transaksi', 'Laporan/Orderan', 'Laporan/cetak_transaksi/*', 'Laporan/cetak_orderan/*'
             ]],
             'filterOwner' => ['except' => [ 
                 '/', 'Auth/logout','Auth/login','Auth/Register','Barang', 'Barang/*', 'Dashboard', 'Dashboard/*',
