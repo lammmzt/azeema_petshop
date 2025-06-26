@@ -68,7 +68,7 @@ class detailStokTipeBarangModel  extends Model
     
     public function getStokMinimal()
     {
-        return $this->select('barang.nama_barang,barang.id_barang, tipe_barang.id_tipe_barang, tipe_barang.merk_tipe_barang, tipe_barang.satuan, SUM(detail_stok_tipe_barang.jumlah_detail_stok_tipe_barang) as total_stok')
+        return $this->select('barang.nama_barang, barang.id_barang, tipe_barang.id_tipe_barang, tipe_barang.merk_tipe_barang, tipe_barang.satuan, SUM(detail_stok_tipe_barang.jumlah_detail_stok_tipe_barang) as total_stok')
                     ->join('tipe_barang', 'tipe_barang.id_tipe_barang = detail_stok_tipe_barang.id_tipe_barang')
                     ->join('barang', 'barang.id_barang = tipe_barang.id_barang')
                     ->groupBy('detail_stok_tipe_barang.id_tipe_barang')
@@ -98,7 +98,7 @@ class detailStokTipeBarangModel  extends Model
 
     public function getProductBecomeExpired()
     {
-    return $this->select('detail_stok_tipe_barang.*, barang.nama_barang, tipe_barang.merk_tipe_barang, tipe_barang.satuan')
+    return $this->select('detail_stok_tipe_barang.*, barang.nama_barang, barang.id_barang, tipe_barang.merk_tipe_barang, tipe_barang.satuan')
                 ->join('tipe_barang', 'tipe_barang.id_tipe_barang = detail_stok_tipe_barang.id_tipe_barang')
                 ->join('barang', 'barang.id_barang = tipe_barang.id_barang')
                 ->where('detail_stok_tipe_barang.jumlah_detail_stok_tipe_barang >', 0)

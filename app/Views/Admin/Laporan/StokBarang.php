@@ -90,9 +90,9 @@ $detailStokTipeBarangModel = new \App\Models\detailStokTipeBarangModel();
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-3 mt-2">
-                        <button id="btn_print" type="button"
-                            class="btn btn-success justify-content-end align-items-center btn_print"><i
-                                class="mdi mdi-printer"></i> Print</button>
+                        <a href="<?= base_url('Laporan/cetak_stok_barang'); ?>" target="_blank"
+                            class="btn btn-success justify-content-end align-items-center "><i
+                                class="mdi mdi-printer"></i> Print</a>
                     </div>
                 </div>
                 <div class="table-responsive mt-4">
@@ -100,11 +100,13 @@ $detailStokTipeBarangModel = new \App\Models\detailStokTipeBarangModel();
                         <thead>
                             <tr>
                                 <th rowspan="2" class="text-center align-middle">No</th>
+                                <th rowspan="2" class="text-center align-middle">Kode Barang</th>
                                 <th rowspan="2" class="text-center align-middle">Nama Barang</th>
-                                <th colspan="2" class="text-center align-middle">Detail Stok</th>
+                                <th colspan="3" class="text-center align-middle">Detail Stok</th>
                                 <th rowspan="2" class="text-center align-middle">Total Stok</th>
                             </tr>
                             <tr>
+                                <th class="text-center">Harga Barang</th>
                                 <th class="text-center">Exp</th>
                                 <th class="text-center">Jumlah</th>
                             </tr>
@@ -134,8 +136,15 @@ $detailStokTipeBarangModel = new \App\Models\detailStokTipeBarangModel();
                                 <td class="text-center align-middle" rowspan="<?= $jumlah_detail_stok; ?>"><?= $no++; ?>
                                 </td>
                                 <td class="text-center align-middle" rowspan="<?= $jumlah_detail_stok; ?>">
+                                    <?= $value['id_barang']; ?></td>
+
+                                <td class="text-center align-middle" rowspan="<?= $jumlah_detail_stok; ?>">
                                     <?= $value['nama_barang']; ?> (<?= $value['merk_tipe_barang']; ?>)</td>
+
                                 <?php endif; ?>
+                                <td class="text-center align-middle">Rp.
+                                    <?= number_format($do['harga_detail_stok_tipe_barang'], 0, ',', '.'); ?></td>
+
                                 <td
                                     <?= ($do['exp_detail_stok_tipe_barang'] < date('Y-m-d')) ? 'class="text-danger text-center"' : 'class="text-center"'; ?>>
                                     <?php if ($do['exp_detail_stok_tipe_barang'] == '0000-00-00') : ?>
@@ -162,13 +171,15 @@ $detailStokTipeBarangModel = new \App\Models\detailStokTipeBarangModel();
                             <tr>
                                 <td class="text-center align-middle"><?= $no++; ?>
                                 </td>
+                                <td class="text-center align-middle"><?= $value['id_barang']; ?></td>
                                 <td class="text-center align-middle">
                                     <?= $value['nama_barang']; ?> (<?= $value['merk_tipe_barang']; ?>)</td>
 
                                 <td class="text-center align-middle text-center">
-                                    -
+                                    Rp. <?= number_format($value['harga_tipe_barang'], 0, ',', '.'); ?></td>
                                 </td>
-                                <td class="text-center">0</td>
+                                <td class="text-center">-</td>
+                                <td class="text-center align-middle">0</td>
                                 <td class="text-center align-middle">0</td>
                             </tr>
                             <?php

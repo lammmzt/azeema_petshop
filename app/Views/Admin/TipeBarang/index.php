@@ -53,7 +53,7 @@ $detailStokTipeBarangModel = new detailStokTipeBarangModel();
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Merk Barang</th>
+                                <th>Nama Tipe Barang</th>
                                 <th>Satuan</th>
                                 <th class="text-center">Stok Barang</th>
                                 <th>Harga Jual</th>
@@ -125,9 +125,9 @@ $detailStokTipeBarangModel = new detailStokTipeBarangModel();
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12 mb-2">
-                            <label for="">Merk Tipe Barang</label>
+                            <label for="">Nama Tipe Barang</label>
                             <input type="text" name="merk_tipe_barang" class="form-control"
-                                placeholder="Masukan merk tipe barang">
+                                placeholder="Masukan Nama tipe barang">
 
                             <!-- validation -->
                             <div class="invalid-feedback">
@@ -193,9 +193,9 @@ foreach ($tipe_barang as $key => $value) : ?>
                     <div class="row">
                         <input type="hidden" value="<?= $value['id_tipe_barang']; ?>" name="id_tipe_barang">
                         <div class="col-lg-12 mb-2">
-                            <label for="">Merk Tipe Barang</label>
+                            <label for="">Nama Tipe Barang</label>
                             <input type="text" name="merk_tipe_barang" class="form-control"
-                                placeholder="Masukan merk tipe barang" value="<?= $value['merk_tipe_barang']; ?>">
+                                placeholder="Masukan Nama tipe barang" value="<?= $value['merk_tipe_barang']; ?>">
 
                             <!-- validation -->
                             <div class="invalid-feedback">

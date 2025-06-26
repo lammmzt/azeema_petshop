@@ -109,9 +109,15 @@ $detailOrderModel = new detailOrderModel();
                         <div class="col-lg-3 mt-4">
                             <button type="submit" class="btn btn-primary justify-content-end align-items-center"><i
                                     class="mdi mdi-magnify"></i> Filter</button>
-                            <button type="button"
-                                class="btn btn-success justify-content-end align-items-center btn_print"><i
-                                    class="mdi mdi-printer" id="btn_print"></i> Print</button>
+                            <?php 
+                            if($tgl_awal != '' && $tgl_akhir != '') :
+                            ?>
+                            <a href="<?= base_url('Laporan/cetak_orderan/' . $tgl_awal . '/' . $tgl_akhir); ?>"
+                                target="_blank" class="btn btn-success justify-content-end align-items-center "><i
+                                    class="mdi mdi-printer"></i> Print</a>
+                            <?php
+                                endif;
+                            ?>
                         </div>
                     </div>
                 </form>
@@ -126,7 +132,7 @@ $detailOrderModel = new detailOrderModel();
                                 <th rowspan="2" class="text-center align-middle">Subtotal</th>
                             </tr>
                             <tr>
-                                <th class="text-center">Nama Produk</th>
+                                <th class="text-center">Nama Layanan</th>
                                 <th class="text-center">Harga</th>
                                 <th class="text-center">Jumlah</th>
                             </tr>

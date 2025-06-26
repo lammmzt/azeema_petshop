@@ -12,14 +12,21 @@ class LandingPage extends BaseController
     public function index(): string
     {
         $layananModel = new layananModel();
+        $usersModel = new usersModel();
+        $orderModel = new orderModel();
         $data_layanan = $layananModel->findAll();
         $data = [
             'title' => 'Home | Azema Petshop',
             'menu_aktif' => 'LandingPage',
             'main_menu' => '',
+            'jumlah_layanan' => $layananModel->countAll(),
+            'jumah_user' => $usersModel->where('role', '3')->countAllResults(),
+            'jumlah_petugas' => $usersModel->where('role', '4')->countAllResults(),
+            'jumlah_order' => $orderModel->countAll(),
             'validation' => \Config\Services::validation(),
             'data_layanan' => $data_layanan
         ];
+        // dd($data);
         return view('Landing/Home', $data);
     }
 

@@ -132,7 +132,7 @@ if(session()->get('role') == '2' || session()->get('role') == '1') :
     <div class="col-xl-6 col-lg-6 col-md-6">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Daftar Stok Barang Menipis</h4>
+                <h4 class="card-title">Daftar Stok Barang Limit</h4>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -143,7 +143,7 @@ if(session()->get('role') == '2' || session()->get('role') == '1') :
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
-                                        <!-- <th>Kode Barang</th> -->
+                                        <th>Kode Barang</th>
                                         <th>Nama Barang</th>
                                         <th class="text-center">Stok</th>
                                         <td class="text-center">Detail</td>
@@ -155,7 +155,7 @@ if(session()->get('role') == '2' || session()->get('role') == '1') :
                                     foreach ($data_stok_minimal as $key => $value) : ?>
                                     <tr>
                                         <td class="text-center"><?= $no++; ?></td>
-                                        <!-- <td><?= $value['id_barang']; ?></td> -->
+                                        <td><?= $value['id_barang']; ?></td>
                                         <td><?= $value['nama_barang']; ?> - <?= $value['merk_tipe_barang']; ?>
                                             (<?= $value['satuan']; ?>)</td>
                                         <td class="text-center"><?= $value['total_stok']; ?></td>
@@ -192,6 +192,7 @@ if(session()->get('role') == '2' || session()->get('role') == '1') :
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
+                                        <th>Kode Barang</th>
                                         <th>Nama Barang</th>
                                         <th>Exp Barang</th>
                                         <th class="text-center">Stok</th>
@@ -204,6 +205,7 @@ if(session()->get('role') == '2' || session()->get('role') == '1') :
                                     foreach ($data_become_expired as $key => $value) : ?>
                                     <tr>
                                         <td class="text-center"><?= $no++; ?></td>
+                                        <td><?= $value['id_barang']; ?></td>
                                         <td><?= $value['nama_barang']; ?> - <?= $value['merk_tipe_barang']; ?>
                                             (<?= $value['satuan']; ?>)</td>
                                         <td><?= date('d-m-Y', strtotime($value['exp_detail_stok_tipe_barang'])); ?></td>

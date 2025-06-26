@@ -139,9 +139,15 @@ $detailTransaksiModel = new detailTransaksiModel();
                         <div class="col-lg-3 mt-4">
                             <button type="submit" class="btn btn-primary justify-content-end align-items-center"><i
                                     class="mdi mdi-magnify"></i> Filter</button>
-                            <button id="btn_print" type="button"
-                                class="btn btn-success justify-content-end align-items-center"><i
-                                    class="mdi mdi-printer"></i> Print</button>
+                            <?php 
+                            if($tgl_awal != '' && $tgl_akhir != '') :
+                            ?>
+                            <a href="<?= base_url('Laporan/cetak_pendapatan/' . $tgl_awal . '/' . $tgl_akhir . '/' . $jenis_pendapatan); ?>"
+                                target="_blank" class="btn btn-success justify-content-end align-items-center "><i
+                                    class="mdi mdi-printer"></i> Print</a>
+                            <?php
+                                endif;
+                            ?>
                         </div>
                     </div>
                 </form>
@@ -156,7 +162,7 @@ $detailTransaksiModel = new detailTransaksiModel();
                                 <th rowspan="2" class="text-center align-middle">Subtotal</th>
                             </tr>
                             <tr>
-                                <th class="text-center">Nama Produk</th>
+                                <th class="text-center">Nama Produk / Layanan</th>
                                 <th class="text-center">Harga</th>
                                 <th class="text-center">Jumlah</th>
                             </tr>

@@ -120,7 +120,7 @@
             <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
                 <div class="block-18 text-center">
                     <div class="text">
-                        <strong class="number" data-number="50">0</strong>
+                        <strong class="number" data-number="<?= $jumlah_layanan; ?>">0</strong>
                     </div>
                     <div class="text">
                         <span>Layanan</span>
@@ -130,7 +130,7 @@
             <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
                 <div class="block-18 text-center">
                     <div class="text">
-                        <strong class="number" data-number="8500">0</strong>
+                        <strong class="number" data-number="<?= $jumlah_petugas; ?>">0</strong>
                     </div>
                     <div class="text">
                         <span>Petugas</span>
@@ -140,7 +140,7 @@
             <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
                 <div class="block-18 text-center">
                     <div class="text">
-                        <strong class="number" data-number="20">0</strong>
+                        <strong class="number" data-number="<?= $jumah_user; ?>">0</strong>
                     </div>
                     <div class="text">
                         <span>Pelanggan</span>
@@ -150,7 +150,7 @@
             <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
                 <div class="block-18 text-center">
                     <div class="text">
-                        <strong class="number" data-number="50">0</strong>
+                        <strong class="number" data-number="<?= $jumlah_order;?>">0</strong>
                     </div>
                     <div class="text">
                         <span>

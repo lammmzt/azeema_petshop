@@ -47,7 +47,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Merk</th>
+                                <th>Nama Tipe Barang</th>
                                 <th class="text-center">Satuan</th>
                                 <th>Stok Barang</th>
                                 <th>Harga Jual</th>

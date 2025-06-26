@@ -1,8 +1,10 @@
  <div class="nav-header">
      <a href="<?= base_url('/'); ?>" class="brand-logo">
-         <img class="logo-abbr" src="<?= base_url('assets/images/logo.png'); ?>" alt="">
-         <img class="logo-compact" src="<?= base_url('assets/images/logo-text.png'); ?>" alt="">
-         <!-- <img class="brand-title" src="<?= base_url('assets/images/logo-text.png'); ?>" alt=""> -->
+         <img class="logo-abbr rounded-circle" src="<?= base_url('assets/img/logo_azema.jpg'); ?>" alt="">
+         <img class="logo-compact" src="<?= base_url('assets/img/logo_azema.jpg'); ?>" alt="">
+         <span class="brand-title">
+             <h6 class="text-white">AZ-Petshop</h6>
+         </span>
      </a>
 
      <div class="nav-control">
