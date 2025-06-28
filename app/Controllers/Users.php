@@ -16,7 +16,7 @@ class Users extends BaseController
     public function index()
     {
         if(session()->get('role') == '1') {
-            $data_user = $this->userModel->where('role !=', '1')->findAll();
+            $data_user = $this->userModel->where('role !=', '3')->findAll();
          }else{
             $data_user = $this->userModel->where('role', '3')->findAll();
          }

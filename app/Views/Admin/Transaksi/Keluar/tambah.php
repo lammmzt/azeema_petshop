@@ -140,7 +140,7 @@ function tampilBarang() {
             html += '<td>' + item.nama_barang + '</td>';
             html += '<td> <input type="text" name="harga[]" class="form-control" min="1" value="' + item
                 .harga +
-                '" > </td>';
+                '" readonly> </td>';
             html +=
                 '<td> <input type="number" name="jumlah[]" class="form-control text-center" min="1" style="max-width: 100px;" value="' +
                 item
