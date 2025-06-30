@@ -132,7 +132,7 @@ $detailTransaksiModel = new detailTransaksiModel();
             <tr>
                 <th rowspan="2" style="text-align: center; vertical-align: middle;">No</th>
                 <th rowspan="2" style="text-align: center; vertical-align: middle;">Tanggal</th>
-                <th rowspan="2" style="text-align: center; vertical-align: middle;">Kode Transaksi</th>
+                <th rowspan="2" style="text-align: center; vertical-align: middle;">Kode Faktur</th>
                 <th colspan="3" style="text-align: center; vertical-align: middle;">Detail Transaksi</th>
                 <th rowspan="2" style="text-align: center; vertical-align: middle;">Subtotal Transaksi</th>
             </tr>
