@@ -125,16 +125,13 @@ $detailOrderModel = new detailOrderModel();
                     <table class="table table-bordered text-black-50">
                         <thead>
                             <tr>
-                                <th rowspan="2" class="text-center align-middle">No</th>
-                                <th rowspan="2" class="text-center align-middle">Tanggal</th>
-                                <th rowspan="2" class="text-center align-middle">Kode</th>
-                                <th colspan="3" class="text-center align-middle">Detail</th>
-                                <th rowspan="2" class="text-center align-middle">Subtotal</th>
-                            </tr>
-                            <tr>
+                                <th class="text-center align-middle">No</th>
+                                <th class="text-center align-middle">Tanggal</th>
+                                <th class="text-center align-middle">Kode</th>
                                 <th class="text-center">Nama Layanan</th>
                                 <th class="text-center">Harga</th>
                                 <th class="text-center">Jumlah</th>
+                                <th class="text-center align-middle">Subtotal</th>
                             </tr>
                         </thead>
                         <tbody>

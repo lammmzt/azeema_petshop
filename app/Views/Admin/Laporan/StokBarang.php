@@ -99,16 +99,13 @@ $detailStokTipeBarangModel = new \App\Models\detailStokTipeBarangModel();
                     <table class="table table-bordered text-black-50">
                         <thead>
                             <tr>
-                                <th rowspan="2" class="text-center align-middle">No</th>
-                                <th rowspan="2" class="text-center align-middle">Kode Barang</th>
-                                <th rowspan="2" class="text-center align-middle">Nama Barang</th>
-                                <th colspan="3" class="text-center align-middle">Detail Stok</th>
-                                <th rowspan="2" class="text-center align-middle">Total Stok</th>
-                            </tr>
-                            <tr>
+                                <th class="text-center align-middle">No</th>
+                                <th class="text-center align-middle">Kode Barang</th>
+                                <th class="text-center align-middle">Nama Barang</th>
                                 <th class="text-center">Harga Barang</th>
                                 <th class="text-center">Exp</th>
                                 <th class="text-center">Jumlah</th>
+                                <th class="text-center align-middle">Total Stok</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -142,9 +139,10 @@ $detailStokTipeBarangModel = new \App\Models\detailStokTipeBarangModel();
                                     <?= $value['nama_barang']; ?> (<?= $value['merk_tipe_barang']; ?>)</td>
 
                                 <?php endif; ?>
-                                <td class="text-center align-middle">Rp.
-                                    <?= number_format($do['harga_detail_stok_tipe_barang'], 0, ',', '.'); ?></td>
 
+                                <td class="text-center align-middle">Rp.
+                                    <?= number_format($do['harga_detail_stok_tipe_barang'], 0, ',', '.'); ?>
+                                </td>
                                 <td
                                     <?= ($do['exp_detail_stok_tipe_barang'] < date('Y-m-d')) ? 'class="text-danger text-center"' : 'class="text-center"'; ?>>
                                     <?php if ($do['exp_detail_stok_tipe_barang'] == '0000-00-00') : ?>

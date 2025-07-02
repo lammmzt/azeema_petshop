@@ -43,7 +43,7 @@ $detailTransaksiModel = new detailTransaksiModel();
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Kode Faktur</th>
+                                <th>No. Kwitansi</th>
                                 <th>Tanggal</th>
                                 <th>Total</th>
                                 <th>Aksi</th>
@@ -88,7 +88,7 @@ $detailTransaksiModel = new detailTransaksiModel();
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-6">
-                        <label for="">Kode Faktur</label>
+                        <label for="">No. Kwitansi</label>
                         <input type="text" name="merk_transaksi_keluar" class="form-control"
                             value="<?= $value['id_transaksi']; ?>" readonly>
                     </div>

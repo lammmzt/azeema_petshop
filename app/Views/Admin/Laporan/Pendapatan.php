@@ -155,16 +155,14 @@ $detailTransaksiModel = new detailTransaksiModel();
                     <table class="table table-bordered text-black-50" id="tabel_data_order">
                         <thead>
                             <tr>
-                                <th rowspan="2" class="text-center align-middle">No</th>
-                                <th rowspan="2" class="text-center align-middle">Tanggal</th>
-                                <th rowspan="2" class="text-center align-middle">Kode</th>
-                                <th colspan="3" class="text-center align-middle">Detail</th>
-                                <th rowspan="2" class="text-center align-middle">Subtotal</th>
-                            </tr>
-                            <tr>
+                                <th class="text-center align-middle">No</th>
+                                <th class="text-center align-middle">Tanggal</th>
+                                <th class="text-center align-middle">Kode</th>
                                 <th class="text-center">Nama Produk / Layanan</th>
                                 <th class="text-center">Harga</th>
                                 <th class="text-center">Jumlah</th>
+                                <th class="text-center">Keterangan</th>
+                                <th class="text-center align-middle">Subtotal</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -199,6 +197,12 @@ $detailTransaksiModel = new detailTransaksiModel();
                                 <td class="text-center"><?= $dt['jumlah_transaksi']; ?></td>
                                 <?php if ($firstRow) : ?>
                                 <td class="text-center align-middle" rowspan="<?= $jumlah_transaksi; ?>">
+                                    <span
+                                        style="background-color: red; color: white; padding: 5px; border-radius: 5px;">
+                                        Jasa Barang
+                                    </span>
+                                </td>
+                                <td class="text-center align-middle" rowspan="<?= $jumlah_transaksi; ?>">
                                     <?= "Rp. " . number_format($value['total_transaksi'], 0, ',', '.'); ?></td>
                                 <?php
                                     $firstRow = false;
@@ -232,6 +236,12 @@ $detailTransaksiModel = new detailTransaksiModel();
                                     <?= "Rp. " . number_format($do['harga_layanan'], 0, ',', '.'); ?></td>
                                 <td class="text-center"><?= $do['jumlah_order']; ?></td>
                                 <?php if ($firstRow) : ?>
+                                <td class="text-center align-middle" rowspan="<?= $jumlah_transaksi; ?>">
+                                    <span
+                                        style="background-color: green; color: white; padding: 5px; border-radius: 5px;">
+                                        Jasa Layanan
+                                    </span>
+                                </td>
                                 <td class="text-center align-middle" rowspan="<?= $jumlah_order; ?>">
                                     <?= "Rp. " . number_format($value['total_order'], 0, ',', '.'); ?></td>
                                 <?php
@@ -247,13 +257,13 @@ $detailTransaksiModel = new detailTransaksiModel();
                        else :
                        ?>
                             <tr>
-                                <td colspan="7" class="text-center">Tidak ada data</td>
+                                <td colspan="8" class="text-center">Tidak ada data</td>
                             </tr>
                             <?php endif; ?>
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="6" class="text-right"><strong>Total Pendapatan</strong></td>
+                                <td colspan="7" class="text-right"><strong>Total Pendapatan</strong></td>
                                 <td class="text-left">
                                     <strong><?= "Rp. " . number_format($total_pendapatan, 0, ',', '.'); ?></strong>
                                 </td>

@@ -93,7 +93,15 @@ $detailOrderModel = new detailOrderModel();
     /* media a4 */
     @page {
         size: 297mm 210mm;
-        margin: 20px 20px;
+        margin: 35px 35px;
+
+        @bottom-left {
+            content: "Laporan Orderan";
+        }
+
+        @bottom-right {
+            content: "Halaman "counter(page);
+        }
     }
     </style>
     <script>
@@ -132,17 +140,15 @@ $detailOrderModel = new detailOrderModel();
     <table border="1" cellpadding="5" cellspacing="0">
         <thead>
             <tr>
-                <th rowspan="2" style="text-align: center; vertical-align: middle;">No</th>
-                <th rowspan="2" style="text-align: center; vertical-align: middle;">Tanggal</th>
-                <th rowspan="2" style="text-align: center; vertical-align: middle;">Kode</th>
-                <th colspan="3" style="text-align: center; vertical-align: middle;">Detail</th>
-                <th rowspan="2" style="text-align: center; vertical-align: middle;">Subtotal</th>
-            </tr>
-            <tr>
+                <th style="text-align: center; vertical-align: middle;">No</th>
+                <th style="text-align: center; vertical-align: middle;">Tanggal</th>
+                <th style="text-align: center; vertical-align: middle;">Kode</th>
                 <th style="text-align: center">Nama Layanan</th>
                 <th style="text-align: center">Harga</th>
                 <th style="text-align: center">Jumlah</th>
+                <th style="text-align: center; vertical-align: middle;">Subtotal</th>
             </tr>
+
         </thead>
         <tbody>
             <?php
@@ -190,15 +196,13 @@ $detailOrderModel = new detailOrderModel();
                             endif;
                             ?>
         </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="6" style="text-align: right;">
-                    <strong>Total Pemesanan</strong>
-                </td>
-                <td><strong><?php echo "Rp. " . number_format($total_order, 0, ',', '.'); ?></strong>
-                </td>
-            </tr>
-        </tfoot>
+        <tr>
+            <td colspan="6" style="text-align: right;">
+                <strong>Total Pemesanan</strong>
+            </td>
+            <td><strong><?php echo "Rp. " . number_format($total_order, 0, ',', '.'); ?></strong>
+            </td>
+        </tr>
     </table>
 
 

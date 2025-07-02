@@ -92,7 +92,15 @@ $detailStokTipeBarangModel = new \App\Models\detailStokTipeBarangModel();
     /* media a4 */
     @page {
         size: 297mm 210mm;
-        margin: 20px 20px;
+        margin: 35px 35px;
+
+        @bottom-left {
+            content: "Laporan Stok Barang";
+        }
+
+        @bottom-right {
+            content: "Halaman "counter(page);
+        }
     }
     </style>
     <script>
@@ -134,16 +142,13 @@ $detailStokTipeBarangModel = new \App\Models\detailStokTipeBarangModel();
     <table border="1" cellpadding="5" cellspacing="0">
         <thead>
             <tr>
-                <th rowspan="2" style="text-align: center; vertical-align: middle;">No</th>
-                <th rowspan="2" style="text-align: center; vertical-align: middle;">Kode Barang</th>
-                <th rowspan="2" style="text-align: center; vertical-align: middle;">Nama Barang</th>
-                <th colspan="3" style="text-align: center; vertical-align: middle;">Detail Stok</th>
-                <th rowspan="2" style="text-align: center; vertical-align: middle;">Total Stok</th>
-            </tr>
-            <tr>
+                <th style="text-align: center; vertical-align: middle;">No</th>
+                <th style="text-align: center; vertical-align: middle;">Kode Barang</th>
+                <th style="text-align: center; vertical-align: middle;">Nama Barang</th>
                 <th style="text-align: center">Harga Barang</th>
                 <th style="text-align: center">Exp</th>
                 <th style="text-align: center">Jumlah</th>
+                <th style="text-align: center; vertical-align: middle;">Total Stok</th>
             </tr>
         </thead>
         <tbody>

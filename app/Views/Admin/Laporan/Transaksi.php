@@ -149,16 +149,14 @@ $detailTransaksiModel = new detailTransaksiModel();
                     <table class="table table-bordered text-black-50" id="tabel_data_order">
                         <thead>
                             <tr>
-                                <th rowspan="2" class="text-center align-middle">No</th>
-                                <th rowspan="2" class="text-center align-middle">Tanggal</th>
-                                <th rowspan="2" class="text-center align-middle">Kode Faktur</th>
-                                <th colspan="3" class="text-center align-middle">Detail Transaksi</th>
-                                <th rowspan="2" class="text-center align-middle">Subtotal Transaksi</th>
-                            </tr>
-                            <tr>
+                                <th class="text-center align-middle">No</th>
+                                <th class="text-center align-middle">Tanggal</th>
+                                <th class="text-center align-middle">
+                                    <?= $jenis_transaksi == '1' ? 'No. Kwitansi' : 'Kode Faktur'; ?></th>
                                 <th class="text-center">Nama Barang</th>
                                 <th class="text-center">Harga</th>
                                 <th class="text-center">Jumlah</th>
+                                <th class="text-center align-middle">Subtotal</th>
                             </tr>
                         </thead>
                         <tbody>
