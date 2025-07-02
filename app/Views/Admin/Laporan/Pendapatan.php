@@ -157,11 +157,11 @@ $detailTransaksiModel = new detailTransaksiModel();
                             <tr>
                                 <th class="text-center align-middle">No</th>
                                 <th class="text-center align-middle">Tanggal</th>
+                                <th class="text-center">Jenis</th>
                                 <th class="text-center align-middle">Kode</th>
                                 <th class="text-center">Nama Produk / Layanan</th>
                                 <th class="text-center">Harga</th>
                                 <th class="text-center">Jumlah</th>
-                                <th class="text-center">Keterangan</th>
                                 <th class="text-center align-middle">Subtotal</th>
                             </tr>
                         </thead>
@@ -188,6 +188,12 @@ $detailTransaksiModel = new detailTransaksiModel();
                                 <td class="text-center align-middle" rowspan="<?= $jumlah_transaksi; ?>">
                                     <?= date('d-m-Y', strtotime($value['tanggal_transaksi'])); ?></td>
                                 <td class="text-center align-middle" rowspan="<?= $jumlah_transaksi; ?>">
+                                    <span
+                                        style="background-color: red; color: white; padding: 5px; border-radius: 5px;">
+                                        Jasa Barang
+                                    </span>
+                                </td>
+                                <td class="text-center align-middle" rowspan="<?= $jumlah_transaksi; ?>">
                                     <?= $value['id_transaksi']; ?></td>
                                 <?php endif; ?>
                                 <td><?= $dt['nama_barang']; ?> (<?= $dt['merk_tipe_barang']; ?>) @ <?= $dt['satuan']; ?>
@@ -196,12 +202,7 @@ $detailTransaksiModel = new detailTransaksiModel();
                                 </td>
                                 <td class="text-center"><?= $dt['jumlah_transaksi']; ?></td>
                                 <?php if ($firstRow) : ?>
-                                <td class="text-center align-middle" rowspan="<?= $jumlah_transaksi; ?>">
-                                    <span
-                                        style="background-color: red; color: white; padding: 5px; border-radius: 5px;">
-                                        Jasa Barang
-                                    </span>
-                                </td>
+
                                 <td class="text-center align-middle" rowspan="<?= $jumlah_transaksi; ?>">
                                     <?= "Rp. " . number_format($value['total_transaksi'], 0, ',', '.'); ?></td>
                                 <?php
@@ -228,6 +229,12 @@ $detailTransaksiModel = new detailTransaksiModel();
                                 <td class="text-center align-middle" rowspan="<?= $jumlah_order; ?>"><?= $no++; ?></td>
                                 <td class="text-center align-middle" rowspan="<?= $jumlah_order; ?>">
                                     <?= date('d-m-Y', strtotime($value['tanggal_order'])); ?></td>
+                                <td class="text-center align-middle" rowspan="<?= $jumlah_transaksi; ?>">
+                                    <span
+                                        style="background-color: green; color: white; padding: 5px; border-radius: 5px;">
+                                        Jasa Layanan
+                                    </span>
+                                </td>
                                 <td class="text-center align-middle" rowspan="<?= $jumlah_order; ?>">
                                     <?= $value['id_order']; ?></td>
                                 <?php endif; ?>
@@ -236,12 +243,7 @@ $detailTransaksiModel = new detailTransaksiModel();
                                     <?= "Rp. " . number_format($do['harga_layanan'], 0, ',', '.'); ?></td>
                                 <td class="text-center"><?= $do['jumlah_order']; ?></td>
                                 <?php if ($firstRow) : ?>
-                                <td class="text-center align-middle" rowspan="<?= $jumlah_transaksi; ?>">
-                                    <span
-                                        style="background-color: green; color: white; padding: 5px; border-radius: 5px;">
-                                        Jasa Layanan
-                                    </span>
-                                </td>
+
                                 <td class="text-center align-middle" rowspan="<?= $jumlah_order; ?>">
                                     <?= "Rp. " . number_format($value['total_order'], 0, ',', '.'); ?></td>
                                 <?php
