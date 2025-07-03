@@ -140,7 +140,9 @@ $detailTransaksiModel = new detailTransaksiModel();
             <tr>
                 <th style="text-align: center; vertical-align: middle;">No</th>
                 <th style="text-align: center; vertical-align: middle;">Tanggal</th>
-                <th style="text-align: center; vertical-align: middle;">Kode Faktur</th>
+                <th style="text-align: center; vertical-align: middle;">
+                    <?= $jenis_transaksi == '1' ? 'No. Kwitansi' : 'Kode Faktur'; ?>
+                </th>
                 <th style="text-align: center">Nama Barang</th>
                 <th style="text-align: center">Harga</th>
                 <th style="text-align: center">Jumlah</th>
