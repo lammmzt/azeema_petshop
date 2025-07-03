@@ -152,7 +152,24 @@ $detailTransaksiModel = new detailTransaksiModel();
                                 <th class="text-center align-middle">No</th>
                                 <th class="text-center align-middle">Tanggal</th>
                                 <th class="text-center align-middle">
-                                    <?= $jenis_transaksi == '1' ? 'No. Kwitansi' : 'Kode Faktur'; ?></th>
+                                    <?php
+                                    if (session()->get('role') == '2') : 
+                                    ?>
+                                    Kode Faktur
+                                    <?php 
+                                    endif;
+                                    if (session()->get('role') == '4') : 
+                                    ?>
+                                    No. Kwitansi
+                                    <?php 
+                                    endif;
+                                    if (session()->get('role') == '1') : 
+                                    ?>
+                                    <?= $jenis_transaksi == '1' ? 'No. Kwitansi' : 'Kode Faktur'; ?>
+                                    <?php 
+                                    endif;
+                                    ?>
+                                </th>
                                 <th class="text-center">Nama Barang</th>
                                 <th class="text-center">Harga</th>
                                 <th class="text-center">Jumlah</th>
