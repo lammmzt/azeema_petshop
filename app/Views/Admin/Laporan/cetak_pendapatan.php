@@ -6,6 +6,24 @@ use App\Models\detailOrderModel;
 
 $detailOrderModel = new detailOrderModel();
 $detailTransaksiModel = new detailTransaksiModel();
+function formatIndo($tanggal) {
+    $bulan = array(
+        1 => 'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember'
+    );
+    $pecahkan = explode('-', $tanggal);
+    return $pecahkan[2] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[0];
+}
 ?>
 
 <head>
@@ -119,148 +137,161 @@ $detailTransaksiModel = new detailTransaksiModel();
 
 <body>
 
-    <div class="header_laporan">
+    <div class="isi">
+        <div class="header_laporan">
 
-        <table border="0" cellpadding="5" cellspacing="0" class="table-header">
-            <tr>
-                <td style="width: 20%;">
-                    <img src="<?= base_url('assets/img/logo_azema_bg.png'); ?>" alt="Logo" />
-                </td>
-                <td style="width: 70%; text-align: center;">
-                    <h2>AZEEMA PETSHOP</h2>
-                    <p>Jl. Hos Cokroaminoto Gg. 14, Kuripan Lor, Kec. Pekalongan Selatan, Kota Pekalongan</p>
-                </td>
-                <td style="width: 10%; text-align: right;">
+            <table border="0" cellpadding="5" cellspacing="0" class="table-header">
+                <tr>
+                    <td style="width: 20%;">
+                        <img src="<?= base_url('assets/img/logo_azema_bg.png'); ?>" alt="Logo" />
+                    </td>
+                    <td style="width: 70%; text-align: center;">
+                        <h2>AZEEMA PETSHOP</h2>
+                        <p>Jl. Hos Cokroaminoto Gg. 14, Kuripan Lor, Kec. Pekalongan Selatan, Kota Pekalongan</p>
+                    </td>
+                    <td style="width: 10%; text-align: right;">
 
-                </td>
-            </tr>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: center;">
+                        <h2>Laporan
+                            <?= ($jenis_pendapatan == '1') ? 'Pendapatan Pemesanan' : ($jenis_pendapatan == '0' ? 'Pendapatan Penjualan' : 'Semua Pendapatan'); ?>
+                            dari <?= date('d-m-Y', strtotime($tgl_awal)) ?> s/d
+                            <?= date('d-m-Y', strtotime($tgl_akhir)) ?>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <table border="1" cellpadding="5" cellspacing="0">
+            <thead>
+                <tr>
+                    <th style="text-align: center; vertical-align: middle;">No</th>
+                    <th style="text-align: center; vertical-align: middle;">Tanggal</th>
+                    <th style="text-align: center; vertical-align: middle;">Jenis</th>
+                    <th style="text-align: center; vertical-align: middle;">Kode</th>
+                    <th style="text-align: center">Nama Produk / Layanan</th>
+                    <th style="text-align: center">Harga</th>
+                    <th style="text-align: center">Jumlah</th>
+                    <th style="text-align: center; vertical-align: middle;">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    $no = 1;
+                    $total_pendapatan = 0;
+
+                    if (!empty($data_transaksi) || !empty($data_order)) :
+                    
+                        // Transaksi
+                        if (!empty($data_transaksi)) :
+                            foreach ($data_transaksi as $value) :
+                                $total_pendapatan += $value['total_transaksi'];
+                                $data_detail_transaksi = $detailTransaksiModel->getDetailTransaksiByTransaksi($value['id_transaksi']);
+                                $jumlah_transaksi = count($data_detail_transaksi);
+                                $firstRow = true;
+                                foreach ($data_detail_transaksi as $dt) :
+                    ?>
+                <tr>
+                    <?php if ($firstRow) : ?>
+                    <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_transaksi; ?>">
+                        <?= $no++; ?>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_transaksi; ?>">
+                        <?= date('d-m-Y', strtotime($value['tanggal_transaksi'])); ?></td>
+                    <td class="text-center align-middle" rowspan="<?= $jumlah_transaksi; ?>">
+                        <span style="background-color: red; color: white; padding: 5px; border-radius: 5px;">
+                            Jasa Barang
+                        </span>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_transaksi; ?>">
+                        <?= $value['id_transaksi']; ?></td>
+                    <?php endif; ?>
+                    <td><?= $dt['nama_barang']; ?> (<?= $dt['merk_tipe_barang']; ?>) @ <?= $dt['satuan']; ?>
+                    </td>
+                    <td style="text-align: center"><?= "Rp. " . number_format($dt['harga_barang'], 0, ',', '.'); ?>
+                    </td>
+                    <td style="text-align: center"><?= $dt['jumlah_transaksi']; ?></td>
+                    <?php if ($firstRow) : ?>
+
+                    <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_transaksi; ?>">
+                        <?= "Rp. " . number_format($value['total_transaksi'], 0, ',', '.'); ?></td>
+                    <?php
+                            $firstRow = false;
+                        endif;
+                        ?>
+                </tr>
+                <?php
+                    endforeach;
+                    endforeach;
+                    endif;
+
+                   // Order
+                   if (!empty($data_order)) :
+                       foreach ($data_order as $value) :
+                           $total_pendapatan += $value['total_order'];
+                           $data_detail_order = $detailOrderModel->getDetailOrderByOrder($value['id_order']);
+                           $jumlah_order = count($data_detail_order);
+                           $firstRow = true;
+                           foreach ($data_detail_order as $do) :
+                           ?>
+                <tr>
+                    <?php if ($firstRow) : ?>
+                    <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_order; ?>">
+                        <?= $no++; ?>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_order; ?>">
+                        <?= date('d-m-Y', strtotime($value['tanggal_order'])); ?></td>
+                    <td class="text-center align-middle" rowspan="<?= $jumlah_transaksi; ?>">
+                        <span style="background-color: green; color: white; padding: 5px; border-radius: 5px;">
+                            Jasa Layanan
+                        </span>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_order; ?>">
+                        <?= $value['id_order']; ?></td>
+                    <?php endif; ?>
+                    <td><?= $do['nama_layanan']; ?></td>
+                    <td style="text-align: center">
+                        <?= "Rp. " . number_format($do['harga_layanan'], 0, ',', '.'); ?></td>
+                    <td style="text-align: center"><?= $do['jumlah_order']; ?></td>
+                    <?php if ($firstRow) : ?>
+
+                    <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_order; ?>">
+                        <?= "Rp. " . number_format($value['total_order'], 0, ',', '.'); ?></td>
+                    <?php
+                                       $firstRow = false;
+                                   endif;
+                                   ?>
+                </tr>
+                <?php
+                           endforeach;
+                       endforeach;
+                   endif;
+
+               else :
+               ?>
+                <tr>
+                    <td colspan="8" style="text-align: center">Tidak ada data</td>
+                </tr>
+                <?php endif; ?>
+            </tbody>
             <tr>
-                <td colspan="3" style="text-align: center;">
-                    <h2>Laporan
-                        <?= ($jenis_pendapatan == '1') ? 'Pendapatan Pemesanan' : ($jenis_pendapatan == '0' ? 'Pendapatan Penjualan' : 'Semua Pendapatan'); ?>
-                        dari <?= date('d-m-Y', strtotime($tgl_awal)) ?> s/d <?= date('d-m-Y', strtotime($tgl_akhir)) ?>
+                <td colspan="7" style="text-align: right;"><strong>Total Pendapatan</strong></td>
+                <td style="text-align: left;">
+                    <strong><?= "Rp. " . number_format($total_pendapatan, 0, ',', '.'); ?></strong>
                 </td>
             </tr>
         </table>
     </div>
-    <table border="1" cellpadding="5" cellspacing="0">
-        <thead>
-            <tr>
-                <th style="text-align: center; vertical-align: middle;">No</th>
-                <th style="text-align: center; vertical-align: middle;">Tanggal</th>
-                <th style="text-align: center; vertical-align: middle;">Jenis</th>
-                <th style="text-align: center; vertical-align: middle;">Kode</th>
-                <th style="text-align: center">Nama Produk / Layanan</th>
-                <th style="text-align: center">Harga</th>
-                <th style="text-align: center">Jumlah</th>
-                <th style="text-align: center; vertical-align: middle;">Subtotal</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-                            $no = 1;
-                            $total_pendapatan = 0;
+    <div class="tanda_tangan" style="margin-top: 10px; text-align: right; padding: 20px;">
+        <p>Pekalongan, <?= formatIndo(date('Y-m-d')); ?></p>
+        <p>Mengetahui,</p>
+        <br><br><br><br>
+        <p>
+            <strong>Azimah</strong>
+        </p>
+    </div>
 
-                            if (!empty($data_transaksi) || !empty($data_order)) :
-                            
-                                // Transaksi
-                                if (!empty($data_transaksi)) :
-                                    foreach ($data_transaksi as $value) :
-                                        $total_pendapatan += $value['total_transaksi'];
-                                        $data_detail_transaksi = $detailTransaksiModel->getDetailTransaksiByTransaksi($value['id_transaksi']);
-                                        $jumlah_transaksi = count($data_detail_transaksi);
-                                        $firstRow = true;
-                                        foreach ($data_detail_transaksi as $dt) :
-                            ?>
-            <tr>
-                <?php if ($firstRow) : ?>
-                <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_transaksi; ?>">
-                    <?= $no++; ?>
-                </td>
-                <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_transaksi; ?>">
-                    <?= date('d-m-Y', strtotime($value['tanggal_transaksi'])); ?></td>
-                <td class="text-center align-middle" rowspan="<?= $jumlah_transaksi; ?>">
-                    <span style="background-color: red; color: white; padding: 5px; border-radius: 5px;">
-                        Jasa Barang
-                    </span>
-                </td>
-                <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_transaksi; ?>">
-                    <?= $value['id_transaksi']; ?></td>
-                <?php endif; ?>
-                <td><?= $dt['nama_barang']; ?> (<?= $dt['merk_tipe_barang']; ?>) @ <?= $dt['satuan']; ?>
-                </td>
-                <td style="text-align: center"><?= "Rp. " . number_format($dt['harga_barang'], 0, ',', '.'); ?>
-                </td>
-                <td style="text-align: center"><?= $dt['jumlah_transaksi']; ?></td>
-                <?php if ($firstRow) : ?>
-
-                <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_transaksi; ?>">
-                    <?= "Rp. " . number_format($value['total_transaksi'], 0, ',', '.'); ?></td>
-                <?php
-                                    $firstRow = false;
-                                endif;
-                                ?>
-            </tr>
-            <?php
-                            endforeach;
-                            endforeach;
-                            endif;
-
-                           // Order
-                           if (!empty($data_order)) :
-                               foreach ($data_order as $value) :
-                                   $total_pendapatan += $value['total_order'];
-                                   $data_detail_order = $detailOrderModel->getDetailOrderByOrder($value['id_order']);
-                                   $jumlah_order = count($data_detail_order);
-                                   $firstRow = true;
-                                   foreach ($data_detail_order as $do) :
-                                   ?>
-            <tr>
-                <?php if ($firstRow) : ?>
-                <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_order; ?>"><?= $no++; ?>
-                </td>
-                <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_order; ?>">
-                    <?= date('d-m-Y', strtotime($value['tanggal_order'])); ?></td>
-                <td class="text-center align-middle" rowspan="<?= $jumlah_transaksi; ?>">
-                    <span style="background-color: green; color: white; padding: 5px; border-radius: 5px;">
-                        Jasa Layanan
-                    </span>
-                </td>
-                <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_order; ?>">
-                    <?= $value['id_order']; ?></td>
-                <?php endif; ?>
-                <td><?= $do['nama_layanan']; ?></td>
-                <td style="text-align: center">
-                    <?= "Rp. " . number_format($do['harga_layanan'], 0, ',', '.'); ?></td>
-                <td style="text-align: center"><?= $do['jumlah_order']; ?></td>
-                <?php if ($firstRow) : ?>
-
-                <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_order; ?>">
-                    <?= "Rp. " . number_format($value['total_order'], 0, ',', '.'); ?></td>
-                <?php
-                                               $firstRow = false;
-                                           endif;
-                                           ?>
-            </tr>
-            <?php
-                                   endforeach;
-                               endforeach;
-                           endif;
-
-                       else :
-                       ?>
-            <tr>
-                <td colspan="8" style="text-align: center">Tidak ada data</td>
-            </tr>
-            <?php endif; ?>
-        </tbody>
-        <tr>
-            <td colspan="7" style="text-align: right;"><strong>Total Pendapatan</strong></td>
-            <td style="text-align: left;">
-                <strong><?= "Rp. " . number_format($total_pendapatan, 0, ',', '.'); ?></strong>
-            </td>
-        </tr>
-    </table>
 </body>
 
 </html>

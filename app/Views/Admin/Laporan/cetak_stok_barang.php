@@ -4,6 +4,24 @@
 use App\Models\detailStokTipeBarangModel;
 
 $detailStokTipeBarangModel = new \App\Models\detailStokTipeBarangModel();
+function formatIndo($tanggal) {
+    $bulan = array(
+        1 => 'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember'
+    );
+    $pecahkan = explode('-', $tanggal);
+    return $pecahkan[2] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[0];
+}
 ?>
 
 <head>
@@ -113,129 +131,140 @@ $detailStokTipeBarangModel = new \App\Models\detailStokTipeBarangModel();
 
 <body>
 
-    <div class="header_laporan">
+    <div class="isi">
+        <div class="header_laporan">
 
 
-        <table border="0" cellpadding="5" cellspacing="0" class="table-header">
-            <tr>
-                <td style="width: 20%;">
-                    <img src="<?= base_url('assets/img/logo_azema_bg.png'); ?>" alt="Logo" />
-                </td>
-                <td style="width: 70%; text-align: center;">
-                    <h2>AZEEMA PETSHOP</h2>
-                    <p>Jl. Hos Cokroaminoto Gg. 14, Kuripan Lor, Kec. Pekalongan Selatan, Kota Pekalongan</p>
-                </td>
-                <td style="width: 10%; text-align: right;">
+            <table border="0" cellpadding="5" cellspacing="0" class="table-header">
+                <tr>
+                    <td style="width: 20%;">
+                        <img src="<?= base_url('assets/img/logo_azema_bg.png'); ?>" alt="Logo" />
+                    </td>
+                    <td style="width: 70%; text-align: center;">
+                        <h2>AZEEMA PETSHOP</h2>
+                        <p>Jl. Hos Cokroaminoto Gg. 14, Kuripan Lor, Kec. Pekalongan Selatan, Kota Pekalongan</p>
+                    </td>
+                    <td style="width: 10%; text-align: right;">
 
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3" style="text-align: center;">
-                    <h2>
-                        Laporan Stok Barang
-                    </h2>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: center;">
+                        <h2>
+                            Laporan Stok Barang
+                        </h2>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <table border="1" cellpadding="5" cellspacing="0">
+            <thead>
+                <tr>
+                    <th style="text-align: center; vertical-align: middle;">No</th>
+                    <th style="text-align: center; vertical-align: middle;">Kode Barang</th>
+                    <th style="text-align: center; vertical-align: middle;">Nama Barang</th>
+                    <th style="text-align: center">Harga Barang</th>
+                    <th style="text-align: center">Exp</th>
+                    <th style="text-align: center">Jumlah</th>
+                    <th style="text-align: center; vertical-align: middle;">Total Stok</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    $no = 1;
+                    $total_order = 0;
+                    // Order
+                   if (!empty($data_stok)) :
+                    // dd($data_stok);
+                    foreach ($data_stok as $value) :
+                        $detailTipeBarang = $detailStokTipeBarangModel->getStokTipeBarangByIdTipeBarang($value['id_tipe_barang']);
+                        if(!empty($detailTipeBarang) && is_array($detailTipeBarang)):
+                            $jumlah_detail_stok = count($detailTipeBarang);
+                            $firstRow = true;
+                            $sub_total_stok = 0; // Inisialisasi sub total stok untuk tiap tipe barang
+                            
+                            foreach ($detailTipeBarang as $do) {
+                                $sub_total_stok += $do['jumlah_detail_stok_tipe_barang'];
+                            }
+                        
+                            foreach ($detailTipeBarang as $do) :
+                        ?>
+                <tr>
+                    <?php if ($firstRow) : ?>
+                    <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_detail_stok; ?>">
+                        <?= $no++; ?>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_detail_stok; ?>">
+                        <?= $value['id_barang']; ?></td>
+
+                    <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_detail_stok; ?>">
+                        <?= $value['nama_barang']; ?> (<?= $value['merk_tipe_barang']; ?>)</td>
+
+                    <?php endif; ?>
+                    <td style="text-align: center; vertical-align: middle;">Rp.
+                        <?= number_format($do['harga_detail_stok_tipe_barang'], 0, ',', '.'); ?></td>
+
+                    <td
+                        <?= ($do['exp_detail_stok_tipe_barang'] < date('Y-m-d')) ? 'class="text-danger text-center"' : 'style="text-align: center"'; ?>>
+                        <?php if ($do['exp_detail_stok_tipe_barang'] == '0000-00-00') : ?>
+                        <span class="badge badge-success">Tidak Ada Exp</span>
+                        <?php else : ?>
+                        <?= date('d-m-Y', strtotime($do['exp_detail_stok_tipe_barang'])); ?>
+                        <?php endif; ?>
+                    </td>
+
+                    <td style="text-align: center; "><?= $do['jumlah_detail_stok_tipe_barang']; ?></td>
+                    <?php if ($firstRow) : ?>
+                    <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_detail_stok; ?>">
+                        <?= $sub_total_stok; ?></td>
+                    <?php
+                            $firstRow = false;
+                            endif;
+                            ?>
+                </tr>
+                <?php
+                    endforeach;
+                    else :
+                    // dd($value);
+                    ?>
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;"><?= $no++; ?>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;"><?= $value['id_barang']; ?></td>
+                    <td style="text-align: center; vertical-align: middle;">
+                        <?= $value['nama_barang']; ?> (<?= $value['merk_tipe_barang']; ?>)</td>
+
+                    <td style="text-align: center; vertical-align: middle;">
+                        Rp. <?= number_format($value['harga_tipe_barang'], 0, ',', '.'); ?></td>
+                    </td>
+                    <td style="text-align: center">-</td>
+                    <td style="text-align: center; vertical-align: middle;">0</td>
+                    <td style="text-align: center; vertical-align: middle;">0</td>
+                </tr>
+                <?php
+                    endif;
+                    endforeach;
+                    else:
+                    ?>
+                <tr>
+                    <td colspan="7" style="text-align: center">Tidak ada data stok</td>
+                </tr>
+                <?php 
+                    endif;
+                    ?>
+            </tbody>
         </table>
     </div>
+    <div class="tanda_tangan" style="margin-top: 10px; text-align: right; padding: 20px;">
+        <p>Pekalongan, <?= formatIndo(date('Y-m-d')); ?></p>
+        <p>Mengetahui,</p>
+        <br><br><br><br>
+        <p>
+            <strong>Azimah</strong>
+        </p>
+    </div>
 
-    <table border="1" cellpadding="5" cellspacing="0">
-        <thead>
-            <tr>
-                <th style="text-align: center; vertical-align: middle;">No</th>
-                <th style="text-align: center; vertical-align: middle;">Kode Barang</th>
-                <th style="text-align: center; vertical-align: middle;">Nama Barang</th>
-                <th style="text-align: center">Harga Barang</th>
-                <th style="text-align: center">Exp</th>
-                <th style="text-align: center">Jumlah</th>
-                <th style="text-align: center; vertical-align: middle;">Total Stok</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-                            $no = 1;
-                            $total_order = 0;
-                            // Order
-                           if (!empty($data_stok)) :
-                            // dd($data_stok);
-                            foreach ($data_stok as $value) :
-                                $detailTipeBarang = $detailStokTipeBarangModel->getStokTipeBarangByIdTipeBarang($value['id_tipe_barang']);
-                                if(!empty($detailTipeBarang) && is_array($detailTipeBarang)):
-                                    $jumlah_detail_stok = count($detailTipeBarang);
-                                    $firstRow = true;
-                                    $sub_total_stok = 0; // Inisialisasi sub total stok untuk tiap tipe barang
-                                    
-                                    foreach ($detailTipeBarang as $do) {
-                                        $sub_total_stok += $do['jumlah_detail_stok_tipe_barang'];
-                                    }
-                                
-                                    foreach ($detailTipeBarang as $do) :
-                                ?>
-            <tr>
-                <?php if ($firstRow) : ?>
-                <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_detail_stok; ?>">
-                    <?= $no++; ?>
-                </td>
-                <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_detail_stok; ?>">
-                    <?= $value['id_barang']; ?></td>
-
-                <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_detail_stok; ?>">
-                    <?= $value['nama_barang']; ?> (<?= $value['merk_tipe_barang']; ?>)</td>
-
-                <?php endif; ?>
-                <td style="text-align: center; vertical-align: middle;">Rp.
-                    <?= number_format($do['harga_detail_stok_tipe_barang'], 0, ',', '.'); ?></td>
-
-                <td
-                    <?= ($do['exp_detail_stok_tipe_barang'] < date('Y-m-d')) ? 'class="text-danger text-center"' : 'style="text-align: center"'; ?>>
-                    <?php if ($do['exp_detail_stok_tipe_barang'] == '0000-00-00') : ?>
-                    <span class="badge badge-success">Tidak Ada Exp</span>
-                    <?php else : ?>
-                    <?= date('d-m-Y', strtotime($do['exp_detail_stok_tipe_barang'])); ?>
-                    <?php endif; ?>
-                </td>
-
-                <td style="text-align: center; "><?= $do['jumlah_detail_stok_tipe_barang']; ?></td>
-                <?php if ($firstRow) : ?>
-                <td style="text-align: center; vertical-align: middle;" rowspan="<?= $jumlah_detail_stok; ?>">
-                    <?= $sub_total_stok; ?></td>
-                <?php
-                                    $firstRow = false;
-                                    endif;
-                                    ?>
-            </tr>
-            <?php
-                            endforeach;
-                            else :
-                            // dd($value);
-                            ?>
-            <tr>
-                <td style="text-align: center; vertical-align: middle;"><?= $no++; ?>
-                </td>
-                <td style="text-align: center; vertical-align: middle;"><?= $value['id_barang']; ?></td>
-                <td style="text-align: center; vertical-align: middle;">
-                    <?= $value['nama_barang']; ?> (<?= $value['merk_tipe_barang']; ?>)</td>
-
-                <td style="text-align: center; vertical-align: middle;">
-                    Rp. <?= number_format($value['harga_tipe_barang'], 0, ',', '.'); ?></td>
-                </td>
-                <td style="text-align: center">-</td>
-                <td style="text-align: center; vertical-align: middle;">0</td>
-                <td style="text-align: center; vertical-align: middle;">0</td>
-            </tr>
-            <?php
-                            endif;
-                            endforeach;
-                            else:
-                            ?>
-            <tr>
-                <td colspan="7" style="text-align: center">Tidak ada data stok</td>
-            </tr>
-            <?php 
-                            endif;
-                            ?>
-        </tbody>
-    </table>
 </body>
 
 </html>
