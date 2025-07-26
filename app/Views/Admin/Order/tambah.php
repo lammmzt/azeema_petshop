@@ -67,7 +67,7 @@
                             <div class="form-group">
                                 <label for="">Tgl Kedatangan</label>
                                 <input type="date" name="tanggal_datang" class="form-control" required
-                                    value="<?= date('Y-m-d'); ?>" required>
+                                    value="<?= date('Y-m-d'); ?>" required min="<?= date('Y-m-d'); ?>">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -236,7 +236,7 @@ $('#tambah_barang').on('click', function() {
     var subtotal = harga_layanan * qty;
 
     if (id_layanan == '') { // jika barang belum dipilih
-        alert('Pilih barang');
+        alert('Pilih layanan');
         return false;
     }
 

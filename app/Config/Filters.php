@@ -88,7 +88,7 @@ class Filters extends BaseFilters
             ]],
             'filterKasir' => ['except' => [ 
                 '/', 'Auth/logout','Auth/login','Auth/Register', 'Dashboard', 'Dashboard/*',
-                'Home', 'Home/*', 'Order', 'Order/*', 'Transaksi/Keluar','Transaksi/tambah_transaksi_keluar', 'Transaksi/simpan_transaksi_keluar',  'Transaksi/print_struk', 'Transaksi/print_struk/*', 'Users', 'Users/reset_password', 'Users/Update', 'Users/Simpan', 'Laporan/Transaksi', 'Laporan/Orderan', 'Laporan/cetak_transaksi/*', 'Laporan/cetak_orderan/*'
+                'Home', 'Home/*', 'Order', 'Order/*', 'Transaksi/Keluar','Transaksi/tambah_transaksi_keluar', 'Transaksi/simpan_transaksi_keluar',  'Transaksi/print_struk', 'Transaksi/print_struk/*', 'Users', 'Users/reset_password', 'Users/Update', 'Users/Simpan', 'Laporan/Transaksi', 'Laporan/Orderan', 'Laporan/cetak_transaksi/*', 'Laporan/cetak_orderan/*', 'LandingPage/saveCheckout',
             ]],
             'filterOwner' => ['except' => [ 
                 '/', 'Auth/logout','Auth/login','Auth/Register','Barang', 'Barang/*', 'Dashboard', 'Dashboard/*',
