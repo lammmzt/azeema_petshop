@@ -62,6 +62,7 @@ class Users extends BaseController
                 ]
             ]
         ])) {
+            session()->setFlashdata('error', 'Data Gagal Ditambahkan');
             return redirect()->to('/Users')->withInput();
         }
         $this->userModel->insert([
@@ -81,10 +82,18 @@ class Users extends BaseController
     {
         $id = $this->request->getVar('id_user');
         $password = $this->request->getVar('password');
+        $data_user = $this->userModel->where('id_user', $id)->first();
         if ($password == '') {
             $password = $this->request->getVar('password_lama');
         } else {
             $password = password_hash($this->request->getVar('password'), PASSWORD_DEFAULT);
+        }
+        // check username aleady exist
+        if ($this->request->getVar('username') != $data_user['username']) {
+            if ($this->userModel->where('username', $this->request->getVar('username'))->first()) {
+                session()->setFlashdata('error', 'Username Sudah Terdaftar');
+                return redirect()->to('/Users')->withInput();
+            }
         }
         $this->userModel->save([
             'id_user' => $id,
