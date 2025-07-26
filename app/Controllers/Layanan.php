@@ -56,6 +56,7 @@ class Layanan extends BaseController
                 ]
                 ]
         ])) {
+            session()->setFlashdata('error', $this->validator->listErrors(1));
             return redirect()->to('/Layanan')->withInput();
         }
 
