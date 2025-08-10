@@ -50,6 +50,7 @@
                                 <th>Nama Tipe Barang</th>
                                 <th class="text-center">Satuan</th>
                                 <th>Stok Barang</th>
+                                <th>Harga Beli</th>
                                 <th>Harga Jual</th>
                                 <th>Exp</th>
                                 <th>Action</th>
@@ -64,7 +65,9 @@
                                 <td><?= $value['merk_tipe_barang']; ?></td>
                                 <td><?= $value['satuan']; ?></td>
                                 <td><?= $value['jumlah_detail_stok_tipe_barang']; ?></td>
-                                <td><?= $value['harga_detail_stok_tipe_barang']; ?></td>
+                                <td>Rp. <?= number_format($value['harga_beli_detail_stok_tipe_barang'], 0, ',', '.'); ?>
+                                <td>Rp. <?= number_format($value['harga_detail_stok_tipe_barang'], 0, ',', '.'); ?></td>
+                                </td>
                                 <td
                                     <?= ($value['exp_detail_stok_tipe_barang'] < date('Y-m-d')) ? 'class="text-danger"' : ''; ?>>
                                     <?php if ($value['exp_detail_stok_tipe_barang'] == '0000-00-00') : ?>
@@ -134,6 +137,17 @@ foreach ($detail_stok as $key => $value) : ?>
                             <!-- validation -->
                             <div class="invalid-feedback">
                                 <?= $validation->getError('jumlah_detail_stok_tipe_barang'); ?>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb-2">
+                            <label for="">Harga Beli</label>
+                            <input type="number" name="harga_beli_detail_stok_tipe_barang" class="form-control"
+                                placeholder="Masukan harga jual"
+                                value="<?= $value['harga_beli_detail_stok_tipe_barang']; ?>" required>
+
+                            <!-- validation -->
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('harga_detail_stok_tipe_barang'); ?>
                             </div>
                         </div>
                         <div class="col-lg-12 mb-2">

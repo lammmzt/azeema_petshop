@@ -172,6 +172,14 @@ class TipeBarang extends BaseController
                     'numeric' => '{field} harus berupa angka.'
                 ]
             ],
+            'harga_beli_detail_stok_tipe_barang' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => '{field} harus diisi.',
+                    'numeric' => '{field} harus berupa angka.'
+                ]
+            ],
+            
         ])) {
             session()->setFlashdata('error', 'Data gagal diubah.');
             return redirect()->to('TipeBarang/detail_stok/' . $this->request->getVar('id_tipe_barang'))->withInput();
@@ -181,6 +189,7 @@ class TipeBarang extends BaseController
             'id_detail_stok_tipe_barang' => $this->request->getVar('id_detail_stok_tipe_barang'),
             'jumlah_detail_stok_tipe_barang' => $this->request->getVar('jumlah_detail_stok_tipe_barang'),
             'harga_detail_stok_tipe_barang' => $this->request->getVar('harga_detail_stok_tipe_barang'),
+            'harga_beli_detail_stok_tipe_barang' => $this->request->getVar('harga_beli_detail_stok_tipe_barang'),
             // Exp bisa kosong
             'exp_detail_stok_tipe_barang' => $this->request->getVar('exp_detail_stok_tipe_barang') ?: null
         ]);

@@ -70,7 +70,8 @@ class Transaksi extends BaseController
         foreach ($data_barang as $key => $value) { // Looping data barang
             $data_detail_stok_tipe_barang = [ // Data yang akan disimpan
                 'id_tipe_barang' => $value['id_tipe_barang'],
-                'harga_detail_stok_tipe_barang' => $value['harga'],
+                'harga_detail_stok_tipe_barang' => $value['harga_jual'],
+                'harga_beli_detail_stok_tipe_barang' => $value['harga'],
                 'jumlah_detail_stok_tipe_barang' => $value['jumlah'],
                 'exp_detail_stok_tipe_barang' => $value['exp_barang'] ?? null,
                 'created_at' => date('Y-m-d H:i:s'),

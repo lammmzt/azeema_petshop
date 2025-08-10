@@ -197,7 +197,7 @@
                                         <div class="widget-timeline">
                                             <ul class="timeline">
                                                 <li>
-                                                    <div class="timeline-badge primary"></div>
+                                                    <div class="timeline-badge primary">1</div>
                                                     <a class="timeline-panel text-muted" href="#">
                                                         <span><?= date('d-m-Y h:i', strtotime($row['tanggal_order'])) ?></span>
                                                         <h6 class="m-t-5">
@@ -210,7 +210,7 @@
                                                 <?php 
                                                 if($row['status_order'] != '1' || $row['tanggal_disetujui'] != null) : ?>
                                                 <li>
-                                                    <div class="timeline-badge warning"></div>
+                                                    <div class="timeline-badge warning">2</div>
                                                     <a class="timeline-panel text-muted" href="#">
                                                         <span><?= date('d-m-Y h:i', strtotime($row['tanggal_disetujui'])) ?></span>
                                                         <h6 class="m-t-5">Pemesanan telah disetujui oleh petugas,
@@ -224,7 +224,7 @@
                                                 <?php 
                                                     if($row['status_order'] != '1' || $row['status_order'] != '2' || $row['tanggal_proses'] != null) : ?>
                                                 <li>
-                                                    <div class="timeline-badge info"></div>
+                                                    <div class="timeline-badge info">3</div>
                                                     <a class="timeline-panel text-muted" href="#">
                                                         <span><?= date('d-m-Y h:i', strtotime($row['tanggal_proses'])) ?></span>
                                                         <h6 class="m-t-5"> Menunggu Proses Pengerjaan
@@ -238,7 +238,7 @@
                                                 <?php
                                                 if($row['status_order'] == '4') : ?>
                                                 <li>
-                                                    <div class="timeline-badge success"></div>
+                                                    <div class="timeline-badge success">4</div>
                                                     <a class="timeline-panel text-muted" href="#">
                                                         <span><?= date('d-m-Y h:i', strtotime($row['tanggal_selesai'])) ?></span>
                                                         <h6 class="m-t-5">Proses Pengerjaan Selesai
@@ -251,7 +251,7 @@
                                                 <?php
                                                 if($row['status_order'] == '0') : ?>
                                                 <li>
-                                                    <div class="timeline-badge danger"></div>
+                                                    <div class="timeline-badge danger">1</div>
                                                     <a class="timeline-panel text-muted" href="#">
                                                         <span><?= date('d-m-Y h:i', strtotime($row['tanggal_selesai'])) ?></span>
                                                         <h6 class="m-t-5">Pemesanan Ditolak oleh petugas
@@ -276,6 +276,165 @@
 </div>
 <?php endforeach; ?>
 
+<style>
+/* style time line to perfect  design */
+
+.timeline {
+    list-style: none;
+    padding: 20px 0 20px;
+    position: relative;
+}
+
+.timeline:before {
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 3px;
+    background-color: #eeeeee;
+    left: 50%;
+    margin-left: -1.5px;
+}
+
+.timeline>li {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.timeline>li:before,
+.timeline>li:after {
+    content: " ";
+    display: table;
+}
+
+.timeline>li:after {
+    clear: both;
+}
+
+.timeline>li:before,
+.timeline>li:after {
+    content: " ";
+    display: table;
+}
+
+.timeline>li:after {
+    clear: both;
+}
+
+.timeline>li>.timeline-panel {
+    width: 46%;
+    float: left;
+    border: 1px solid #d4d4d4;
+    border-radius: 2px;
+    padding: 20px;
+    position: relative;
+    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+}
+
+.timeline>li>.timeline-panel:before {
+    position: absolute;
+    top: 26px;
+    right: -15px;
+    display: inline-block;
+    border-top: 15px solid transparent;
+    border-left: 15px solid #ccc;
+    border-right: 0 solid #ccc;
+    border-bottom: 15px solid transparent;
+    content: " ";
+}
+
+.timeline>li>.timeline-panel:after {
+    position: absolute;
+    top: 27px;
+    right: -14px;
+    display: inline-block;
+    border-top: 14px solid transparent;
+    border-left: 14px solid #fff;
+    border-right: 0 solid #fff;
+    border-bottom: 14px solid transparent;
+    content: " ";
+}
+
+.timeline>li>.timeline-badge {
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 1.4em;
+    text-align: center;
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    margin-left: -25px;
+    background-color: #999999;
+    z-index: 100;
+    border-top-right-radius: 50%;
+    border-top-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+
+.timeline>.timeline-heading li {
+    list-style-type: none;
+    margin-left: -40px;
+}
+
+.timeline>.timeline-heading li span {
+    margin-right: 5px;
+}
+
+.timeline>.timeline-heading li i {
+    margin-right: 5px;
+}
+
+.timeline-heading {
+    margin-left: 0px;
+}
+
+.timeline-badge.primary {
+    background-color: #2e6da4 !important;
+}
+
+.timeline-badge.success {
+    background-color: #3f903f !important;
+}
+
+.timeline-badge.warning {
+    background-color: #f0ad4e !important;
+}
+
+.timeline-badge.danger {
+    background-color: #d9534f !important;
+}
+
+.timeline-badge.info {
+    background-color: #5bc0de !important;
+}
+
+.timeline-title {
+    margin-top: 0;
+    color: inherit;
+}
+
+.timeline-body>img {
+    margin: 20px;
+}
+
+.timeline-footer {
+    padding: 4px 15px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+}
+
+.timeline-footer a {
+    cursor: pointer;
+}
+
+.timeline-footer a:hover {
+    text-decoration: none;
+}
+</style>
 <?= $this->endSection('content'); ?>
 <?= $this->section('script'); ?>
 <script>

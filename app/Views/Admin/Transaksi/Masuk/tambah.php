@@ -91,7 +91,9 @@
                                     <th class="text-center">#</th>
                                     <th>Nama Barang</th>
                                     <th>Exp Barang</th>
-                                    <th>Harga</th>
+                                    <th>Harga Beli</th>
+                                    <th>% Jual</th>
+                                    <th>Harga Jual</th>
                                     <th>Jumlah</th>
                                     <th>Subtotal</th>
                                     <th>Aksi</th>
@@ -141,6 +143,16 @@ function tampilBarang() {
                 .harga +
                 '" > </td>';
             html +=
+                '<td> <input type="number" name="persen_jual[]" class="form-control persen_jual" min="1" value="' +
+                item
+                .persen_jual +
+                '" > </td>';
+            html +=
+                '<td> <input type="text" name="harga_jual[]" class="form-control harga_jual" min="1" readonly value="' +
+                item
+                .harga_jual +
+                '" > </td>';
+            html +=
                 '<td> <input type="number" name="jumlah[]" class="form-control text-center" min="1" style="max-width: 100px;" value="' +
                 item
                 .jumlah +
@@ -157,14 +169,14 @@ function tampilBarang() {
         });
 
         html += '<tr>';
-        html += '<td colspan="5" class="text-right">Total</td>';
+        html += '<td colspan="7" class="text-right">Total</td>';
         html += '<td><input type="text" name="total" class="form-control" value="' + formatRupiah(total) +
             '" readonly></td>';
         html += '<td></td>';
         html += '</tr>';
     } else { // jika tidak ada data barang
         html += '<tr>';
-        html += '<td colspan="7" class="text-center">Tidak ada data</td>';
+        html += '<td colspan="9" class="text-center">Tidak ada data</td>';
         html += '</tr>';
     }
 
@@ -179,6 +191,8 @@ $('#tambah_barang').on('click', function() {
     var id_tipe_barang = $('#id_tipe_barang').val();
     var nama_barang = $('#id_tipe_barang option:selected').text();
     var harga = $('#id_tipe_barang option:selected').data('harga');
+    var persen_jual = 20;
+    var harga_jual = (harga * persen_jual / 100) + harga;
     var jumlah = 1;
     var subtotal = harga * jumlah;
 
@@ -196,6 +210,8 @@ $('#tambah_barang').on('click', function() {
             nama_barang: nama_barang,
             exp_barang: '',
             harga: harga,
+            persen_jual: persen_jual,
+            harga_jual: harga_jual,
             jumlah: jumlah,
             subtotal: subtotal
         });
@@ -248,7 +264,19 @@ $('#tabel_transaksi_masuk').on('change', 'input[name="exp_barang[]"]', function(
 });
 
 
+// change persen jual
+$('#tabel_transaksi_masuk').on('change', 'input[name="persen_jual[]"]', function() {
+    // alert('ubah persen jual');
+    var index = $(this).closest('tr').index(); // index baris
+    var persen_jual = $(this).val(); // persen jual
+    var harga = data_barang[index].harga; // harga barang
+    var harga_jual = (harga * persen_jual / 100) + harga; // harga jual
 
+    data_barang[index].persen_jual = persen_jual; // ubah persen jual
+    data_barang[index].harga_jual = harga_jual; // ubah harga jual
+
+    tampilBarang(); // tampilkan barang
+})
 // hapus barang
 function hapusBarang(index) {
     // alert('hapus barang ' + index);

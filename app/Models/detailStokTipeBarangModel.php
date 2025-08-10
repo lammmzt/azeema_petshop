@@ -7,7 +7,7 @@ class detailStokTipeBarangModel  extends Model
 {
     protected $table = 'detail_stok_tipe_barang';
     protected $primaryKey = 'id_detail_stok_tipe_barang';
-    protected $allowedFields = ['id_detail_stok_tipe_barang','id_tipe_barang','harga_detail_stok_tipe_barang', 'jumlah_detail_stok_tipe_barang', 'created_at', 'updated_at', 'exp_detail_stok_tipe_barang'];
+    protected $allowedFields = ['id_detail_stok_tipe_barang','id_tipe_barang', 'harga_beli_detail_stok_tipe_barang', 'harga_detail_stok_tipe_barang', 'jumlah_detail_stok_tipe_barang', 'created_at', 'updated_at', 'exp_detail_stok_tipe_barang'];
 
     public function getStokTipeBarang($id_detail_stok_tipe_barang = false)
     {
@@ -73,6 +73,7 @@ class detailStokTipeBarangModel  extends Model
                     ->join('barang', 'barang.id_barang = tipe_barang.id_barang')
                     ->groupBy('detail_stok_tipe_barang.id_tipe_barang')
                     ->having('SUM(detail_stok_tipe_barang.jumlah_detail_stok_tipe_barang) < 5') // Ganti 5 dengan stok minimal yang diinginkan
+                    ->orderBy('SUM(detail_stok_tipe_barang.jumlah_detail_stok_tipe_barang)', 'ASC')
                     ->findAll();
     }
 
