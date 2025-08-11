@@ -56,7 +56,7 @@ $detailTransaksiModel = new detailTransaksiModel();
                             <tr>
                                 <td><?= $no++; ?></td>
                                 <td><?= $value['id_transaksi']; ?></td>
-                                <td><?= $value['tanggal_transaksi']; ?></td>
+                                <td><?= date('d-m-Y', strtotime($value['tanggal_transaksi'])); ?></td>
                                 <td><?php echo "Rp. " . number_format($value['total_transaksi'], 0, ',', '.'); ?></td>
                                 <td>
                                     <button type="button" data-toggle="modal"
