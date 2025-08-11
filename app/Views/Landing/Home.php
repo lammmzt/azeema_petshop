@@ -3,17 +3,17 @@
 
 <!-- END nav -->
 <div class="hero-wrap js-fullheight"
-    style="background-image: url('<?= base_url('assets/Landing/'); ?>images/bg_1.jpg');"
+    style="background-image: url('<?= base_url('assets/Landing/'); ?>images/bg_kucing.jpg');"
     data-stellar-background-ratio="0.5" id="home">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center"
             data-scrollax-parent="true">
             <div class="col-md-11 ftco-animate text-center">
-                <h1 class="mb-4">
+                <h1 class="mb-4" style="text-shadow: 2px 2px black">
                     Perawatan Hewan Peliharaan Terbaik di Kota Pekalongan
                 </h1>
-                <p><a href="#" class="btn btn-primary mr-md-4 py-3 px-4">Learn more <span
+                <p><a href="#" class="btn btn-primary mr-md-4 py-3 px-4">Baca selengkapnya <span
                             class="ion-ios-arrow-forward"></span></a></p>
             </div>
         </div>
@@ -52,7 +52,7 @@
         <div class="row d-flex no-gutters">
             <div class="col-md-5 d-flex">
                 <div class="img img-video d-flex align-self-stretch align-items-center justify-content-center justify-content-md-center mb-4 mb-sm-0"
-                    style="background-image:url(<?= base_url('assets/Landing/'); ?>images/about-1.jpg);">
+                    style="background-image:url(<?= base_url('assets/Landing/'); ?>images/cats.jpeg);">
                 </div>
             </div>
             <div class="col-md-7 pl-md-5 py-md-5">
@@ -394,10 +394,11 @@
 <section class="ftco-section bg-light ftco-faqs" id="faq">
     <div class="container">
         <div class="row">
+            <!-- <iframe width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
             <div class="col-lg-6 order-md-last">
                 <div class="img img-video d-flex align-self-stretch align-items-center justify-content-center justify-content-md-center mb-4 mb-sm-0"
-                    style="background-image:url(<?= base_url('assets/Landing/'); ?>images/about.jpg);">
-                    <a href="https://vimeo.com/45830194"
+                    style="background-image:url(<?= base_url('assets/Landing/'); ?>images/groomer.jpeg);">
+                    <a href="https://www.youtube.com/watch?v=9yTu3HogI_Y"
                         class="icon-video popup-vimeo d-flex justify-content-center align-items-center">
                         <span class="fa fa-play"></span>
                     </a>
