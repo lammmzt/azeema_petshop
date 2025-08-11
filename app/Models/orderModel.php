@@ -37,8 +37,8 @@ class orderModel extends Model
         return $this
         ->select('order.*, users.nama_user, users.username, users.no_hp_user, users.alamat_user, order.tanggal_order as tanggal')
         ->join('users', 'users.id_user = order.id_user')
-        ->where('order.tanggal >=', date('Y-m-d', strtotime($tgl_awal)))
-        ->where('order.tanggal <=', date('Y-m-d', strtotime($tgl_akhir)))
+        ->where('order.tanggal_order >=', date('Y-m-d', strtotime($tgl_awal)))
+        ->where('order.tanggal_order <=', date('Y-m-d', strtotime($tgl_akhir)))
         ->orderBy('id_order', 'DESC')
         ->findAll();
         
